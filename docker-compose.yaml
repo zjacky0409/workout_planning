@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  backend:
+    build: ./workout-planning-backend
+    container_name: workout-planning-backend-container
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./workout-planning-backend:/app
+      - /app/node_modules
+  frontend:
+    build: ./workout_planning_frontend
+    container_name: workout_planning_frontend-container
+    volumes:
+      - ./workout_planning_frontend:/app
+      - /app/node_modules
+    ports:
+      - '3000:3000'
+    stdin_open: true
