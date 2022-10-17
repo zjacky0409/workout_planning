@@ -13,7 +13,8 @@ services:
     container_name: frontend-container
     volumes:
       - ./frontend:/app
-      - /app/node_modules
+      - /app/node_modules #to make sure the node_modules will not be delete after we mounted by ./frontend:/app
+      # it will be mouted to a volume which managed by docker
     ports:
       - '3000:3000'
     stdin_open: true
