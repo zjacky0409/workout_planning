@@ -12,6 +12,7 @@ Frontend: ReactJS (Typescript)
 |      | Day2    | Training Day | Chest         |         |                 |
 |      | .....   | Macro        | ....Body Part |         |                 |
 
+4. Add i18n for my app
 
 
 Backend: NestJS (Typescript)
