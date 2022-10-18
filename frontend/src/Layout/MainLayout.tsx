@@ -11,8 +11,9 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface Route {
   name: string;
@@ -37,6 +38,11 @@ const MainLayout = (props: PropsType) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -58,7 +64,9 @@ const MainLayout = (props: PropsType) => {
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <FitnessCenterIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <FitnessCenterIcon
+              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+            />
             <Typography
               variant="h6"
               noWrap
@@ -118,7 +126,9 @@ const MainLayout = (props: PropsType) => {
                 ))}
               </Menu>
             </Box>
-            <FitnessCenterIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+            <FitnessCenterIcon
+              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+            />
             <Typography
               variant="h5"
               noWrap
@@ -178,6 +188,9 @@ const MainLayout = (props: PropsType) => {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
+                <MenuItem key={'change_lang'} onClick={() => changeLanguage('zh_hk')}>
+                  <Typography textAlign="center">Change Language {i18n.language}</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

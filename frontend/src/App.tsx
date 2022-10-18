@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import ProgramView from "./View/ProgramView";
 import ExercisesView from "./View/ExercisesView";
 import UsefulResourceView from "./View/UsefulResourceView";
+
 function App() {
   return (
     <BrowserRouter>
