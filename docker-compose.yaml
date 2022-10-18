@@ -1,7 +1,10 @@
 version: "3.8"
 services:
   backend:
-    build: ./backend
+    # build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: backend-container
     ports:
       - '4000:4000'
@@ -9,7 +12,10 @@ services:
       - ./backend:/app
       - /app/node_modules
   frontend:
-    build: ./frontend
+    # build: ./frontend
+    build: 
+      context: ./frontend # to specify the path of the Dockerfile and the name of the Dockerfile
+      dockerfile: Dockerfile
     container_name: frontend-container
     volumes:
       - ./frontend:/app
