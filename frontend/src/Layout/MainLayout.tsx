@@ -25,7 +25,7 @@ const pages: Route[] = [
   { name: "Exercises", path: "/exercises" },
   { name: "Useful Resource", path: "/useful_resource" },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Dashboard", "Logout","Change Lang"];
 
 interface PropsType {
   children: JSX.Element;

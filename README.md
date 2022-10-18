@@ -14,7 +14,7 @@ Frontend: ReactJS (Typescript)
 
 4. Add i18n for my app
 
-5. pull before or after commit
+5. pull before or after commit --> we should pull before commit
 
 Backend: NestJS (Typescript)
     DB: PostgreDB
