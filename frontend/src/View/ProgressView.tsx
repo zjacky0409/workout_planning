@@ -1,13 +1,15 @@
 import MainLayout from "../Layout/MainLayout";
 import { useTranslation } from 'react-i18next';
 
-const ProgramView = () => {
+
+const ProgressView = () => {
 
   const { t } = useTranslation();
+
   return (
     <MainLayout>
-      <p>This is the {t('Program')} Page</p>
+      <p>This is the {t('Progress')} Page</p>
     </MainLayout>
   );
 };
-export default ProgramView;
+export default ProgressView;

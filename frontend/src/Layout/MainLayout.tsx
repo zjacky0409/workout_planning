@@ -24,6 +24,7 @@ const pages: Route[] = [
   { name: "Program", path: "/program" },
   { name: "Exercises", path: "/exercises" },
   { name: "Useful Resource", path: "/useful_resource" },
+  { name: "Progress", path:"/progress"}
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout","Change Lang"];
 
