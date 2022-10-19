@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
+import SideBar from './SideBar'
 interface Route {
   name: string;
   path: string;
@@ -23,10 +23,10 @@ const pages: Route[] = [
   { name: "Diet", path: "/diet" },
   { name: "Program", path: "/program" },
   { name: "Exercises", path: "/exercises" },
-  { name: "Useful Resource", path: "/useful_resource" },
-  { name: "Progress", path:"/progress"}
+  { name: "Useful Resource", path: "/useful_resources" },
+  { name: "Progress", path: "/progress" },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout","Change Lang"];
+const settings = ["Profile", "Account", "Dashboard", "Logout", "Change Lang"];
 
 interface PropsType {
   children: JSX.Element;
@@ -39,7 +39,7 @@ const MainLayout = (props: PropsType) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -62,7 +62,10 @@ const MainLayout = (props: PropsType) => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" sx={{
+          width: { sm: `calc(100% - ${240}px)` },
+          ml: { sm: `${240}px` },
+        }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <FitnessCenterIcon
@@ -122,7 +125,7 @@ const MainLayout = (props: PropsType) => {
                     component={Link}
                     to={page.path}
                   >
-                    <Typography textAlign="center">{page.name}</Typography>
+                    <Typography textAlign="center">{t(page.name as unknown as TemplateStringsArray)}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -157,7 +160,7 @@ const MainLayout = (props: PropsType) => {
                   component={Link}
                   to={page.path}
                 >
-                  {page.name}
+                  {t(page.name as unknown as TemplateStringsArray)}
                 </Button>
               ))}
             </Box>
@@ -189,14 +192,20 @@ const MainLayout = (props: PropsType) => {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
-                <MenuItem key={'change_lang'} onClick={() => changeLanguage('zh_hk')}>
-                  <Typography textAlign="center">Change Language {i18n.language}</Typography>
+                <MenuItem
+                  key={"change_lang"}
+                  onClick={() => changeLanguage("zh_hk")}
+                >
+                  <Typography textAlign="center">
+                    Change Language {i18n.language}
+                  </Typography>
                 </MenuItem>
               </Menu>
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
+      <SideBar></SideBar>
       {props.children}
     </>
   );

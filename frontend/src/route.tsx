@@ -5,9 +5,9 @@ import UsefulResourceView from "./View/UsefulResourceView";
 import ProgressView from "./View/ProgressView";
 import { RouteObject } from "react-router-dom";
 const routes: RouteObject[] = [
-    {
-      path: "/",
-      element: <DietView />,
+  {
+    path: "/",
+    element: <DietView />,
     //   children: [
     //     {
     //       path: "messages",
@@ -15,8 +15,8 @@ const routes: RouteObject[] = [
     //     },
     //     { path: "tasks", element: <DashboardTasks /> },
     //   ],
-    },
-    { path: "diet", element: <DeitView /> },
+  },
+  { path: "diet", element: <DietView /> },
     { path: "progress", element: <ProgressView /> },
     { path: "exercises", element: <ExercisesView /> },
     { path: "useful_resources", element: <UsefulResourceView /> },
