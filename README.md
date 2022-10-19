@@ -16,6 +16,7 @@ Frontend: ReactJS (Typescript)
 
 5. pull before or after commit --> we should pull before commit
 6. For the chart: we may use the chart js
+7. https://mui.com/material-ui/react-drawer/ --> for the side bar
 
 Backend: NestJS (Typescript)
     DB: PostgreDB
