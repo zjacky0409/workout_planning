@@ -14,8 +14,15 @@ import MenuItem from "@mui/material/MenuItem";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import LanguageIcon from '@mui/icons-material/Language';
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import LanguageIcon from "@mui/icons-material/Language";
+import { navigations } from "../navgation";
+import Popper from "@mui/material/Popper";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
+import MenuList from "@mui/material/MenuList";
+import { SideBarContext } from "../Context/SideBarContext";
+
 interface Route {
   name: string;
   path: string;
@@ -28,7 +35,11 @@ const pages: Route[] = [
   { name: "Progress", path: "/progress" },
 ];
 const settings = ["Profile", "Account", "Logout"];
-const lang_choice = [{ name: 'English', value: 'en' }, { name: '繁體中文', value: 'zh_hk' }, { name: '简体中文', value: 'zh_cn' }]
+const lang_choice = [
+  { name: "English", value: "en" },
+  { name: "繁體中文", value: "zh_hk" },
+  { name: "简体中文", value: "zh_cn" },
+];
 
 // interface PropsType {
 //   children: JSX.Element;
@@ -45,9 +56,30 @@ const TopBar = () => {
   const [anchorElLang, setAnchorElLang] = React.useState<null | HTMLElement>(
     null
   );
-  const { t, i18n } = useTranslation();
 
-  console.log(i18n)
+  const currentSideBar = React.useContext(SideBarContext);
+
+  console.log("currentSideBar == ", currentSideBar);
+
+  const [openPopper, setOpenPopper] = React.useState(false);
+  const [anchorElPopper, setAnchorElPopper] =
+    React.useState<null | HTMLElement>(null);
+  const [popperContent, setPopperContent] = React.useState([]);
+
+  console.log(popperContent);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>, children: any) => {
+    setAnchorElPopper(event.currentTarget);
+    setOpenPopper(true);
+    setPopperContent(children);
+  };
+
+  const handleMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElPopper(event.currentTarget);
+    setOpenPopper(false);
+  };
+
+  const { t, i18n } = useTranslation();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -86,8 +118,6 @@ const TopBar = () => {
     >
       <Box maxWidth="xl">
         <Toolbar disableGutters>
-
-
           {
             // If the screen size is small, we show the meun icon
           }
@@ -127,12 +157,13 @@ const TopBar = () => {
                   component={Link}
                   to={page.path}
                 >
-                  <Typography textAlign="center">{t(page.name as unknown as TemplateStringsArray)}</Typography>
+                  <Typography textAlign="center">
+                    {t(page.name as unknown as TemplateStringsArray)}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-
 
           {
             // If the screen size is small, we show the Logo instead of the meun item
@@ -161,32 +192,58 @@ const TopBar = () => {
             </Typography>
           </>
 
-
-
-
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {navigations.map((page) => (
               <Button
                 key={page.name}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ color: "white", display: "block" }}
                 component={Link}
                 to={page.path}
+                onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
+                  handleClick(e, page.children)
+                }
               >
-                {t(page.name as unknown as TemplateStringsArray)}
+                {t(page.name as unknown as TemplateStringsArray) + " Test"}
               </Button>
             ))}
           </Box>
-
-
+          <Popper
+            open={openPopper}
+            anchorEl={anchorElPopper}
+            placement="bottom-start"
+            onMouseLeave={handleMouseLeave}
+          >
+            <Paper>
+              <MenuList>
+                {popperContent.map((value: any) => {
+                  return (
+                    <MenuItem
+                      component={Link}
+                      to={value.path}
+                      onClick={() => {
+                        currentSideBar.setSideContent(popperContent);
+                      }}
+                    >
+                      <ListItemText>{value.name}</ListItemText>
+                    </MenuItem>
+                  );
+                })}
+              </MenuList>
+            </Paper>
+          </Popper>
 
           {/* <Box sx={{ flexGrow: 1 }} /> */}
 
-          <Box sx={{ xs: 'flex' }}>
+          <Box sx={{ xs: "flex" }}>
             <Tooltip title="Change Language">
-              <IconButton onClick={handleOpenLangMenu} sx={{ p: 2 }} size="large"
+              <IconButton
+                onClick={handleOpenLangMenu}
+                sx={{ p: 2 }}
+                size="large"
                 edge="end"
-                color="inherit">
+                color="inherit"
+              >
                 <LanguageIcon />
               </IconButton>
             </Tooltip>
@@ -207,11 +264,18 @@ const TopBar = () => {
               onClose={handleCloseLangMenu}
             >
               {lang_choice.map((setting) => (
-                <MenuItem key={setting.name} onClick={() => { changeLanguage(setting.value) }} sx={{py:0, px:0.5}}>
-      
+                <MenuItem
+                  key={setting.name}
+                  onClick={() => {
+                    changeLanguage(setting.value);
+                  }}
+                  sx={{ py: 0, px: 0.5 }}
+                >
                   <Checkbox
                     checked={i18n.language === setting.value}
-                    inputProps={{ 'aria-label': 'Language change To '+ setting.name }}
+                    inputProps={{
+                      "aria-label": "Language change To " + setting.name,
+                    }}
                   />
                   <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
@@ -219,9 +283,11 @@ const TopBar = () => {
             </Menu>
           </Box>
 
-          <Box sx={{ xs: 'flex' }}>
+          <Box sx={{ xs: "flex" }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 2 }}
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 2 }}
                 size="large"
                 edge="end"
                 color="inherit"

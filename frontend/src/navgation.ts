@@ -19,7 +19,7 @@ export const navigations = [
             },
             {
                 name: 'Rest Day', 
-                path: '/diet/trainning_day',
+                path: '/diet/rest_day',
                 // children: [
                 //     {
                 //         name: 'Trainning Day',

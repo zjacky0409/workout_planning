@@ -8,10 +8,14 @@ import ExercisesView from "./View/ExercisesView";
 import UsefulResourceView from "./View/UsefulResourceView";
 import ProgressView from "./View/ProgressView";
 import routes from "./route";
+import { SideBarContext } from "./Context/SideBarContext";
+import { useState } from "react";
 
 function App() {
   const routing = useRoutes(routes);
-  return <> { routing } </>;
+
+  const [sideContent, setSideContent] = useState([])
+  return <SideBarContext.Provider value={{sideContent, setSideContent}} > { routing } </SideBarContext.Provider>;
 }
 
 export default App;
