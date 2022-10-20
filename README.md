@@ -8,8 +8,8 @@ Frontend: ReactJS (Typescript)
 
 | Logo | Program | Diet         | Exercises     | Booking | Useful Resource | Progress                               |
 |------|---------|--------------|---------------|---------|-----------------|----------------------------------------|
-|      | Day1    | Rest Day     | Back          |         |                 |Some charts to show the process         |
-|      | Day2    | Training Day | Chest         |         |                 |Volumn....                              |
+|      | Day1    | Rest Day     | Back          |         |                 | Some charts to show the process        |
+|      | Day2    | Training Day | Chest         |         |                 | Volumn....                             |
 |      | .....   | Macro        | ....Body Part |         |                 |                                        |
 
 4. Add i18n for my app
