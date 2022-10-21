@@ -16,7 +16,11 @@ Frontend: ReactJS (Typescript)
 
 5. pull before or after commit --> we should pull before commit
 6. For the chart: we may use the chart js
-7. https://mui.com/material-ui/react-drawer/ --> for the side bar
+7. https://mui.com/material-ui/react-drawer/ --> for the side bar 
+
+8. if we use context to store the sidebar content --> it doesnt work for a suitation: if we refresh the page, the context will become null, then the sidebar content will become empty.
+    so we need to use another method to achieve the goal.
+
 
 Backend: NestJS (Typescript)
     DB: PostgreDB
