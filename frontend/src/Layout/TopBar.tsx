@@ -188,7 +188,7 @@ const TopBar = () => {
                 textDecoration: "none",
               }}
             >
-              做占 Jouh !
+              做 Jouh !
             </Typography>
           </>
 
@@ -222,7 +222,7 @@ const TopBar = () => {
                       component={Link}
                       to={value.path}
                       onClick={() => {
-                        currentSideBar.setSideContent(popperContent);
+                        currentSideBar?.setSideContent(popperContent);
                       }}
                     >
                       <ListItemText>{value.name}</ListItemText>

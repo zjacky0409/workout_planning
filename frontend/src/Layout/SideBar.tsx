@@ -51,13 +51,13 @@ export default function SideBar() {
               textDecoration: "none",
             }}
           >
-            做占 Jouh !
+            做 Jouh !
           </Typography>
         </Stack>
       </Toolbar>
       <Divider />
       <List>
-        {currentSideBar.sideContent.map((text: any) => (
+        {currentSideBar?.sideContent.map((text: any) => (
           <ListItem
             key={text.path}
             disablePadding

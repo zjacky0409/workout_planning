@@ -1,8 +1,16 @@
 import { createContext } from "react";
-interface SideBarStructure {
-    name: string;
-    path: string
+
+
+interface SideBarElement {
+    path: string,
+    name: string
+  }
+
+
+  interface SideBarStructure {
+    sideContent: SideBarElement[];
+    setSideContent: Function
 }
 
 
-export const SideBarContext = createContext<any>(null);
+export const SideBarContext = createContext<SideBarStructure | null>(null);

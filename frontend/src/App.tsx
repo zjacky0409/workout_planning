@@ -14,7 +14,13 @@ import { useState } from "react";
 function App() {
   const routing = useRoutes(routes);
 
-  const [sideContent, setSideContent] = useState([])
+
+  interface SideBarElement {
+    path: string,
+    name: string
+  }
+
+  const [sideContent, setSideContent] = useState<SideBarElement[]>([])
   return <SideBarContext.Provider value={{sideContent, setSideContent}} > { routing } </SideBarContext.Provider>;
 }
 
