@@ -5,8 +5,8 @@ const UsefulResourceView = () => {
 
   const { t } = useTranslation();
   return (
-    <MainLayout>
-      <p>This is the {t('Useful Resource')} Page</p>
+    <MainLayout content="Resource">
+      <p>This is the {t('Resource')} Page</p>
     </MainLayout>
   );
 };

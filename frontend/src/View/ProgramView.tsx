@@ -5,7 +5,7 @@ const ProgramView = () => {
 
   const { t } = useTranslation();
   return (
-    <MainLayout>
+    <MainLayout content="Program">
       <p>This is the {t('Program')} Page</p>
     </MainLayout>
   );

@@ -35,7 +35,32 @@ const routes: RouteObject[] = [
     ],
   },
   { path: "progress", element: <ProgressView /> },
-  { path: "exercises", element: <ExercisesView /> },
+  { path: "exercises", element: <ExercisesView /> , children:[
+    {
+      path: "/exercises/back",
+      element: <ExercisesView />,
+    },
+    {
+      path: "/exercises/chest",
+      element: <ExercisesView />,
+    },
+    {
+      path: "/exercises/arm",
+      element: <ExercisesView />,
+    },
+    {
+      path: "/exercises/leg",
+      element: <ExercisesView />,
+    },
+    {
+      path: "/exercises/shoulder",
+      element: <ExercisesView />,
+    },
+    {
+      path: "/exercises/core",
+      element: <ExercisesView />,
+    },
+  ]},
   { path: "useful_resources", element: <UsefulResourceView /> },
   { path: "program", element: <ProgramView /> }
 ]

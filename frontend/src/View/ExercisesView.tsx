@@ -5,7 +5,7 @@ const ExercisesView = () => {
 
   const { t } = useTranslation();
   return (
-    <MainLayout>
+    <MainLayout content="Exercise">
       <p>This is the {t('Exercises')} Page</p>
     </MainLayout>
   );

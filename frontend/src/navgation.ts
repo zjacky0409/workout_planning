@@ -39,7 +39,7 @@ export const navigations = [
         children: [
             {
                 name: 'Back', 
-                path: '/exercises',
+                path: '/exercises/back',
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -53,7 +53,7 @@ export const navigations = [
             },
             {
                 name: 'Chest', 
-                path: '/exercises',
+                path: '/exercises/chest',
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -67,7 +67,7 @@ export const navigations = [
             },
             {
                 name: 'Shoulder', 
-                path: '/exercises',
+                path: '/exercises/shoulder',
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -81,7 +81,7 @@ export const navigations = [
             },
             {
                 name: 'Arm', 
-                path: '/exercises',
+                path: '/exercises/arm',
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -95,7 +95,7 @@ export const navigations = [
             },
             {
                 name: 'Leg', 
-                path: '/exercises',
+                path: '/exercises/leg',
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -109,7 +109,7 @@ export const navigations = [
             },
             {
                 name: 'Core', 
-                path: '/exercises',
+                path: '/exercises/core',
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -158,7 +158,7 @@ export const navigations = [
         ]
     },
     {
-        name: 'Useful Resource',
+        name: 'Resource',
         path:'/useful_resources',
         children: [
             // {

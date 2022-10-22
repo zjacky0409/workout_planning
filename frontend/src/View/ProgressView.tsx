@@ -7,7 +7,7 @@ const ProgressView = () => {
   const { t } = useTranslation();
 
   return (
-    <MainLayout>
+    <MainLayout content="Progress">
       <p>This is the {t('Progress')} Page</p>
     </MainLayout>
   );

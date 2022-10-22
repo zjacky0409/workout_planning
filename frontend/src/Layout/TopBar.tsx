@@ -22,6 +22,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
 import { SideBarContext } from "../Context/SideBarContext";
+import { useLocation } from "react-router-dom";
 
 interface Route {
   name: string;
@@ -31,7 +32,7 @@ const pages: Route[] = [
   { name: "Diet", path: "/diet" },
   { name: "Program", path: "/program" },
   { name: "Exercises", path: "/exercises" },
-  { name: "Useful Resource", path: "/useful_resources" },
+  { name: "Resource", path: "/useful_resources" },
   { name: "Progress", path: "/progress" },
 ];
 const settings = ["Profile", "Account", "Logout"];
@@ -59,14 +60,12 @@ const TopBar = () => {
 
   const currentSideBar = React.useContext(SideBarContext);
 
-  console.log("currentSideBar == ", currentSideBar);
+  const location = useLocation();
 
   const [openPopper, setOpenPopper] = React.useState(false);
   const [anchorElPopper, setAnchorElPopper] =
     React.useState<null | HTMLElement>(null);
   const [popperContent, setPopperContent] = React.useState([]);
-
-  console.log(popperContent);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>, children: any) => {
     setAnchorElPopper(event.currentTarget);
@@ -114,10 +113,13 @@ const TopBar = () => {
       sx={{
         width: { sm: `calc(100% - ${240}px)` },
         ml: { sm: `${240}px` },
+        height: 63,
+        bgcolor: "#fcfafa",
       }}
+      elevation={2}
     >
       <Box maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar sx={{ bgcolor: "#fcfafa" }}>
           {
             // If the screen size is small, we show the meun icon
           }
@@ -188,7 +190,7 @@ const TopBar = () => {
                 textDecoration: "none",
               }}
             >
-              做 Jouh !
+              <img src="/Logo.png" alt="Logo" width="200" height="100" />
             </Typography>
           </>
 
@@ -197,24 +199,36 @@ const TopBar = () => {
               <Button
                 key={page.name}
                 onClick={handleCloseNavMenu}
-                sx={{ color: "white", display: "block" }}
+                sx={{
+                  color: "black",
+                  display: "block",
+                  px: 5,
+                  "&:hover": {
+                    backgroundColor: "#cacbcc",
+                  },
+                  bgcolor:
+                    location.pathname.split("/")[1] === page.path.split("/")[1]
+                      ? "#cacbcc"
+                      : "none",
+                  borderRadius: 0,
+                }}
                 component={Link}
                 to={page.path}
                 onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
                   handleClick(e, page.children)
                 }
               >
-                {t(page.name as unknown as TemplateStringsArray) + " Test"}
+                {t(page.name as unknown as TemplateStringsArray)}
               </Button>
             ))}
           </Box>
           <Popper
             open={openPopper}
             anchorEl={anchorElPopper}
-            placement="bottom-start"
             onMouseLeave={handleMouseLeave}
+            sx={{ zIndex: 99 }}
           >
-            <Paper>
+            <Paper elevation={2}>
               <MenuList>
                 {popperContent.map((value: any) => {
                   return (
@@ -242,7 +256,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-                color="inherit"
+                // color="inherit"
               >
                 <LanguageIcon />
               </IconButton>
@@ -290,7 +304,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-                color="inherit"
+                // color="inherit"
               >
                 <AccountCircle />
               </IconButton>
