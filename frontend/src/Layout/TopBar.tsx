@@ -196,57 +196,66 @@ const TopBar = () => {
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {navigations.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  color: "black",
-                  display: "block",
-                  px: 5,
-                  "&:hover": {
-                    backgroundColor: "#cacbcc",
-                  },
-                  bgcolor:
-                    location.pathname.split("/")[1] === page.path.split("/")[1]
-                      ? "#cacbcc"
-                      : "none",
-                  borderRadius: 0,
-                }}
-                component={Link}
-                to={page.path}
-                onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
-                  handleClick(e, page.children)
+              <Tooltip
+                title={
+                  <Paper elevation={2}>
+                    <MenuList>
+                      {popperContent.map((value: any) => {
+                        return (
+                          <MenuItem
+                            component={Link}
+                            to={value.path}
+                            onClick={() => {
+                              currentSideBar?.setSideContent(popperContent);
+                            }}
+                          >
+                            <ListItemText>{value.name}</ListItemText>
+                          </MenuItem>
+                        );
+                      })}
+                    </MenuList>
+                  </Paper>
                 }
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      bgcolor: 'transparent',
+                      '& .MuiTooltip-arrow': {
+                        color: 'transparent',
+                      },
+                    },
+                  },
+                }}
+                // sx={{backgroundColor: 'transparent'}}
               >
-                {t(page.name as unknown as TemplateStringsArray)}
-              </Button>
+                <Button
+                  key={page.name}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    color: "black",
+                    display: "block",
+                    px: 5,
+                    "&:hover": {
+                      backgroundColor: "#cacbcc",
+                    },
+                    bgcolor:
+                      location.pathname.split("/")[1] ===
+                      page.path.split("/")[1]
+                        ? "#cacbcc"
+                        : "none",
+                    borderRadius: 0,
+                  }}
+                  component={Link}
+                  to={page.path}
+                  onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
+                    handleClick(e, page.children)
+                  }
+                >
+                  {t(page.name as unknown as TemplateStringsArray)}
+                </Button>
+              </Tooltip>
             ))}
           </Box>
-          <Popper
-            open={openPopper}
-            anchorEl={anchorElPopper}
-            onMouseLeave={handleMouseLeave}
-            sx={{ zIndex: 99 }}
-          >
-            <Paper elevation={2}>
-              <MenuList>
-                {popperContent.map((value: any) => {
-                  return (
-                    <MenuItem
-                      component={Link}
-                      to={value.path}
-                      onClick={() => {
-                        currentSideBar?.setSideContent(popperContent);
-                      }}
-                    >
-                      <ListItemText>{value.name}</ListItemText>
-                    </MenuItem>
-                  );
-                })}
-              </MenuList>
-            </Paper>
-          </Popper>
-
           {/* <Box sx={{ flexGrow: 1 }} /> */}
 
           <Box sx={{ xs: "flex" }}>
