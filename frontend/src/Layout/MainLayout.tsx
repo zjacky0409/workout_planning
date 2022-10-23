@@ -11,27 +11,38 @@ interface PropsType {
 
 const MainLayout = (props: PropsType) => {
   return (
-    <Box sx={{ display: "flex", flexDirection: 'row' }}>
+    <Box sx={{ display: "flex", flexDirection: "row" }}>
       <CssBaseline />
       <TopBar />
       <SideBar content={props.content} />
       <Box
         component="main"
-        sx={{ p: 3, width: { sm: `calc(100% - ${240}px)` } }}
+        sx={{ p: 0, width: { sm: `calc(100% - ${240}px)` } }}
       >
-        <Toolbar />
+        <Toolbar variant="dense" />
         <div
           style={{
             width: "100%",
-            height: `calc(100vh - ${140}px)`,
+            height: `calc(100vh - ${90}px)`,
             backgroundColor: "#f5f5f5",
           }}
         >
-          {props.children}
+          <Box sx={{ padding: 2 }}>{props.children}</Box>
         </div>
 
-        <div style={{position: 'fixed', bottom: 0, height: 30, width: `calc(100% - ${240}px)`}}>
-          <Typography variant="subtitle2" gutterBottom sx={{textAlign: 'center'}}>
+        <div
+          style={{
+            position: "fixed",
+            bottom: 0,
+            height: 30,
+            width: `calc(100% - ${240}px)`,
+          }}
+        >
+          <Typography
+            variant="subtitle2"
+            gutterBottom
+            sx={{ textAlign: "center" }}
+          >
             Copyright © Jacky Luo. Just For Fun
           </Typography>
         </div>
