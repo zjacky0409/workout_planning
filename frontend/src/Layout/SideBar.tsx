@@ -126,10 +126,11 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
             boxSizing: "border-box",
             width: drawerWidth,
             bgcolor: "white",
+            overflow:'hidden'
           },
         }}
         open
-        PaperProps={{ elevation: 2 }}
+        PaperProps={{ elevation: 4 }}
       >
         {drawer}
       </Drawer>

@@ -116,7 +116,7 @@ const TopBar = () => {
         height: 63,
         bgcolor: "#fcfafa",
       }}
-      elevation={2}
+      elevation={4}
     >
       <Box maxWidth="xl">
         <Toolbar sx={{ bgcolor: "#fcfafa" }}>

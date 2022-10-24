@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar";
 import Toolbar from "@mui/material/Toolbar";
+import Stack from "@mui/material/Stack";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 interface PropsType {
@@ -11,43 +12,44 @@ interface PropsType {
 
 const MainLayout = (props: PropsType) => {
   return (
-    <Box sx={{ display: "flex", flexDirection: "row" }}>
-      <CssBaseline />
+    <div>
+      {/* <CssBaseline /> */}
+
+
       <TopBar />
-      <SideBar content={props.content} />
       <Box
-        component="main"
-        sx={{ p: 0, width: { sm: `calc(100% - ${240}px)` } }}
+        sx={{ p: 0, display: 'flex', flexDirection: 'row', gap: '3px', minHeight: '100vh' }}
       >
-        <Toolbar variant="dense" />
+        <SideBar content={props.content} />
         <div
           style={{
             width: "100%",
-            height: `calc(100vh - ${90}px)`,
             backgroundColor: "#f5f5f5",
           }}
         >
-          <Box sx={{ padding: 2 }}>{props.children}</Box>
+          <div style={{ height: 65 }}></div>
+          <div style={{ minHeight: `calc(100% - ${170}px)`, padding:20 }}>{props.children}</div>
+          <div style={{
+            height: '60px', backgroundColor: 'white', display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              sx={{ textAlign: "center" }}
+            >
+              Copyright © Jacky Luo. Just For Fun
+            </Typography>
+          </div>
+
+
         </div>
 
-        <div
-          style={{
-            position: "fixed",
-            bottom: 0,
-            height: 30,
-            width: `calc(100% - ${240}px)`,
-          }}
-        >
-          <Typography
-            variant="subtitle2"
-            gutterBottom
-            sx={{ textAlign: "center" }}
-          >
-            Copyright © Jacky Luo. Just For Fun
-          </Typography>
-        </div>
+
       </Box>
-    </Box>
+
+    </div>
   );
 };
 export default MainLayout;
