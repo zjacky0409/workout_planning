@@ -118,7 +118,7 @@ const TopBar = () => {
       }}
       elevation={4}
     >
-      <Box maxWidth="xl">
+      <Box >
         <Toolbar sx={{ bgcolor: "#fcfafa" }}>
           {
             // If the screen size is small, we show the meun icon
