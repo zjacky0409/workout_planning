@@ -13,7 +13,7 @@ const DietView = (props: PropsType) => {
       <div style={{height: '100%'}}>
         <p>This is the {t("Diet")} Page</p>
         <p>{props.day}</p>
-        <table style={{height: '50%'}}>
+        <table>
           <tr>
             <th>Company</th>
             <th>Contact</th>
@@ -30,7 +30,7 @@ const DietView = (props: PropsType) => {
             <td>Mexico</td>
           </tr>
         </table>
-        <table style={{height: '50%'}}>
+        <table>
           <tr>
             <th>Company</th>
             <th>Contact</th>
@@ -47,7 +47,7 @@ const DietView = (props: PropsType) => {
             <td>Mexico</td>
           </tr>
         </table>
-        <table style={{height: '50%'}}>
+        <table>
           <tr>
             <th>Company</th>
             <th>Contact</th>
@@ -64,7 +64,7 @@ const DietView = (props: PropsType) => {
             <td>Mexico</td>
           </tr>
         </table>
-        <table style={{height: '50%'}}>
+        <table>
           <tr>
             <th>Company</th>
             <th>Contact</th>
@@ -81,7 +81,7 @@ const DietView = (props: PropsType) => {
             <td>Mexico</td>
           </tr>
         </table>
-        <table style={{height: '50%'}}>
+        <table>
           <tr>
             <th>Company</th>
             <th>Contact</th>
@@ -98,7 +98,7 @@ const DietView = (props: PropsType) => {
             <td>Mexico</td>
           </tr>
         </table>
-        <table style={{height: '50%'}}>
+        <table>
           <tr>
             <th>Company</th>
             <th>Contact</th>
@@ -115,7 +115,7 @@ const DietView = (props: PropsType) => {
             <td>Mexico</td>
           </tr>
         </table>
-        <table style={{height: '50%'}}>
+        <table>
           <tr>
             <th>Company</th>
             <th>Contact</th>
@@ -131,24 +131,7 @@ const DietView = (props: PropsType) => {
             <td>Francisco Chang</td>
             <td>Mexico</td>
           </tr>
-        </table> <table style={{height: '50%'}}>
-          <tr>
-            <th>Company</th>
-            <th>Contact</th>
-            <th>Country</th>
-          </tr>
-          <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-          </tr>
-          <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-          </tr>
-        </table>
-        <table style={{height: '50%'}}>
+        </table> <table>
           <tr>
             <th>Company</th>
             <th>Contact</th>
@@ -165,7 +148,24 @@ const DietView = (props: PropsType) => {
             <td>Mexico</td>
           </tr>
         </table>
-        <table style={{height: '50%'}}>
+        <table>
+          <tr>
+            <th>Company</th>
+            <th>Contact</th>
+            <th>Country</th>
+          </tr>
+          <tr>
+            <td>Alfreds Futterkiste</td>
+            <td>Maria Anders</td>
+            <td>Germany</td>
+          </tr>
+          <tr>
+            <td>Centro comercial Moctezuma</td>
+            <td>Francisco Chang</td>
+            <td>Mexico</td>
+          </tr>
+        </table>
+        <table>
           <tr>
             <th>Company</th>
             <th>Contact</th>
