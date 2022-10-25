@@ -197,6 +197,7 @@ const TopBar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {navigations.map((page) => (
               <Tooltip
+                key={page.path}
                 title={
                   <Paper elevation={2}>
                     <MenuList>
