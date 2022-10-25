@@ -6,35 +6,21 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import LanguageIcon from "@mui/icons-material/Language";
 import { navigations } from "../navgation";
-import Popper from "@mui/material/Popper";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
 import { SideBarContext } from "../Context/SideBarContext";
 import { useLocation } from "react-router-dom";
-
-interface Route {
-  name: string;
-  path: string;
-}
-const pages: Route[] = [
-  { name: "Diet", path: "/diet" },
-  { name: "Program", path: "/program" },
-  { name: "Exercises", path: "/exercises" },
-  { name: "Resource", path: "/useful_resources" },
-  { name: "Progress", path: "/progress" },
-];
+import NestListItem from "../components/NestListItem"
 const settings = ["Profile", "Account", "Logout"];
 const lang_choice = [
   { name: "English", value: "en" },
@@ -62,20 +48,10 @@ const TopBar = () => {
 
   const location = useLocation();
 
-  const [openPopper, setOpenPopper] = React.useState(false);
-  const [anchorElPopper, setAnchorElPopper] =
-    React.useState<null | HTMLElement>(null);
   const [popperContent, setPopperContent] = React.useState([]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>, children: any) => {
-    setAnchorElPopper(event.currentTarget);
-    setOpenPopper(true);
     setPopperContent(children);
-  };
-
-  const handleMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElPopper(event.currentTarget);
-    setOpenPopper(false);
   };
 
   const { t, i18n } = useTranslation();
@@ -130,7 +106,6 @@ const TopBar = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
             >
               <MenuIcon />
             </IconButton>
@@ -150,18 +125,30 @@ const TopBar = () => {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
+                width: '100%'
               }}
             >
-              {pages.map((page) => (
+              {navigations.map((page) => (
                 <MenuItem
                   key={page.name}
-                  onClick={handleCloseNavMenu}
-                  component={Link}
-                  to={page.path}
                 >
-                  <Typography textAlign="center">
-                    {t(page.name as unknown as TemplateStringsArray)}
-                  </Typography>
+
+                  {
+                    page.children.length > 0
+                      ? <NestListItem shownText={page.name} content={page.children} action={handleCloseNavMenu} />
+                      :
+
+                      <MenuItem
+                        key={page.path + '_menuItem'}
+                        component={Link}
+                        onClick={handleCloseNavMenu}
+                        to={page.path}
+                      >
+                        <ListItemText>{t(page.name as unknown as TemplateStringsArray)}</ListItemText>
+                      </MenuItem>
+
+                  }
+
                 </MenuItem>
               ))}
             </Menu>
@@ -171,9 +158,6 @@ const TopBar = () => {
             // If the screen size is small, we show the Logo instead of the meun item
           }
           <>
-            <FitnessCenterIcon
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            />
             <Typography
               variant="h5"
               noWrap
@@ -204,6 +188,7 @@ const TopBar = () => {
                       {popperContent.map((value: any) => {
                         return (
                           <MenuItem
+                            key={value.path + '_menuItem'}
                             component={Link}
                             to={value.path}
                             onClick={() => {
@@ -227,7 +212,7 @@ const TopBar = () => {
                     },
                   },
                 }}
-                // sx={{backgroundColor: 'transparent'}}
+              // sx={{backgroundColor: 'transparent'}}
               >
                 <Button
                   key={page.name}
@@ -241,7 +226,7 @@ const TopBar = () => {
                     },
                     bgcolor:
                       location.pathname.split("/")[1] ===
-                      page.path.split("/")[1]
+                        page.path.split("/")[1]
                         ? "#cacbcc"
                         : "none",
                     borderRadius: 0,
@@ -266,7 +251,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-                // color="inherit"
+              // color="inherit"
               >
                 <LanguageIcon />
               </IconButton>
@@ -292,6 +277,7 @@ const TopBar = () => {
                   key={setting.name}
                   onClick={() => {
                     changeLanguage(setting.value);
+                    handleCloseLangMenu()
                   }}
                   sx={{ py: 0, px: 0.5 }}
                 >
@@ -314,7 +300,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-                // color="inherit"
+              // color="inherit"
               >
                 <AccountCircle />
               </IconButton>

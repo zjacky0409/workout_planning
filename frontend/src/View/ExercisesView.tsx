@@ -12,27 +12,37 @@ import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 
 interface Exercise {
-  name: string;
-  details: string;
+  id: number,
+  name: string,
+  details: string
 }
 
 const ExercisesView = () => {
   const { t } = useTranslation();
 
-  const [exercise, setExercise] = useState<Exercise[]>([]);
+  const [exercise, setExercise] = useState<Exercise[]>([
+    { id: 1, name: "DB Flat Bench Press", details: "Test" },
+    { id: 2, name: "DB Fly", details: "Test" },
+    { id: 3, name: "DB Incline Bench Press", details: "Test" },
+    { id: 4, name: "Cable Fly", details: "Test" },
+    { id: 5, name: "Chest Machine", details: "Test" },
+    { id: 6, name: "Chest Machine Upper", details: "Test" },
+    { id: 7, name: "Lower Chest Machine Upper", details: "Test" },
+    { id: 8, name: "Middle Chest Machine Upper", details: "Test" },
+  ]);
 
-  const [status, setStatus] = useState<Boolean>(true);
+  const [status, setStatus] = useState<Boolean>(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      const result = await axios("http://localhost:3000/exercises_list");
-      console.log("result == ", result);
-      setExercise(result.data);
-      setStatus(false);
-    }
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const result = await axios("http://localhost:3000/exercises_list");
+  //     console.log("result == ", result);
+  //     setExercise(result.data);
+  //     setStatus(false);
+  //   }
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   // const exercise = [
   //   { name: "DB Flat Bench Press", details: "Test" },
@@ -68,7 +78,7 @@ const ExercisesView = () => {
         <Grid container spacing={2}>
           {exercise.map((value) => {
             return (
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={6} md={6} lg={4} key={value.id}>
                 {" "}
                 <Card sx={{ minWidth: 275 }}>
                   <CardContent>

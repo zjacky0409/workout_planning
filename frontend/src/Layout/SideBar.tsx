@@ -126,7 +126,7 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
             boxSizing: "border-box",
             width: drawerWidth,
             bgcolor: "white",
-            overflow:'hidden'
+            // overflow:'hidden'
           },
         }}
         open
