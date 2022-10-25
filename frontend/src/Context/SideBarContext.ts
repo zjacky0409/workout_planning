@@ -3,7 +3,8 @@ import { createContext } from "react";
 
 interface SideBarElement {
     path: string,
-    name: string
+    name: string,
+    icon: string
   }
 
 

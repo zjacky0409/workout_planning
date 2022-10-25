@@ -2,10 +2,12 @@ export const navigations = [
     {
         name: 'Diet',
         path: '/diet/trainning_day',
+        icon:'🍱',
         children: [
             {
                 name: 'Trainning Day', 
                 path: '/diet/trainning_day',
+                icon:'🏋'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -20,6 +22,7 @@ export const navigations = [
             {
                 name: 'Rest Day', 
                 path: '/diet/rest_day',
+                icon:'🧘'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -36,10 +39,12 @@ export const navigations = [
     {
         name: 'Exercise',
         path: '/exercises',
+        icon:'🏋',
         children: [
             {
                 name: 'Back', 
                 path: '/exercises/back',
+                icon:'🔙'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -54,6 +59,7 @@ export const navigations = [
             {
                 name: 'Chest', 
                 path: '/exercises/chest',
+                icon:'🈷'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -68,6 +74,7 @@ export const navigations = [
             {
                 name: 'Shoulder', 
                 path: '/exercises/shoulder',
+                icon:'🙋‍♂️'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -82,6 +89,7 @@ export const navigations = [
             {
                 name: 'Arm', 
                 path: '/exercises/arm',
+                icon:'💪'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -96,6 +104,7 @@ export const navigations = [
             {
                 name: 'Leg', 
                 path: '/exercises/leg',
+                icon:'🦵'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -110,6 +119,7 @@ export const navigations = [
             {
                 name: 'Core', 
                 path: '/exercises/core',
+                icon:'🧗'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -126,6 +136,7 @@ export const navigations = [
     {
         name: 'Program',
         path:'/program',
+        icon:'📝',
         children: [
             // {
             //     name: 'Trainning Day', 
@@ -160,6 +171,7 @@ export const navigations = [
     {
         name: 'Resource',
         path:'/useful_resources',
+        icon:'📋',
         children: [
             // {
             //     name: 'Trainning Day', 
@@ -194,6 +206,7 @@ export const navigations = [
     {
         name: 'Progress',
         path:'/progress',
+        icon:'📈',
         children: [
             // {
             //     name: 'Trainning Day', 

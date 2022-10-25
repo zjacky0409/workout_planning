@@ -17,7 +17,8 @@ function App() {
 
   interface SideBarElement {
     path: string,
-    name: string
+    name: string,
+    icon: string
   }
 
   const [sideContent, setSideContent] = useState<SideBarElement[]>([])

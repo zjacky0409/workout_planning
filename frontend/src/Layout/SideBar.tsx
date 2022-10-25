@@ -11,7 +11,7 @@ import { Toolbar } from "@mui/material";
 import { SideBarContext } from "../Context/SideBarContext";
 import { Link, useLocation } from "react-router-dom";
 import { navigations } from "../navgation";
-
+import Icon from '@mui/material/Icon';
 const drawerWidth = 240;
 
 interface SideBarProp {
@@ -27,10 +27,6 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
   const currentSideBar = React.useContext(SideBarContext);
 
   const location = useLocation();
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   // console.log(navigations.filter((value :any) => value.name === content))
 
@@ -80,12 +76,12 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
                   spacing={2}
                   justifyContent="center"
                   alignItems="center"
-                  // sx={{margin: 'auto'}}
+                // sx={{margin: 'auto'}}
                 >
-                  <MailIcon fontSize="small" />
+                  {/* <Icon fontSize="small"> {text.icon}</Icon> */}
                   {/* <ListItemText primary={text.name} /> */}
                   <Typography variant="subtitle2" gutterBottom>
-                    {text.name}
+                    <span>{text.icon} </span>{text.name}
                   </Typography>
                 </Stack>
               </ListItemButton>
@@ -126,7 +122,7 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
             boxSizing: "border-box",
             width: drawerWidth,
             bgcolor: "white",
-            overflow:'hidden'
+            overflow: 'hidden'
           },
         }}
         open

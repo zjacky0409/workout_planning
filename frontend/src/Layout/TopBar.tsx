@@ -125,17 +125,18 @@ const TopBar = () => {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
-                width: '100%'
+                width: '100%',
               }}
             >
               {navigations.map((page) => (
                 <MenuItem
                   key={page.name}
+                  sx={{p:0}}
                 >
 
                   {
                     page.children.length > 0
-                      ? <NestListItem shownText={page.name} content={page.children} action={handleCloseNavMenu} />
+                      ? <NestListItem shownText={page.icon + page.name} content={page.children} action={handleCloseNavMenu} />
                       :
 
                       <MenuItem
@@ -144,7 +145,7 @@ const TopBar = () => {
                         onClick={handleCloseNavMenu}
                         to={page.path}
                       >
-                        <ListItemText>{t(page.name as unknown as TemplateStringsArray)}</ListItemText>
+                        <ListItemText>{page.icon} {t(page.name as unknown as TemplateStringsArray)}</ListItemText>
                       </MenuItem>
 
                   }
@@ -195,7 +196,7 @@ const TopBar = () => {
                               currentSideBar?.setSideContent(popperContent);
                             }}
                           >
-                            <ListItemText>{value.name}</ListItemText>
+                            <ListItemText>{value.icon} {value.name}</ListItemText>
                           </MenuItem>
                         );
                       })}
@@ -237,7 +238,7 @@ const TopBar = () => {
                     handleClick(e, page.children)
                   }
                 >
-                  {t(page.name as unknown as TemplateStringsArray)}
+                  {page.icon}{t(page.name as unknown as TemplateStringsArray)}
                 </Button>
               </Tooltip>
             ))}

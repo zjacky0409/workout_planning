@@ -10,7 +10,8 @@ import { Link } from "react-router-dom";
 
 interface Content {
     name: string,
-    path: string
+    path: string,
+    icon: string
 }
 
 interface SideBarProp {
@@ -43,7 +44,7 @@ export default function NestListItem({ shownText, content, action }: SideBarProp
                     {
                         content.map((val) => {
                             return (
-                                <ListItemButton key={val.path+'_nest_item'} sx={{ pl: 4 }} onClick={action} component={Link} to={val.path}>{val.name}</ListItemButton>
+                                <ListItemButton key={val.path+'_nest_item'} sx={{ pl: 4 }} onClick={action} component={Link} to={val.path}>{val.icon}{val.name}</ListItemButton>
                             )
                         })
                     }
