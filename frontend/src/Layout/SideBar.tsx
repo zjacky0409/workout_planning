@@ -11,13 +11,11 @@ import { Toolbar } from "@mui/material";
 import { SideBarContext } from "../Context/SideBarContext";
 import { Link, useLocation } from "react-router-dom";
 import { navigations } from "../navgation";
-import Icon from '@mui/material/Icon';
 const drawerWidth = 240;
 
 interface SideBarProp {
   content?: string;
 }
-
 
 // Drawer aka side bar
 
@@ -49,7 +47,7 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
               textDecoration: "none",
             }}
           >
-            <img src="/Logo.png" alt="Logo" width="200" height="100" />
+            <img src="/Logo.svg" alt="Logo" width="200" height="100" />
           </Typography>
         </Stack>
       </Toolbar>
@@ -66,9 +64,11 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
             <ListItem
               key={text.path}
               disablePadding
-              sx={{
-                bgcolor: location.pathname === text.path ? "#cacbcc" : "white",
-              }}
+              sx={
+                {
+                  // bgcolor: location.pathname === text.path ? "#cacbcc" : "white",
+                }
+              }
             >
               <ListItemButton component={Link} to={text.path}>
                 <Stack
@@ -76,12 +76,26 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
                   spacing={2}
                   justifyContent="center"
                   alignItems="center"
-                // sx={{margin: 'auto'}}
+                  // sx={{margin: 'auto'}}
                 >
                   {/* <Icon fontSize="small"> {text.icon}</Icon> */}
                   {/* <ListItemText primary={text.name} /> */}
+                  {/* {
+                    location.pathname === text.path ? "#cacbcc" : "white" && 
+                  } */}
+                  <Divider
+                    orientation="vertical"
+                    // variant="middle"
+                    flexItem
+                    sx={{
+                      background: location.pathname === text.path ? "skyblue" : "white",
+                      borderRightWidth: 5,
+                      // height: "100%",
+                    }}
+                  />
                   <Typography variant="subtitle2" gutterBottom>
-                    <span>{text.icon} </span>{text.name}
+                    <span>{text.icon} </span>
+                    {text.name}
                   </Typography>
                 </Stack>
               </ListItemButton>
@@ -122,7 +136,7 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
             boxSizing: "border-box",
             width: drawerWidth,
             bgcolor: "white",
-            overflow: 'hidden'
+            overflow: "hidden",
           },
         }}
         open

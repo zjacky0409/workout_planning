@@ -2,12 +2,12 @@ export const navigations = [
     {
         name: 'Diet',
         path: '/diet/trainning_day',
-        icon:'🍱',
+        icon: '🍱',
         children: [
             {
-                name: 'Trainning Day', 
+                name: 'Trainning Day',
                 path: '/diet/trainning_day',
-                icon:'🏋'
+                icon: '🏋'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -20,9 +20,9 @@ export const navigations = [
                 // ]
             },
             {
-                name: 'Rest Day', 
+                name: 'Rest Day',
                 path: '/diet/rest_day',
-                icon:'🧘'
+                icon: '🧘'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -39,12 +39,12 @@ export const navigations = [
     {
         name: 'Exercise',
         path: '/exercises',
-        icon:'🏋',
+        icon: '🏋',
         children: [
             {
-                name: 'Back', 
+                name: 'Back',
                 path: '/exercises/back',
-                icon:'🔙'
+                icon: '🔙'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -57,9 +57,9 @@ export const navigations = [
                 // ]
             },
             {
-                name: 'Chest', 
+                name: 'Chest',
                 path: '/exercises/chest',
-                icon:'🈷'
+                icon: '🈷'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -72,9 +72,9 @@ export const navigations = [
                 // ]
             },
             {
-                name: 'Shoulder', 
+                name: 'Shoulder',
                 path: '/exercises/shoulder',
-                icon:'🙋‍♂️'
+                icon: '🙋‍♂️'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -87,9 +87,9 @@ export const navigations = [
                 // ]
             },
             {
-                name: 'Arm', 
+                name: 'Arm',
                 path: '/exercises/arm',
-                icon:'💪'
+                icon: '💪'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -102,9 +102,9 @@ export const navigations = [
                 // ]
             },
             {
-                name: 'Leg', 
+                name: 'Leg',
                 path: '/exercises/leg',
-                icon:'🦵'
+                icon: '🦵'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -117,9 +117,9 @@ export const navigations = [
                 // ]
             },
             {
-                name: 'Core', 
+                name: 'Core',
                 path: '/exercises/core',
-                icon:'🧗'
+                icon: '🧗'
                 // children: [
                 //     {
                 //         name: 'Trainning Day',
@@ -135,107 +135,128 @@ export const navigations = [
     },
     {
         name: 'Program',
-        path:'/program',
-        icon:'📝',
+        path: '/program',
+        icon: '📝',
         children: [
-            // {
-            //     name: 'Trainning Day', 
-            //     path: '/diet/trainning_day',
-            //     // children: [
-            //     //     {
-            //     //         name: 'Trainning Day',
-            //     //         path: '/diet/trainning_day',
-            //     //     },
-            //     //     {
-            //     //         name: 'Rest Day',
-            //     //         path: '/diet/rest_day',
-            //     //     },
-            //     // ]
-            // },
-            // {
-            //     name: 'Rest Day', 
-            //     path: '/diet/trainning_day',
-            //     // children: [
-            //     //     {
-            //     //         name: 'Trainning Day',
-            //     //         path: '/diet/trainning_day',
-            //     //     },
-            //     //     {
-            //     //         name: 'Rest Day',
-            //     //         path: '/diet/rest_day',
-            //     //     },
-            //     // ]
-            // }
+            {
+                name: 'Push Day',
+                path: '/program/trainning_day',
+                icon: '🦵'
+                // children: [
+                //     {
+                //         name: 'Trainning Day',
+                //         path: '/diet/trainning_day',
+                //     },
+                //     {
+                //         name: 'Rest Day',
+                //         path: '/diet/rest_day',
+                //     },
+                // ]
+            },
+            {
+                name: 'Pull Day',
+                path: '/program/trainning_day',
+                icon: '🦵'
+                // children: [
+                //     {
+                //         name: 'Trainning Day',
+                //         path: '/diet/trainning_day',
+                //     },
+                //     {
+                //         name: 'Rest Day',
+                //         path: '/diet/rest_day',
+                //     },
+                // ]
+            },
+            {
+                name: 'Legs Day',
+                path: '/program/trainning_day',
+                icon: '🦵'
+                // children: [
+                //     {
+                //         name: 'Trainning Day',
+                //         path: '/diet/trainning_day',
+                //     },
+                //     {
+                //         name: 'Rest Day',
+                //         path: '/diet/rest_day',
+                //     },
+                // ]
+            }
         ]
     },
     {
         name: 'Resource',
-        path:'/useful_resources',
-        icon:'📋',
+        path: '/useful_resources',
+        icon: '📋',
         children: [
-            // {
-            //     name: 'Trainning Day', 
-            //     path: '/diet/trainning_day',
-            //     // children: [
-            //     //     {
-            //     //         name: 'Trainning Day',
-            //     //         path: '/diet/trainning_day',
-            //     //     },
-            //     //     {
-            //     //         name: 'Rest Day',
-            //     //         path: '/diet/rest_day',
-            //     //     },
-            //     // ]
-            // },
-            // {
-            //     name: 'Rest Day', 
-            //     path: '/diet/trainning_day',
-            //     // children: [
-            //     //     {
-            //     //         name: 'Trainning Day',
-            //     //         path: '/diet/trainning_day',
-            //     //     },
-            //     //     {
-            //     //         name: 'Rest Day',
-            //     //         path: '/diet/rest_day',
-            //     //     },
-            //     // ]
-            // }
+            {
+                name: 'Exercise',
+                path: '/useful_resources/exercise',
+                icon: '🦵'
+                // children: [
+                //     {
+                //         name: 'Trainning Day',
+                //         path: '/diet/trainning_day',
+                //     },
+                //     {
+                //         name: 'Rest Day',
+                //         path: '/diet/rest_day',
+                //     },
+                // ]
+            },
+            {
+                name: 'Other',
+                path: '/useful_resources/other',
+                icon: '🦵'
+                // children: [
+                //     {
+                //         name: 'Trainning Day',
+                //         path: '/diet/trainning_day',
+                //     },
+                //     {
+                //         name: 'Rest Day',
+                //         path: '/diet/rest_day',
+                //     },
+                // ]
+            }
         ]
     },
     {
         name: 'Progress',
-        path:'/progress',
-        icon:'📈',
+        path: '/progress',
+        icon: '📈',
         children: [
-            // {
-            //     name: 'Trainning Day', 
-            //     path: '/diet/trainning_day',
-            //     // children: [
-            //     //     {
-            //     //         name: 'Trainning Day',
-            //     //         path: '/diet/trainning_day',
-            //     //     },
-            //     //     {
-            //     //         name: 'Rest Day',
-            //     //         path: '/diet/rest_day',
-            //     //     },
-            //     // ]
-            // },
-            // {
-            //     name: 'Rest Day', 
-            //     path: '/diet/trainning_day',
-            //     // children: [
-            //     //     {
-            //     //         name: 'Trainning Day',
-            //     //         path: '/diet/trainning_day',
-            //     //     },
-            //     //     {
-            //     //         name: 'Rest Day',
-            //     //         path: '/diet/rest_day',
-            //     //     },
-            //     // ]
-            // }
+            {
+                name: 'Weight',
+                path: '/progress/weight',
+                icon: '🦵'
+                // children: [
+                //     {
+                //         name: 'Trainning Day',
+                //         path: '/diet/trainning_day',
+                //     },
+                //     {
+                //         name: 'Rest Day',
+                //         path: '/diet/rest_day',
+                //     },
+                // ]
+            },
+            {
+                name: 'Training',
+                path: '/progress/trainning',
+                icon: '🦵'
+                // children: [
+                //     {
+                //         name: 'Trainning Day',
+                //         path: '/diet/trainning_day',
+                //     },
+                //     {
+                //         name: 'Rest Day',
+                //         path: '/diet/rest_day',
+                //     },
+                // ]
+            }
         ]
     }
 

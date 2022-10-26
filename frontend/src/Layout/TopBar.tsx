@@ -20,7 +20,9 @@ import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
 import { SideBarContext } from "../Context/SideBarContext";
 import { useLocation } from "react-router-dom";
-import NestListItem from "../components/NestListItem"
+import NestListItem from "../components/NestListItem";
+import Divider from "@mui/material/Divider";
+
 const settings = ["Profile", "Account", "Logout"];
 const lang_choice = [
   { name: "English", value: "en" },
@@ -94,7 +96,7 @@ const TopBar = () => {
       }}
       elevation={4}
     >
-      <Box >
+      <Box>
         <Toolbar sx={{ bgcolor: "#fcfafa" }}>
           {
             // If the screen size is small, we show the meun icon
@@ -125,31 +127,30 @@ const TopBar = () => {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
-                width: '100%',
+                width: "100%",
               }}
             >
               {navigations.map((page) => (
-                <MenuItem
-                  key={page.name}
-                  sx={{p:0}}
-                >
-
-                  {
-                    page.children.length > 0
-                      ? <NestListItem shownText={page.icon + page.name} content={page.children} action={handleCloseNavMenu} />
-                      :
-
-                      <MenuItem
-                        key={page.path + '_menuItem'}
-                        component={Link}
-                        onClick={handleCloseNavMenu}
-                        to={page.path}
-                      >
-                        <ListItemText>{page.icon} {t(page.name as unknown as TemplateStringsArray)}</ListItemText>
-                      </MenuItem>
-
-                  }
-
+                <MenuItem key={page.name} sx={{ p: 0 }}>
+                  {page.children.length > 0 ? (
+                    <NestListItem
+                      shownText={page.icon + page.name}
+                      content={page.children}
+                      action={handleCloseNavMenu}
+                    />
+                  ) : (
+                    <MenuItem
+                      key={page.path + "_menuItem"}
+                      component={Link}
+                      onClick={handleCloseNavMenu}
+                      to={page.path}
+                    >
+                      <ListItemText>
+                        {page.icon}{" "}
+                        {t(page.name as unknown as TemplateStringsArray)}
+                      </ListItemText>
+                    </MenuItem>
+                  )}
                 </MenuItem>
               ))}
             </Menu>
@@ -175,7 +176,7 @@ const TopBar = () => {
                 textDecoration: "none",
               }}
             >
-              <img src="/Logo.png" alt="Logo" width="200" height="100" />
+              <img src="/Logo.svg" alt="Logo" width="200" height="100" />
             </Typography>
           </>
 
@@ -183,20 +184,24 @@ const TopBar = () => {
             {navigations.map((page) => (
               <Tooltip
                 key={page.path}
+                placement='bottom-start'
                 title={
-                  <Paper elevation={2}>
-                    <MenuList>
+                  <Paper elevation={2} sx={{width:'40vh'}}>
+                    <MenuList sx={{display: 'flex', flexWrap: 'wrap'}}>
                       {popperContent.map((value: any) => {
                         return (
                           <MenuItem
-                            key={value.path + '_menuItem'}
+                            key={value.path + "_menuItem"}
                             component={Link}
                             to={value.path}
                             onClick={() => {
                               currentSideBar?.setSideContent(popperContent);
                             }}
+                            sx={{width: '50%'}}
                           >
-                            <ListItemText>{value.icon} {value.name}</ListItemText>
+                            <ListItemText>
+                              {value.icon} {value.name}
+                            </ListItemText>
                           </MenuItem>
                         );
                       })}
@@ -206,40 +211,45 @@ const TopBar = () => {
                 componentsProps={{
                   tooltip: {
                     sx: {
-                      bgcolor: 'transparent',
-                      '& .MuiTooltip-arrow': {
-                        color: 'transparent',
+                      bgcolor: "transparent",
+                      "& .MuiTooltip-arrow": {
+                        color: "transparent",
                       },
                     },
                   },
                 }}
-              // sx={{backgroundColor: 'transparent'}}
+                // sx={{backgroundColor: 'transparent'}}
               >
-                <Button
-                  key={page.name}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    color: "black",
-                    display: "block",
-                    px: 5,
-                    "&:hover": {
-                      backgroundColor: "#cacbcc",
-                    },
-                    bgcolor:
-                      location.pathname.split("/")[1] ===
-                        page.path.split("/")[1]
-                        ? "#cacbcc"
-                        : "none",
-                    borderRadius: 0,
-                  }}
-                  component={Link}
-                  to={page.path}
-                  onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
-                    handleClick(e, page.children)
-                  }
-                >
-                  {page.icon}{t(page.name as unknown as TemplateStringsArray)}
-                </Button>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Button
+                    key={page.name}
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      color: "black",
+                      display: "block",
+                      px: 3,
+                      // "&:hover": {
+                      //   backgroundColor: "#cacbcc",
+                      // },
+                      // bgcolor:
+                      //   location.pathname.split("/")[1] ===
+                      //   page.path.split("/")[1]
+                      //     ? "#cacbcc"
+                      //     : "none",
+                      borderRadius: 0,
+                    }}
+                    component={Link}
+                    to={page.path}
+                    onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
+                      handleClick(e, page.children)
+                    }
+                  >
+                    {page.icon}
+                    {t(page.name as unknown as TemplateStringsArray)}
+                  </Button>
+                  {location.pathname.split("/")[1] ===
+                    page.path.split("/")[1] && <Divider sx={{background:'skyblue', borderBottomWidth:5}}/>}
+                </div>
               </Tooltip>
             ))}
           </Box>
@@ -252,7 +262,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-              // color="inherit"
+                // color="inherit"
               >
                 <LanguageIcon />
               </IconButton>
@@ -278,7 +288,7 @@ const TopBar = () => {
                   key={setting.name}
                   onClick={() => {
                     changeLanguage(setting.value);
-                    handleCloseLangMenu()
+                    handleCloseLangMenu();
                   }}
                   sx={{ py: 0, px: 0.5 }}
                 >
@@ -301,7 +311,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-              // color="inherit"
+                // color="inherit"
               >
                 <AccountCircle />
               </IconButton>
