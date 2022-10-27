@@ -11,7 +11,11 @@ import ProtectedRoute from "./Layout/ProtectedRoute";
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <DietView day="test" />,
+    element: (
+      <ProtectedRoute>
+        <DietView day="test" />
+      </ProtectedRoute>
+    ),
     //   children: [
     //     {
     //       path: "messages",
@@ -53,7 +57,11 @@ const routes: RouteObject[] = [
   { path: "progress", element: <ProgressView /> },
   {
     path: "exercises",
-    element: <Outlet></Outlet>,
+    element: (
+      <ProtectedRoute>
+        <Outlet></Outlet>
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/exercises",
@@ -85,8 +93,22 @@ const routes: RouteObject[] = [
       },
     ],
   },
-  { path: "useful_resources", element: <UsefulResourceView /> },
-  { path: "program", element: <ProgramView /> },
+  {
+    path: "useful_resources",
+    element: (
+      <ProtectedRoute>
+        <UsefulResourceView />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "program",
+    element: (
+      <ProtectedRoute>
+        <ProgramView />
+      </ProtectedRoute>
+    ),
+  },
 ];
 
 export default routes;

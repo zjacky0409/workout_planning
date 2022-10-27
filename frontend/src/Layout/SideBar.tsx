@@ -111,7 +111,7 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
       sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
       aria-label="side bar"
     >
-      <Drawer // Drawer in mui, the default value of anchor is left
+      {/* <Drawer // Drawer in mui, the default value of anchor is left
         variant="temporary"
         open={mobileOpen}
         ModalProps={{
@@ -127,7 +127,7 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
         }}
       >
         {drawer}
-      </Drawer>
+      </Drawer> */}
       <Drawer // Drawer in mui, the default value of anchor is left
         variant="permanent"
         sx={{

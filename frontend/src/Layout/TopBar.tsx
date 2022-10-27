@@ -22,6 +22,8 @@ import { SideBarContext } from "../Context/SideBarContext";
 import { useLocation } from "react-router-dom";
 import NestListItem from "../components/NestListItem";
 import Divider from "@mui/material/Divider";
+import Dialog from "@mui/material/Dialog";
+import CloseIcon from "@mui/icons-material/Close";
 
 const settings = ["Profile", "Account", "Logout"];
 const lang_choice = [
@@ -92,12 +94,12 @@ const TopBar = () => {
         width: { sm: `calc(100% - ${240}px)` },
         ml: { sm: `${240}px` },
         height: 63,
-        bgcolor: "#fcfafa",
+        bgcolor: "#ffffff",
       }}
       elevation={4}
     >
       <Box>
-        <Toolbar sx={{ bgcolor: "#fcfafa" }}>
+        <Toolbar sx={{ bgcolor: "#ffffff" }}>
           {
             // If the screen size is small, we show the meun icon
           }
@@ -111,7 +113,49 @@ const TopBar = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Menu
+            <Dialog
+              fullScreen
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              // TransitionComponent={Transition}
+            >
+              <AppBar sx={{ position: "relative", bgcolor:'#ffffff' }}>
+                <Toolbar sx={{bgcolor:'#ffffff' }}>
+                  <IconButton
+                    edge="start"
+                    // color="inherit"
+                    onClick={handleCloseNavMenu}
+                    aria-label="close"
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Toolbar>
+              </AppBar>
+              {navigations.map((page) => (
+                <MenuItem key={page.name} sx={{ p: 0 }}>
+                  {page.children.length > 0 ? (
+                    <NestListItem
+                      shownText={page.icon + page.name}
+                      content={page.children}
+                      action={handleCloseNavMenu}
+                    />
+                  ) : (
+                    <MenuItem
+                      key={page.path + "_menuItem"}
+                      component={Link}
+                      onClick={handleCloseNavMenu}
+                      to={page.path}
+                    >
+                      <ListItemText>
+                        {page.icon}{" "}
+                        {t(page.name as unknown as TemplateStringsArray)}
+                      </ListItemText>
+                    </MenuItem>
+                  )}
+                </MenuItem>
+              ))}
+            </Dialog>
+            {/* <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -153,11 +197,11 @@ const TopBar = () => {
                   )}
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> */}
           </Box>
 
           {
-            // If the screen size is small, we show the Logo instead of the meun item
+            // If the screen size is small, we show the  Logo instead of the meun item
           }
           <>
             <Typography
@@ -184,10 +228,10 @@ const TopBar = () => {
             {navigations.map((page) => (
               <Tooltip
                 key={page.path}
-                placement='bottom-start'
+                placement="bottom-start"
                 title={
-                  <Paper elevation={2} sx={{width:'40vh'}}>
-                    <MenuList sx={{display: 'flex', flexWrap: 'wrap'}}>
+                  <Paper elevation={2} sx={{ width: "40vh" }}>
+                    <MenuList sx={{ display: "flex", flexWrap: "wrap" }}>
                       {popperContent.map((value: any) => {
                         return (
                           <MenuItem
@@ -197,7 +241,7 @@ const TopBar = () => {
                             onClick={() => {
                               currentSideBar?.setSideContent(popperContent);
                             }}
-                            sx={{width: '50%'}}
+                            sx={{ width: "50%" }}
                           >
                             <ListItemText>
                               {value.icon} {value.name}
@@ -248,7 +292,11 @@ const TopBar = () => {
                     {t(page.name as unknown as TemplateStringsArray)}
                   </Button>
                   {location.pathname.split("/")[1] ===
-                    page.path.split("/")[1] && <Divider sx={{background:'skyblue', borderBottomWidth:5}}/>}
+                    page.path.split("/")[1] && (
+                    <Divider
+                      sx={{ background: "skyblue", borderBottomWidth: 5 }}
+                    />
+                  )}
                 </div>
               </Tooltip>
             ))}
