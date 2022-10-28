@@ -26,6 +26,8 @@ import {
   incrementIfOdd,
   selectCount,
 } from '../store/counterSlice';
+import axios from "axios";
+import { selectAuth, setAuthentication } from "../store/authSlice";
 
 const LoginView = () => {
   const { t } = useTranslation();
@@ -33,17 +35,55 @@ const LoginView = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const dispatch = useAppDispatch();
 
+  const auth = useAppSelector(selectAuth)
+
 
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [status, setStatus] = React.useState(1)
   const navigate = useNavigate();
+
+  React.useEffect(() =>{
+    if(auth){
+      navigate("/");
+    }
+  },[])
+
 
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // alert("TODO: Login");
-    dispatch(incrementByAmount(100))
-    navigate("/");
+    setStatus(0)
+
+    async function fetchData() {
+
+      const loginInPromise = new Promise((resolve, reject) => {
+        axios.post("http://localhost:3000/auth/login", {
+          username: username,
+          password: password
+        }).then(function (response) {
+          return resolve(response)
+        })
+          .catch(function (error) {
+            return reject(error)
+          });;
+      })
+      let result: any
+      try {
+        result = await loginInPromise
+        console.log('result == ', result)
+        setStatus(1);
+        localStorage.setItem('access_token', result.data.access_token)
+        dispatch(setAuthentication())
+        navigate("/");
+      } catch (e) {
+        console.log(e)
+        setStatus(2);
+      }
+
+    }
+    fetchData();
   };
 
   const handleUsername = (
@@ -98,7 +138,7 @@ const LoginView = () => {
                     <AccountCircle />
                   </InputAdornment>
                 }
-                // required
+              // required
               />
               <FormHelperText>Account Name</FormHelperText>
             </FormControl>
@@ -133,6 +173,18 @@ const LoginView = () => {
                 </Button>
               </div>
             </FormControl>
+
+            {
+              status === 1 && <Typography variant="button" display="block" gutterBottom>
+                Loading
+              </Typography>
+            }
+
+            {
+              status === 2 && <Typography variant="button" display="block" gutterBottom>
+                Wrong Password
+              </Typography>
+            }
           </CardContent>
           <CardActions sx={{ float: "right" }}>
             <Button size="small">Register</Button>

@@ -24,8 +24,12 @@ import NestListItem from "../components/NestListItem";
 import Divider from "@mui/material/Divider";
 import Dialog from "@mui/material/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
+import { clearAuthentication, selectUsername } from "../store/authSlice";
+import { useAppSelector, useAppDispatch } from "../store/hook";
 
-const settings = ["Profile", "Account", "Logout"];
+// const settings = ["Profile", "Account", "Logout"];
+const settings = ["Logout"];
+
 const lang_choice = [
   { name: "English", value: "en" },
   { name: "繁體中文", value: "zh_hk" },
@@ -37,6 +41,10 @@ const lang_choice = [
 // }
 
 const TopBar = () => {
+
+  const dispatch = useAppDispatch()
+
+  const userName = useAppSelector(selectUsername)
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -80,6 +88,9 @@ const TopBar = () => {
   };
 
   const handleCloseUserMenu = () => {
+    localStorage.removeItem('access_token')
+    dispatch(clearAuthentication())
+    
     setAnchorElUser(null);
   };
 
@@ -117,10 +128,10 @@ const TopBar = () => {
               fullScreen
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              // TransitionComponent={Transition}
+            // TransitionComponent={Transition}
             >
-              <AppBar sx={{ position: "relative", bgcolor:'#ffffff' }}>
-                <Toolbar sx={{bgcolor:'#ffffff' }}>
+              <AppBar sx={{ position: "relative", bgcolor: '#ffffff' }}>
+                <Toolbar sx={{ bgcolor: '#ffffff' }}>
                   <IconButton
                     edge="start"
                     // color="inherit"
@@ -262,7 +273,7 @@ const TopBar = () => {
                     },
                   },
                 }}
-                // sx={{backgroundColor: 'transparent'}}
+              // sx={{backgroundColor: 'transparent'}}
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Button
@@ -293,15 +304,16 @@ const TopBar = () => {
                   </Button>
                   {location.pathname.split("/")[1] ===
                     page.path.split("/")[1] && (
-                    <Divider
-                      sx={{ background: "skyblue", borderBottomWidth: 5 }}
-                    />
-                  )}
+                      <Divider
+                        sx={{ background: "skyblue", borderBottomWidth: 5 }}
+                      />
+                    )}
                 </div>
               </Tooltip>
             ))}
           </Box>
           {/* <Box sx={{ flexGrow: 1 }} /> */}
+          <Typography sx={{ color: 'black' }}>Hi, {userName}</Typography>
 
           <Box sx={{ xs: "flex" }}>
             <Tooltip title="Change Language">
@@ -310,7 +322,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-                // color="inherit"
+              // color="inherit"
               >
                 <LanguageIcon />
               </IconButton>
@@ -359,7 +371,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-                // color="inherit"
+              // color="inherit"
               >
                 <AccountCircle />
               </IconButton>

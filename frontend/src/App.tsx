@@ -10,6 +10,7 @@ import ProgressView from "./View/ProgressView";
 import routes from "./route";
 import { SideBarContext } from "./Context/SideBarContext";
 import { useState } from "react";
+import GetConfigLayout from "./Layout/GetConfigLayout";
 
 function App() {
   const routing = useRoutes(routes);
@@ -22,7 +23,7 @@ function App() {
   }
 
   const [sideContent, setSideContent] = useState<SideBarElement[]>([])
-  return <SideBarContext.Provider value={{sideContent, setSideContent}} > { routing } </SideBarContext.Provider>;
+  return <SideBarContext.Provider value={{ sideContent, setSideContent }} > <GetConfigLayout><>{routing}</></GetConfigLayout> </SideBarContext.Provider>;
 }
 
 export default App;

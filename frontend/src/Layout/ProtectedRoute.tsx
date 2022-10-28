@@ -3,6 +3,7 @@ import SideBar from "./SideBar";
 import TopBar from "./TopBar";
 import Typography from "@mui/material/Typography";
 import { selectCount } from "../store/counterSlice";
+import { selectAuth } from "../store/authSlice";
 import { useAppSelector, useAppDispatch } from "../store/hook";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -12,14 +13,14 @@ interface PropsType {
 }
 
 const ProtectedRoute = (props: PropsType) => {
-  const count = useAppSelector(selectCount);
+  const auth = useAppSelector(selectAuth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (count < 10) {
+    if (!auth) {
       navigate("/login");
     }
-  }, [count, navigate]);
+  }, [auth, navigate]);
 
   return <>{props.children}</>;
 }
