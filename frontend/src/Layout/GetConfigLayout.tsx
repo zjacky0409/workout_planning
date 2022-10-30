@@ -25,7 +25,7 @@ const GetConfigLayout = (props: PropsType) => {
         async function fetchData() {
 
             const loginInPromise = new Promise((resolve, reject) => {
-                axios.post("http://localhost:3000/auth/getUser", {}, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }).then(function (response) {
+                axios.post("http://localhost:4000/auth/getUser", {}, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }).then(function (response) {
                     return resolve(response)
                 })
                     .catch(function (error) {

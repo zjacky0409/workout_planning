@@ -59,7 +59,7 @@ const LoginView = () => {
     async function fetchData() {
 
       const loginInPromise = new Promise((resolve, reject) => {
-        axios.post("http://localhost:3000/auth/login", {
+        axios.post("http://localhost:4000/auth/login", {
           username: username,
           password: password
         }).then(function (response) {

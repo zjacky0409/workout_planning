@@ -72,6 +72,18 @@ const routes: RouteObject[] = [
         element: <ExercisesView />,
       },
       {
+        path: "/exercises/chest/summary",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/chest/upper_chest",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/chest/lower_chest",
+        element: <ExercisesView />,
+      },
+      {
         path: "/exercises/chest",
         element: <ExercisesView />,
       },

@@ -26,7 +26,7 @@ import Dialog from "@mui/material/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
 import { clearAuthentication, selectUsername } from "../store/authSlice";
 import { useAppSelector, useAppDispatch } from "../store/hook";
-
+import { PageObject } from "../common";
 // const settings = ["Profile", "Account", "Logout"];
 const settings = ["Logout"];
 
@@ -60,9 +60,9 @@ const TopBar = () => {
 
   const location = useLocation();
 
-  const [popperContent, setPopperContent] = React.useState([]);
+  const [popperContent, setPopperContent] = React.useState<PageObject[]>([]);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>, children: any) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>, children: PageObject[]) => {
     setPopperContent(children);
   };
 
@@ -157,7 +157,7 @@ const TopBar = () => {
                       onClick={handleCloseNavMenu}
                       to={page.path}
                     >
-                      <ListItemText>
+                      <ListItemText sx={{fontWeight:'bold'}}>
                         {page.icon}{" "}
                         {t(page.name as unknown as TemplateStringsArray)}
                       </ListItemText>
@@ -166,49 +166,6 @@ const TopBar = () => {
                 </MenuItem>
               ))}
             </Dialog>
-            {/* <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-                width: "100%",
-              }}
-            >
-              {navigations.map((page) => (
-                <MenuItem key={page.name} sx={{ p: 0 }}>
-                  {page.children.length > 0 ? (
-                    <NestListItem
-                      shownText={page.icon + page.name}
-                      content={page.children}
-                      action={handleCloseNavMenu}
-                    />
-                  ) : (
-                    <MenuItem
-                      key={page.path + "_menuItem"}
-                      component={Link}
-                      onClick={handleCloseNavMenu}
-                      to={page.path}
-                    >
-                      <ListItemText>
-                        {page.icon}{" "}
-                        {t(page.name as unknown as TemplateStringsArray)}
-                      </ListItemText>
-                    </MenuItem>
-                  )}
-                </MenuItem>
-              ))}
-            </Menu> */}
           </Box>
 
           {
@@ -243,15 +200,12 @@ const TopBar = () => {
                 title={
                   <Paper elevation={2} sx={{ width: "40vh" }}>
                     <MenuList sx={{ display: "flex", flexWrap: "wrap" }}>
-                      {popperContent.map((value: any) => {
+                      {popperContent.map((value: PageObject) => {
                         return (
                           <MenuItem
                             key={value.path + "_menuItem"}
                             component={Link}
                             to={value.path}
-                            onClick={() => {
-                              currentSideBar?.setSideContent(popperContent);
-                            }}
                             sx={{ width: "50%" }}
                           >
                             <ListItemText>

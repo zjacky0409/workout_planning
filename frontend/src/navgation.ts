@@ -58,18 +58,25 @@ export const navigations = [
             },
             {
                 name: 'Chest',
-                path: '/exercises/chest',
-                icon: '🈷'
-                // children: [
-                //     {
-                //         name: 'Trainning Day',
-                //         path: '/diet/trainning_day',
-                //     },
-                //     {
-                //         name: 'Rest Day',
-                //         path: '/diet/rest_day',
-                //     },
-                // ]
+                path: '/exercises/chest/summary',
+                icon: '🈷',
+                children: [
+                    {
+                        name: 'Summary',
+                        path: '/exercises/chest/summary',
+                        icon: '🈷',
+                    },
+                    {
+                        name: 'Upper Chest',
+                        path: '/exercises/chest/upper_chest',
+                        icon: '🈷',
+                    },
+                    {
+                        name: 'Lower Chest',
+                        path: '/exercises/chest/lower_chest',
+                        icon: '🈷',
+                    },
+                ]
             },
             {
                 name: 'Shoulder',

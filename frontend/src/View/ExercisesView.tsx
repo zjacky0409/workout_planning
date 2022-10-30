@@ -16,33 +16,31 @@ interface Exercise {
   name: string,
   details: string
 }
-
+type GetExerciseResponse = {
+  data: Exercise[];
+};
 const ExercisesView = () => {
   const { t } = useTranslation();
 
-  const [exercise, setExercise] = useState<Exercise[]>([
-    { id: 1, name: "DB Flat Bench Press", details: "Test" },
-    { id: 2, name: "DB Fly", details: "Test" },
-    { id: 3, name: "DB Incline Bench Press", details: "Test" },
-    { id: 4, name: "Cable Fly", details: "Test" },
-    { id: 5, name: "Chest Machine", details: "Test" },
-    { id: 6, name: "Chest Machine Upper", details: "Test" },
-    { id: 7, name: "Lower Chest Machine Upper", details: "Test" },
-    { id: 8, name: "Middle Chest Machine Upper", details: "Test" },
-  ]);
+  const [exercise, setExercise] = useState<Exercise[]>([]);
 
   const [status, setStatus] = useState<Boolean>(false);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const result = await axios("http://localhost:3000/exercises_list");
-  //     console.log("result == ", result);
-  //     setExercise(result.data);
-  //     setStatus(false);
-  //   }
+  useEffect(() => {
+    async function fetchData() {
+      try{
+        const result = await axios.get<Exercise[]>("http://localhost:4000/exercises_list");
+        console.log(result)
+        setExercise(result.data);
+        setStatus(false);
+      }catch(error){
+        console.log('error --> ', error)
+      }
+      
+    }
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   // const exercise = [
   //   { name: "DB Flat Bench Press", details: "Test" },
@@ -95,7 +93,7 @@ const ExercisesView = () => {
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                       {value.name}
                     </Typography>
-                    <Typography variant="body2">{value.details}</Typography>
+                    <Typography variant="body2">{value.details.toString()}</Typography>
                   </CardContent>
                   <CardActions>
                     <Button size="small">Learn More</Button>
