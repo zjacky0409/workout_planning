@@ -24,3 +24,19 @@ services:
     ports:
       - '3000:3000'
     stdin_open: true
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+        POSTGRES_DB: postgres
+        POSTGRES_USER: postgres_test #postgres
+        POSTGRES_PASSWORD: postgres_tes #1234
+        PGDATA: /var/lib/postgresql/data
+    volumes:
+        - db-data:/var/lib/postgresql/data
+    ports:
+        - "5432:5432"
+volumes:
+    db-data:
+    pgadmin-data:

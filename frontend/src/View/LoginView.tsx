@@ -18,6 +18,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import { useAppSelector, useAppDispatch } from '../store/hook';
 import { useNavigate } from "react-router-dom";
 import Alert from '@mui/material/Alert';
+import { useEffect } from "react";
 
 
 import {
@@ -45,11 +46,11 @@ const LoginView = () => {
   const [status, setStatus] = React.useState(0)
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (auth) {
       navigate("/diet");
     }
-  }, [])
+  }, [auth, navigate])
 
 
 
