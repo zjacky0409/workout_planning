@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from './store';
-import { fetchCount } from './counterAPI';
-
+import { RootState } from './store';
+import { getUser } from '../Api/authApi';
 export interface AuthState {
   authentication: boolean;
   status: 'idle' | 'loading' | 'failed';
@@ -16,15 +15,10 @@ const initialState: AuthState = {
   userId: -999
 };
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched. Thunks are
-// typically used to make async requests.
-export const incrementAsync = createAsyncThunk(
-  'counter/fetchCount',
-  async (amount: number) => {
-    const response = await fetchCount(amount);
+export const getUserWithJwt = createAsyncThunk(
+  'auth/getUser',
+  async () => {
+    const response = await getUser();
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -47,19 +41,22 @@ export const authSlice = createSlice({
       state.authentication = false;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(incrementAsync.pending, (state) => {
-  //       state.status = 'loading';
-  //     })
-  //     .addCase(incrementAsync.fulfilled, (state, action) => {
-  //       state.status = 'idle';
-  //       state.value += action.payload;
-  //     })
-  //     .addCase(incrementAsync.rejected, (state) => {
-  //       state.status = 'failed';
-  //     });
-  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUserWithJwt.pending, (state) => {
+        console.log('fetching data from the backend')
+        state.status = 'loading';
+      })
+      .addCase(getUserWithJwt.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.username = action.payload.username;
+        state.userId = action.payload.userId;
+      })
+      .addCase(getUserWithJwt.rejected, (state) => {
+        state.authentication = false;
+        state.status = 'failed';
+      });
+  },
 });
 
 export const { setAuthentication,clearAuthentication, setUsername, setUserId  } = authSlice.actions;
