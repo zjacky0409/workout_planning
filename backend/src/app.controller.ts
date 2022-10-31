@@ -5,17 +5,25 @@ import { AuthService } from './auth/auth.service';
 
 @Controller()
 export class AppController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {
+
+    // console.log('Hi, someone call the login api')
+    // function wait(ms: any): any {
+    //   return new Promise(resolve => setTimeout(() => resolve(''), ms));
+    // };
+
+    // // 调用方法；
+    // await wait(5000);
     return this.authService.login(req.user);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('auth/getUser')
-  getProfile(@Request() req) {
+  async getProfile(@Request() req) {
     return req.user;
   }
 }

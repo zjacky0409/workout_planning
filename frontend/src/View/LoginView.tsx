@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useSSR, useTranslation } from "react-i18next";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -17,6 +17,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useAppSelector, useAppDispatch } from '../store/hook';
 import { useNavigate } from "react-router-dom";
+import Alert from '@mui/material/Alert';
+
 
 import {
   decrement,
@@ -40,21 +42,21 @@ const LoginView = () => {
 
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [status, setStatus] = React.useState(1)
+  const [status, setStatus] = React.useState(0)
   const navigate = useNavigate();
 
-  React.useEffect(() =>{
-    if(auth){
+  React.useEffect(() => {
+    if (auth) {
       navigate("/");
     }
-  },[])
+  }, [])
 
 
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // alert("TODO: Login");
-    setStatus(0)
+    setStatus(1)
 
     async function fetchData() {
 
@@ -130,6 +132,7 @@ const LoginView = () => {
               </InputLabel> */}
               <Input
                 value={username}
+                disabled={status === 1}
                 onChange={(
                   e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
                 ) => handleUsername(e)}
@@ -158,6 +161,7 @@ const LoginView = () => {
                   </InputLabel> */}
                   <Input
                     value={password}
+                    disabled={status === 1}
                     onChange={(
                       e: React.ChangeEvent<
                         HTMLTextAreaElement | HTMLInputElement
@@ -175,20 +179,16 @@ const LoginView = () => {
             </FormControl>
 
             {
-              status === 1 && <Typography variant="button" display="block" gutterBottom>
-                Loading
-              </Typography>
+              status === 1 && <CircularProgress/>
             }
 
             {
-              status === 2 && <Typography variant="button" display="block" gutterBottom>
-                Wrong Password
-              </Typography>
+              status === 2 && <Alert severity="error" sx={{width:'90%'}}>Incorrect Account or Incorrect Password</Alert>
             }
           </CardContent>
           <CardActions sx={{ float: "right" }}>
             <Button size="small">Register</Button>
-            <Button size="small" type="submit">
+            <Button disabled={status === 1} size="small" type="submit">
               Login
             </Button>
           </CardActions>
