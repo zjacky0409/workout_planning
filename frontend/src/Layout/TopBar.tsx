@@ -27,9 +27,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { clearAuthentication, selectUsername } from "../store/authSlice";
 import { useAppSelector, useAppDispatch } from "../store/hook";
 import { PageObject } from "../common";
-// const settings = ["Profile", "Account", "Logout"];
-const settings = ["Logout"];
-
 const lang_choice = [
   { name: "English", value: "en" },
   { name: "繁體中文", value: "zh_hk" },
@@ -88,11 +85,17 @@ const TopBar = () => {
   };
 
   const handleCloseUserMenu = () => {
-    localStorage.removeItem('access_token')
-    dispatch(clearAuthentication())
-    
     setAnchorElUser(null);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token')
+    dispatch(clearAuthentication())
+    setAnchorElUser(null);
+  }
+
+  const settings = [{ name: "Logout", action: handleLogout }];
+
 
   const handleCloseLangMenu = () => {
     setAnchorElLang(null);
@@ -157,7 +160,7 @@ const TopBar = () => {
                       onClick={handleCloseNavMenu}
                       to={page.path}
                     >
-                      <ListItemText sx={{fontWeight:'bold'}}>
+                      <ListItemText sx={{ fontWeight: 'bold' }}>
                         {page.icon}{" "}
                         {t(page.name as unknown as TemplateStringsArray)}
                       </ListItemText>
@@ -267,7 +270,7 @@ const TopBar = () => {
             ))}
           </Box>
           {/* <Box sx={{ flexGrow: 1 }} /> */}
-          <Typography sx={{ color: 'black' }}>Hi, {userName}</Typography>
+          <Typography sx={{ color: 'black' }}>Welcome, {userName}</Typography>
 
           <Box sx={{ xs: "flex" }}>
             <Tooltip title="Change Language">
@@ -304,13 +307,14 @@ const TopBar = () => {
                     changeLanguage(setting.value);
                     handleCloseLangMenu();
                   }}
-                  sx={{ py: 0, px: 0.5 }}
+                  sx={{ py: 0, px: 1 }}
                 >
                   <Checkbox
                     checked={i18n.language === setting.value}
                     inputProps={{
                       "aria-label": "Language change To " + setting.name,
                     }}
+                    size="small"
                   />
                   <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
@@ -347,8 +351,8 @@ const TopBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.name+'_setting'} onClick={setting.action}>
+                  <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>

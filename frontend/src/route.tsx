@@ -12,29 +12,26 @@ const routes: RouteObject[] = [
   {
     path: "/",
     element: (
-      <ProtectedRoute>
-        <DietView day="test" />
-      </ProtectedRoute>
+      <Outlet></Outlet>
     ),
-    //   children: [
-    //     {
-    //       path: "messages",
-    //       element: <DashboardMessages />,
-    //     },
-    //     { path: "tasks", element: <DashboardTasks /> },
-    //   ],
+    children: [
+      { path: '/', element: <LoginView /> },
+      { path: '/login', element: <LoginView /> },
+      // { path: '401', element: <UnauthorizedView /> },
+      { path: '*', element: <LoginView /> },
+    ],
   },
-  {
-    path: "/login",
-    element: <LoginView />,
-    //   children: [
-    //     {
-    //       path: "messages",
-    //       element: <DashboardMessages />,
-    //     },
-    //     { path: "tasks", element: <DashboardTasks /> },
-    //   ],
-  },
+  // {
+  //   path: "/login",
+  //   element: <LoginView />,
+  //   //   children: [
+  //   //     {
+  //   //       path: "messages",
+  //   //       element: <DashboardMessages />,
+  //   //     },
+  //   //     { path: "tasks", element: <DashboardTasks /> },
+  //   //   ],
+  // },
   {
     path: "/diet",
     element: (
@@ -54,7 +51,25 @@ const routes: RouteObject[] = [
       { path: "/diet/rest_day", element: <DietView day="rest_day" /> },
     ],
   },
-  { path: "progress", element: <ProgressView /> },
+  {
+    path: "progress", element: <ProtectedRoute><Outlet /></ProtectedRoute>,
+    children:
+      [
+        {
+          path: "/progress",
+          element: <Navigate to="/progress/trainning" replace={true} />,
+        },
+        {
+          path: "/progress/trainning",
+          element: <ProgressView />,
+        },
+        {
+          path: "/progress/weight",
+          element: <ProgressView />,
+        }
+      ]
+
+  },
   {
     path: "exercises",
     element: (
@@ -69,6 +84,22 @@ const routes: RouteObject[] = [
       },
       {
         path: "/exercises/back",
+        element: <Navigate to="/exercises/back/summary" replace={true} />,
+      },
+      {
+        path: "/exercises/back/summary",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/back/upper",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/back/lat",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/back/trap",
         element: <ExercisesView />,
       },
       {
@@ -89,37 +120,138 @@ const routes: RouteObject[] = [
       },
       {
         path: "/exercises/arm",
+        element: <Navigate to="/exercises/arm/summary" replace={true} />,
+
+      },
+      {
+        path: "/exercises/arm/summary",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/arm/former",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/arm/bi",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/arm/tri",
         element: <ExercisesView />,
       },
       {
         path: "/exercises/leg",
+        element: <Navigate to="/exercises/leg/summary" replace={true} />,
+      },
+      {
+        path: "/exercises/leg/summary",
         element: <ExercisesView />,
       },
       {
-        path: "/exercises/shoulder",
+        path: "/exercises/leg/quad",
         element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/leg/harmstring",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/leg/hip",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/shoulder/summary",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/shoulder/rear_delt",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/shoulder/front_delt",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/shoulder/side_delt",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/shoulder/summary",
+        element: <Navigate to="/diet/trainning_day" replace={true} />,
       },
       {
         path: "/exercises/core",
+        element: <Navigate to="/exercises/core/summary" replace={true} />,
+      },
+      {
+        path: "/exercises/core/upper",
         element: <ExercisesView />,
       },
+      {
+        path: "/exercises/core/lower",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/core/summary",
+        element: <ExercisesView />,
+      },
+      {
+        path: "/exercises/core/full",
+        element: <ExercisesView />,
+      }
     ],
   },
   {
     path: "useful_resources",
     element: (
       <ProtectedRoute>
-        <UsefulResourceView />
+        <Outlet />
       </ProtectedRoute>
     ),
+    children: [
+      {
+        path: "/useful_resources",
+        element: <Navigate to="/useful_resources/exercise" replace={true} />,
+      },
+      {
+        path: "/useful_resources/exercise",
+        element: <UsefulResourceView />,
+      },
+      {
+        path: "/useful_resources/other",
+        element: <UsefulResourceView />,
+      },
+    ]
   },
   {
     path: "program",
     element: (
       <ProtectedRoute>
-        <ProgramView />
+        <Outlet />
       </ProtectedRoute>
     ),
+    children: [
+      {
+        path: "/program",
+        element: <Navigate to="/program/pull_day" replace={true} />,
+      },
+      {
+        path: "/program/pull_day",
+        element: <ProgramView />,
+      },
+      {
+        path: "/program/push_day",
+        element: <ProgramView />,
+      },
+      {
+        path: "/program/legs_day",
+        element: <ProgramView />,
+      },
+      {
+        path: "/program/arms_day",
+        element: <ProgramView />,
+      }
+    ]
   },
 ];
 

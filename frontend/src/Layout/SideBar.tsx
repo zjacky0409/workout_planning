@@ -10,7 +10,8 @@ import { Toolbar } from "@mui/material";
 import { SideBarContext } from "../Context/SideBarContext";
 import { Link, useLocation } from "react-router-dom";
 import { navigations } from "../navgation";
-import { SideBarObject } from "../common";
+import { SideBarObject, PageObject } from "../common";
+
 const drawerWidth = 240;
 
 interface SideBarProp {
@@ -35,16 +36,28 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
       if(toBeProcessed.path === location.pathname){
         return toBeProcessed.children
       }
-      toBeProcessed.children.forEach((child) => {
+      toBeProcessed.children.forEach((child: PageObject) => {
         if (child.path === location.pathname) {
           tempContent = toBeProcessed.children;
         }
-        if(child.children !== undefined){
-          child.children.forEach((subChild) => {
+        
+        // https://stackoverflow.com/questions/49610779/typescript-error-ts2532-object-is-possibly-undefined-even-after-undefined-c
+        // if(child.children !== undefined){
+        //   child.children.forEach((subChild) => {
+        //     if (subChild.path === location.pathname) {
+        //       if(child.children !== undefined){
+        //         tempContent = child.children;
+        //       }
+        //     }
+        //   })
+        // }
+
+        if (child.children !== undefined) {
+          for (var subChild of child.children) {
             if (subChild.path === location.pathname) {
               tempContent = child.children;
             }
-          })
+          }
         }
       })
       return tempContent;

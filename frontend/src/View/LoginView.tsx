@@ -47,7 +47,7 @@ const LoginView = () => {
 
   React.useEffect(() => {
     if (auth) {
-      navigate("/");
+      navigate("/diet");
     }
   }, [])
 

@@ -43,18 +43,30 @@ export const navigations = [
         children: [
             {
                 name: 'Back',
-                path: '/exercises/back',
-                icon: '🔙'
-                // children: [
-                //     {
-                //         name: 'Trainning Day',
-                //         path: '/diet/trainning_day',
-                //     },
-                //     {
-                //         name: 'Rest Day',
-                //         path: '/diet/rest_day',
-                //     },
-                // ]
+                path: '/exercises/back/summary',
+                icon: '🔙',
+                children: [
+                    {
+                        name: 'Summary',
+                        path: '/exercises/back/summary',
+                        icon: '🔙'
+                    },
+                    {
+                        name: 'Upper',
+                        path: '/exercises/back/upper',
+                        icon: '🔙'
+                    },
+                    {
+                        name: 'Lat',
+                        path: '/exercises/back/lat',
+                        icon: '🔙'
+                    },
+                    {
+                        name: 'Trap',
+                        path: '/exercises/back/trap',
+                        icon: '🔙'
+                    },
+                ]
             },
             {
                 name: 'Chest',
@@ -80,63 +92,110 @@ export const navigations = [
             },
             {
                 name: 'Shoulder',
-                path: '/exercises/shoulder',
-                icon: '🙋‍♂️'
-                // children: [
-                //     {
-                //         name: 'Trainning Day',
-                //         path: '/diet/trainning_day',
-                //     },
-                //     {
-                //         name: 'Rest Day',
-                //         path: '/diet/rest_day',
-                //     },
-                // ]
+                path: '/exercises/shoulder/summary',
+                icon: '🙋‍♂️',
+                children: [
+                    {
+                        name: 'Summary',
+                        path: '/exercises/shoulder/summary',
+                        icon: '🈷',
+                    },
+                    {
+                        name: 'Rear Delt',
+                        path: '/exercises/shoulder/rear_delt',
+                        icon: '🈷',
+                    },
+                    {
+                        name: 'Side Delt',
+                        path: '/exercises/shoulder/side_delt',
+                        icon: '🈷',
+                    },
+                    {
+                        name: 'Front Delt',
+                        path: '/exercises/shoulder/front_delt',
+                        icon: '🈷',
+                    },
+                ]
             },
             {
                 name: 'Arm',
                 path: '/exercises/arm',
-                icon: '💪'
-                // children: [
-                //     {
-                //         name: 'Trainning Day',
-                //         path: '/diet/trainning_day',
-                //     },
-                //     {
-                //         name: 'Rest Day',
-                //         path: '/diet/rest_day',
-                //     },
-                // ]
+                icon: '💪',
+                children: [
+                    {
+                        name: 'Summary',
+                        path: '/exercises/arm/summary',
+                        icon: '💪'
+                    },
+                    {
+                        name: 'Former',
+                        path: '/exercises/arm/former',
+                        icon: '💪'
+                    },
+                    {
+                        name: 'Tricept',
+                        path: '/exercises/arm/tri',
+                        icon: '💪'
+                    },
+                    {
+                        name: 'Bicept',
+                        path: '/exercises/arm/bi',
+                        icon: '💪'
+                    },
+                ]
             },
             {
                 name: 'Leg',
                 path: '/exercises/leg',
-                icon: '🦵'
-                // children: [
-                //     {
-                //         name: 'Trainning Day',
-                //         path: '/diet/trainning_day',
-                //     },
-                //     {
-                //         name: 'Rest Day',
-                //         path: '/diet/rest_day',
-                //     },
-                // ]
+                icon: '🦵',
+                children: [
+                    {
+                        name: 'Summary',
+                        path: '/exercises/leg/summary',
+                        icon: '🦵'
+                    },
+                    {
+                        name: 'Former',
+                        path: '/exercises/leg/quad',
+                        icon: '🦵'
+                    },
+                    {
+                        name: 'Tricept',
+                        path: '/exercises/leg/harmstring',
+                        icon: '🦵'
+                    },
+                    {
+                        name: 'Bicept',
+                        path: '/exercises/leg/hip',
+                        icon: '🦵'
+                    }]
             },
             {
                 name: 'Core',
                 path: '/exercises/core',
-                icon: '🧗'
-                // children: [
-                //     {
-                //         name: 'Trainning Day',
-                //         path: '/diet/trainning_day',
-                //     },
-                //     {
-                //         name: 'Rest Day',
-                //         path: '/diet/rest_day',
-                //     },
-                // ]
+                icon: '🧗',
+                children: [
+                    {
+                        name: 'Summary',
+                        path: '/exercises/core/summary',
+                        icon: '🧗'
+                    },
+                    {
+                        name: 'Upper',
+                        path: '/exercises/core/upper',
+                        icon: '🧗'
+                    },
+                    {
+                        name: 'Lower',
+                        path: '/exercises/core/lower',
+                        icon: '🧗'
+                    },
+                    {
+                        name: 'Full',
+                        path: '/exercises/core/full',
+                        icon: '🧗'
+                    },
+                ]
             }
         ]
     },
@@ -147,7 +206,7 @@ export const navigations = [
         children: [
             {
                 name: 'Push Day',
-                path: '/program/trainning_day',
+                path: '/program/push_day',
                 icon: '🦵'
                 // children: [
                 //     {
@@ -162,7 +221,7 @@ export const navigations = [
             },
             {
                 name: 'Pull Day',
-                path: '/program/trainning_day',
+                path: '/program/pull_day',
                 icon: '🦵'
                 // children: [
                 //     {
@@ -177,7 +236,22 @@ export const navigations = [
             },
             {
                 name: 'Legs Day',
-                path: '/program/trainning_day',
+                path: '/program/legs_day',
+                icon: '🦵'
+                // children: [
+                //     {
+                //         name: 'Trainning Day',
+                //         path: '/diet/trainning_day',
+                //     },
+                //     {
+                //         name: 'Rest Day',
+                //         path: '/diet/rest_day',
+                //     },
+                // ]
+            },
+            {
+                name: 'Arms Day',
+                path: '/program/arms_day',
                 icon: '🦵'
                 // children: [
                 //     {
