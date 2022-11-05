@@ -9,3 +9,10 @@ export async function getUser() {
     );
     return response
 }
+
+export async function createUserAPI(jsonData: any) {
+
+    const response = await axios.post("http://localhost:4000/user/create",
+        jsonData,);
+    return response
+}

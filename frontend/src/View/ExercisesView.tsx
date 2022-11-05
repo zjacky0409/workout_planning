@@ -1,4 +1,4 @@
-import MainLayout from "../Layout/MainLayout";
+import MainLayout from "../layout/MainLayout";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
@@ -29,9 +29,9 @@ const ExercisesView = () => {
   useEffect(() => {
     async function fetchData() {
       try{
-        const result = await axios.get<Exercise[]>("http://localhost:4000/exercises_list");
+        const result = await axios.get<Exercise[]>("http://localhost:4000/exercise");
         console.log(result)
-        setExercise(result.data);
+        setExercise(result.data)
         setStatus(false);
       }catch(error){
         console.log('error --> ', error)
@@ -40,6 +40,8 @@ const ExercisesView = () => {
     }
 
     fetchData();
+
+    // should be make the clean up function
   }, []);
 
   // const exercise = [

@@ -1,4 +1,4 @@
-import MainLayout from "../Layout/MainLayout";
+import MainLayout from "../layout/MainLayout";
 import { useTranslation } from 'react-i18next';
 import { useAppSelector, useAppDispatch } from '../store/hook';
 import { selectCount } from "../store/counterSlice";

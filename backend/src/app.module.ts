@@ -6,19 +6,25 @@ import { UserModule } from './user/user.module';
 // import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
-
+import { ExerciseModule } from './exercise/exercise.module';
+import { Exercise } from './exercise/entities/exercise.entity';
+// import { ExerciseController } from './exercise/exercise.controller';
 
 @Module({
-  imports: [AuthModule, UserModule, TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: '192.168.0.104',
-    port: 5432,
-    username: 'postgres_test',
-    password: 'postgres_tes',
-    database: 'postgres',
-    entities: [User],
-    synchronize: false,
-  })
+  imports: [
+    AuthModule,
+    UserModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'db',
+      port: 5432,
+      username: 'postgres_test',
+      password: 'postgres_tes',
+      database: 'postgres',
+      entities: [User, Exercise],
+      synchronize: true,
+    }),
+    ExerciseModule,
     // , ConfigModule.forRoot({ isGlobal: true }),
     //   TypeOrmModule.forRoot({
     //     type: 'postgres',
@@ -35,4 +41,4 @@ import { User } from './user/entities/user.entity';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

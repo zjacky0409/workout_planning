@@ -1,11 +1,11 @@
 import "./App.css";
 import { useRoutes } from "react-router-dom";
 import routes from "./route";
-import { SideBarContext } from "./Context/SideBarContext";
+import { SideBarContext } from "./context/SideBarContext";
 import { useState } from "react";
-import GetConfigLayout from "./Layout/GetConfigLayout";
+import GetConfigLayout from "./layout/GetConfigLayout";
 import { SideBarObject } from "./common";
-import RoutingLayout from "./Layout/RoutingLayout";
+import RoutingLayout from "./layout/RoutingLayout";
 function App() {
   // const routing = useRoutes(routes); // if we change the route, we will triger the rerander
   const [sideContent, setSideContent] = useState<SideBarObject[]>([]);

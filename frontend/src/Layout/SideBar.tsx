@@ -7,7 +7,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Toolbar } from "@mui/material";
-import { SideBarContext } from "../Context/SideBarContext";
+import { SideBarContext } from "../context/SideBarContext";
 import { Link, useLocation } from "react-router-dom";
 import { navigations } from "../navgation";
 import { SideBarObject, PageObject } from "../common";

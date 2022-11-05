@@ -1,13 +1,14 @@
-import DietView from "./View/DietView";
-import ProgramView from "./View/ProgramView";
-import ExercisesView from "./View/ExercisesView";
-import UsefulResourceView from "./View/UsefulResourceView";
-import ProgressView from "./View/ProgressView";
+import DietView from "./view/DietView";
+import ProgramView from "./view/ProgramView";
+import ExercisesView from "./view/ExercisesView";
+import UsefulResourceView from "./view/UsefulResourceView";
+import ProgressView from "./view/ProgressView";
 import { RouteObject } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import LoginView from "./View/LoginView";
-import ProtectedRoute from "./Layout/ProtectedRoute";
+import LoginView from "./view/LoginView";
+import ProtectedRoute from "./layout/ProtectedRoute";
+import RegistrationView from "./view/RegistrationView";
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -18,6 +19,7 @@ const routes: RouteObject[] = [
       { path: '/', element: <LoginView /> },
       { path: '/login', element: <LoginView /> },
       // { path: '401', element: <UnauthorizedView /> },
+      { path: '/registration', element: <RegistrationView /> },
       { path: '*', element: <LoginView /> },
     ],
   },

@@ -1,4 +1,4 @@
-import MainLayout from "../Layout/MainLayout";
+import MainLayout from "../layout/MainLayout";
 import { useTranslation } from 'react-i18next';
 
 const UsefulResourceView = () => {

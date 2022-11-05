@@ -18,7 +18,7 @@ import { navigations } from "../navgation";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
-import { SideBarContext } from "../Context/SideBarContext";
+import { SideBarContext } from "../context/SideBarContext";
 import { useLocation } from "react-router-dom";
 import NestListItem from "../components/NestListItem";
 import Divider from "@mui/material/Divider";
