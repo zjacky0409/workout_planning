@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 // import CreateExerciseDto from 'src/exercise/dto/create-exercise.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import * as crypto from "crypto";
+
 @Injectable()
 export class UserService {
   constructor(
@@ -16,6 +18,11 @@ export class UserService {
       role: 'user',
       isActive: true,
     };
+
+    user['password'] = crypto
+      .createHash('md5')
+      .update(user['password'] + 'workout_planning_test_salt')
+      .digest('hex');
     const insertToDB = { ...user, ...metaData };
     console.log('insertToDB --> ', insertToDB);
 

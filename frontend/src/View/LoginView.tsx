@@ -188,7 +188,7 @@ const LoginView = () => {
             }
           </CardContent>
           <CardActions sx={{ float: "right" }}>
-            <Button size="small">Register</Button>
+            <Button size="small" onClick={()=>{navigate('/registration')}}>Register</Button>
             <Button disabled={status === 1} size="small" type="submit">
               Login
             </Button>

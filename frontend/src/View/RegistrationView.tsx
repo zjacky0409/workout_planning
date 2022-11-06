@@ -16,9 +16,10 @@ import * as yup from "yup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
-import {createUser} from '../store/authSlice'
-import { useAppSelector, useAppDispatch } from '../store/hook';
-
+import { createUser } from "../store/authSlice";
+import { useAppSelector, useAppDispatch } from "../store/hook";
+import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 
 interface IFormInput {
   firstName: string;
@@ -40,7 +41,10 @@ const schema = yup
     phoneNumber: yup.number().required(),
     emailAddress: yup.string().email().required(),
     password: yup.string().required(),
-    confirmPassword: yup.string().required(),
+    confirmPassword: yup
+      .string()
+      .required()
+      .oneOf([yup.ref("password")], "Your password do not match."),
     dateOfBirth: yup.string().required(),
     age: yup.number().positive().integer().required(),
   })
@@ -49,6 +53,8 @@ const schema = yup
 const RegistrationView = () => {
   const [dShowPassword, setDShowPassword] = useState(true);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [regSuccess, setRegSuccess] = useState(false);
 
   const {
     register,
@@ -61,9 +67,21 @@ const RegistrationView = () => {
   const methods = useForm();
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    
     console.log(data);
     dispatch(createUser(data))
+      .unwrap()
+      .then((result) => {
+        if (result.create_user === true) {
+          setRegSuccess(true);
+        } else {
+          setRegSuccess(false);
+        }
+        // handle result here
+      })
+      .catch((rejectedValueOrSerializedError) => {
+        console.log(rejectedValueOrSerializedError);
+        // handle error here
+      });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,228 +98,275 @@ const RegistrationView = () => {
       }}
     >
       <Card raised sx={{ width: { xs: "90%", md: "50%" } }}>
-        {/* <FormProvider {...methods}> */}
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 3,
-            }}
-          >
-            <img src="/Logo.svg" alt="Logo" width="200" height="100" />
-            <div
-              style={{
+        {regSuccess && (
+          <>
+            <CardContent
+              sx={{
                 display: "flex",
-                flexDirection: "row",
-                width: "100%",
-                gap: 5,
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 1,
               }}
             >
-              <Controller
-                name="firstName"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    error={!!errors["firstName"]}
-                    size="small"
-                    label="First Name"
-                    fullWidth
-                    helperText={
-                      errors["firstName"] ? errors["firstName"].message : ""
-                    }
-                  />
-                )}
-              />
-              <Controller
-                name="lastName"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    size="small"
-                    error={!!errors["lastName"]}
-                    label="Last Name"
-                    fullWidth
-                    helperText={
-                      errors["lastName"] ? errors["lastName"].message : ""
-                    }
-                  />
-                )}
-              />
-            </div>
-
-            <Controller
-              name="username"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  size="small"
-                  error={!!errors["username"]}
-                  label="Username"
-                  fullWidth
-                  helperText={
-                    errors["username"] ? errors["username"].message : ""
-                  }
-                />
-              )}
-            />
-            <Controller
-              name="phoneNumber"
-              control={control}
-              // defaultValue=
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  size="small"
-                  error={!!errors["phoneNumber"]}
-                  label="Phone Number"
-                  fullWidth
-                  // type="tel"
-                  helperText={
-                    errors["phoneNumber"] ? errors["phoneNumber"].message : ""
-                  }
-                />
-              )}
-            />
-            <Controller
-              name="emailAddress"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  size="small"
-                  error={!!errors["emailAddress"]}
-                  label="Email Address"
-                  type="email"
-                  fullWidth
-                  helperText={
-                    errors["emailAddress"] ? errors["emailAddress"].message : ""
-                  }
-                />
-              )}
-            />
-
-            <div
-              style={{
+              <img src="/Logo.svg" alt="Logo" width="200" height="100" />
+              <Typography variant="button" gutterBottom>
+                Registration Successfully
+              </Typography>
+              <Typography variant="caption" gutterBottom>
+                Now you can go to login page to explore a new journey.
+              </Typography>
+              <Typography variant="caption" gutterBottom>
+                Remember: Eat, Train, Sleep and Enjoy
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button
+                size="small"
+                sx={{margin:'auto'}}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Explore Now
+              </Button>
+            </CardActions>
+          </>
+        )}
+        {!regSuccess && (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <CardContent
+              sx={{
                 display: "flex",
-                flexDirection: "row",
-                width: "100%",
-                gap: 5,
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 3,
               }}
             >
+              <img src="/Logo.svg" alt="Logo" width="200" height="100" />
+              {/* <Typography variant="h6" sx={{marginRight:'auto'}}>Registration:</Typography> */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  gap: 5,
+                }}
+              >
+                <Controller
+                  name="firstName"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      error={!!errors["firstName"]}
+                      size="small"
+                      label="First Name"
+                      fullWidth
+                      helperText={
+                        errors["firstName"] ? errors["firstName"].message : ""
+                      }
+                    />
+                  )}
+                />
+                <Controller
+                  name="lastName"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      size="small"
+                      error={!!errors["lastName"]}
+                      label="Last Name"
+                      fullWidth
+                      helperText={
+                        errors["lastName"] ? errors["lastName"].message : ""
+                      }
+                    />
+                  )}
+                />
+              </div>
+
               <Controller
-                name="password"
+                name="username"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
-                    error={!!errors["password"]}
-                    label="Password"
-                    type={dShowPassword ? "text" : "password"}
+                    error={!!errors["username"]}
+                    label="Username"
                     fullWidth
                     helperText={
-                      errors["password"] ? errors["password"].message : ""
+                      errors["username"] ? errors["username"].message : ""
                     }
                   />
                 )}
               />
               <Controller
-                name="confirmPassword"
+                name="phoneNumber"
+                control={control}
+                // defaultValue=
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    size="small"
+                    error={!!errors["phoneNumber"]}
+                    label="Phone Number"
+                    fullWidth
+                    // type="tel"
+                    helperText={
+                      errors["phoneNumber"] ? errors["phoneNumber"].message : ""
+                    }
+                  />
+                )}
+              />
+              <Controller
+                name="emailAddress"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
-                    error={!!errors["confirmPassword"]}
-                    label="Confirm Password"
-                    type={dShowPassword ? "text" : "password"}
+                    error={!!errors["emailAddress"]}
+                    label="Email Address"
+                    type="email"
                     fullWidth
                     helperText={
-                      errors["confirmPassword"]
-                        ? errors["confirmPassword"].message
+                      errors["emailAddress"]
+                        ? errors["emailAddress"].message
                         : ""
                     }
                   />
                 )}
               />
-            </div>
-            <FormControlLabel
-              sx={{marginRight: "auto"}}
-              control={
-                <Checkbox
-                  size="small"
-                  checked={dShowPassword}
-                  onChange={handleChange}
-                />
-              }
-              label="Show Password"
-            />
 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "100%",
-                gap: 5,
-              }}
-            >
-              <div style={{ flexGrow: 3 }}>
-                <Controller
-                  name="dateOfBirth"
-                  control={control}
-                  defaultValue={""}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "100%",
+                    gap: 5,
+                  }}
+                >
+                  <Controller
+                    name="password"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        size="small"
+                        error={!!errors["password"]}
+                        label="Password"
+                        type={dShowPassword ? "text" : "password"}
+                        fullWidth
+                        helperText={
+                          errors["password"] ? errors["password"].message : ""
+                        }
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="confirmPassword"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        size="small"
+                        error={!!errors["confirmPassword"]}
+                        label="Confirm Password"
+                        type={dShowPassword ? "text" : "password"}
+                        fullWidth
+                        helperText={
+                          errors["confirmPassword"]
+                            ? errors["confirmPassword"].message
+                            : ""
+                        }
+                      />
+                    )}
+                  />
+                </div>
+                <FormControlLabel
+                  sx={{ marginRight: "auto", p: 0 }}
+                  control={
+                    <Checkbox
                       size="small"
-                      // sx={{ flexGrow: 0.7 }}
-                      error={!!errors["age"]}
-                      InputLabelProps={{ shrink: true }}
-                      label="Age"
-                      type={"date"}
-                      fullWidth
-                      helperText={errors["age"] ? errors["age"].message : ""}
+                      checked={dShowPassword}
+                      onChange={handleChange}
                     />
-                  )}
+                  }
+                  label="Show Password"
                 />
               </div>
-              <div style={{ flexGrow: 0 }}>
-                <Controller
-                  name="age"
-                  control={control}
-                  // defaultValue={null}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      // sx={{flexGrow: 0.3}}
-                      size="small"
-                      error={!!errors["age"]}
-                      label="Age"
-                      fullWidth
-                      helperText={errors["age"] ? errors["age"].message : ""}
-                    />
-                  )}
-                />
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  gap: 5,
+                }}
+              >
+                <div style={{ flexGrow: 3 }}>
+                  <Controller
+                    name="dateOfBirth"
+                    control={control}
+                    defaultValue={""}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        size="small"
+                        // sx={{ flexGrow: 0.7 }}
+                        error={!!errors["age"]}
+                        InputLabelProps={{ shrink: true }}
+                        label="Age"
+                        type={"date"}
+                        fullWidth
+                        helperText={errors["age"] ? errors["age"].message : ""}
+                      />
+                    )}
+                  />
+                </div>
+                <div style={{ flexGrow: 0 }}>
+                  <Controller
+                    name="age"
+                    control={control}
+                    // defaultValue={null}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        // sx={{flexGrow: 0.3}}
+                        size="small"
+                        error={!!errors["age"]}
+                        label="Age"
+                        fullWidth
+                        helperText={errors["age"] ? errors["age"].message : ""}
+                      />
+                    )}
+                  />
+                </div>
               </div>
-            </div>
-          </CardContent>
-          <CardActions sx={{ float: "right" }}>
-            <Button size="small" type="submit">
-              Register
-            </Button>
-          </CardActions>
-        </form>
+            </CardContent>
+            <CardActions sx={{ float: "right" }}>
+              <Button size="small" type="submit">
+                Register
+              </Button>
+            </CardActions>
+          </form>
+        )}
+
         {/* </FormProvider> */}
       </Card>
     </div>
