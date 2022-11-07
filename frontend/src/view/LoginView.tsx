@@ -15,22 +15,13 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import FormHelperText from "@mui/material/FormHelperText";
-import { useAppSelector, useAppDispatch } from '../store/hook';
+import { useAppSelector, useAppDispatch } from "../store/hook";
 import { useNavigate } from "react-router-dom";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import { useEffect } from "react";
-
-
-import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  incrementIfOdd,
-  selectCount,
-} from '../store/counterSlice';
 import axios from "axios";
 import { selectAuth, setAuthentication } from "../store/authSlice";
+import CustomButton from "../Button/CustomButton";
 
 const LoginView = () => {
   const { t } = useTranslation();
@@ -38,53 +29,50 @@ const LoginView = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const dispatch = useAppDispatch();
 
-  const auth = useAppSelector(selectAuth)
-
+  const auth = useAppSelector(selectAuth);
 
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [status, setStatus] = React.useState(0)
+  const [status, setStatus] = React.useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (auth) {
       navigate("/diet");
     }
-  }, [auth, navigate])
-
-
+  }, [auth, navigate]);
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // alert("TODO: Login");
-    setStatus(1)
+    setStatus(1);
 
     async function fetchData() {
-
       const loginInPromise = new Promise((resolve, reject) => {
-        axios.post("http://localhost:4000/auth/login", {
-          username: username,
-          password: password
-        }).then(function (response) {
-          return resolve(response)
-        })
+        axios
+          .post("http://localhost:4000/auth/login", {
+            username: username,
+            password: password,
+          })
+          .then(function (response) {
+            return resolve(response);
+          })
           .catch(function (error) {
-            return reject(error)
-          });;
-      })
-      let result: any
+            return reject(error);
+          });
+      });
+      let result: any;
       try {
-        result = await loginInPromise
-        console.log('result == ', result)
+        result = await loginInPromise;
+        console.log("result == ", result);
         setStatus(1);
-        localStorage.setItem('access_token', result.data.access_token)
-        dispatch(setAuthentication())
+        localStorage.setItem("access_token", result.data.access_token);
+        dispatch(setAuthentication());
         navigate("/");
       } catch (e) {
-        console.log(e)
+        console.log(e);
         setStatus(2);
       }
-
     }
     fetchData();
   };
@@ -142,7 +130,7 @@ const LoginView = () => {
                     <AccountCircle />
                   </InputAdornment>
                 }
-              // required
+                // required
               />
               <FormHelperText>Account Name</FormHelperText>
             </FormControl>
@@ -179,19 +167,34 @@ const LoginView = () => {
               </div>
             </FormControl>
 
-            {
-              status === 1 && <CircularProgress/>
-            }
+            {status === 1 && <CircularProgress />}
 
-            {
-              status === 2 && <Alert severity="error" sx={{width:'90%'}}>Incorrect Account or Incorrect Password</Alert>
-            }
+            {status === 2 && (
+              <Alert severity="error" sx={{ width: "90%" }}>
+                Incorrect Account or Incorrect Password
+              </Alert>
+            )}
           </CardContent>
           <CardActions sx={{ float: "right" }}>
-            <Button size="small" onClick={()=>{navigate('/registration')}}>Register</Button>
-            <Button disabled={status === 1} size="small" type="submit">
+            <CustomButton
+              handler={() => {
+                navigate("/registration");
+              }}
+              shownText="Register"
+              variant={"TEST"}
+            />
+            <CustomButton
+              type="submit"
+              shownText="Login"
+              variant={"normal"}
+              disabled={status === 1}
+              handler={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
+            {/* <Button disabled={status === 1} size="small" type="submit">
               Login
-            </Button>
+            </Button> */}
           </CardActions>
         </form>
       </Card>

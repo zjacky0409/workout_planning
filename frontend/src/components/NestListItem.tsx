@@ -6,12 +6,12 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link } from "react-router-dom";
-import { PageObject } from '../common'
+import { PageObject } from "../common";
 
 interface SideBarProp {
   shownText: string;
   content: PageObject[];
-  action: any;
+  action: () => void;
 }
 
 // Drawer aka side bar
@@ -27,7 +27,10 @@ export default function NestListItem({
     setOpen(!open);
   };
 
-  const SubChildren = (subShownText: string, subContent: any[]): JSX.Element => {
+  const SubChildren = (
+    subShownText: string,
+    subContent: any[]
+  ): JSX.Element => {
     const [subOpen, setSubOpen] = React.useState(false);
 
     const subHandleClick = () => {
@@ -77,7 +80,7 @@ export default function NestListItem({
         <List component="div" disablePadding>
           {content.map((val) => {
             if (val.children) {
-              return SubChildren(val.icon + val.name, val.children)
+              return SubChildren(val.icon + val.name, val.children);
             }
             return (
               <ListItemButton
