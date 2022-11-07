@@ -13,7 +13,7 @@ const ProgressView = () => {
 
   return (
     <MainLayout content="Progress">
-      <p>This is the {t('Progress')} Page {count}</p>
+      <p>This is the {t('Progress')} Page {count} </p>
     </MainLayout>
   );
 };

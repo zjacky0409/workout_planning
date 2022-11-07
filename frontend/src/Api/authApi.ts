@@ -7,7 +7,7 @@ export async function getUser() {
         {},
         { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }
     );
-    return response
+    return response 
 }
 
 export async function createUserAPI(jsonData: any) {

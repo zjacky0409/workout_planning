@@ -6,7 +6,7 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link } from "react-router-dom";
-import {PageObject} from '../common'
+import { PageObject } from '../common'
 
 interface SideBarProp {
   shownText: string;
@@ -31,14 +31,14 @@ export default function NestListItem({
     const [subOpen, setSubOpen] = React.useState(false);
 
     const subHandleClick = () => {
-    //   setOpen(!open);
+      //   setOpen(!open);
       setSubOpen(!subOpen);
     };
 
     return (
       <>
         <ListItemButton onClick={subHandleClick} sx={{ width: "100%" }}>
-          <ListItemText primary={subShownText} sx={{ pl: 2 }}/>
+          <ListItemText primary={subShownText} sx={{ pl: 2 }} />
           {subOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={subOpen} timeout="auto" unmountOnExit>
@@ -77,7 +77,7 @@ export default function NestListItem({
         <List component="div" disablePadding>
           {content.map((val) => {
             if (val.children) {
-              return SubChildren(val.icon+val.name, val.children)
+              return SubChildren(val.icon + val.name, val.children)
             }
             return (
               <ListItemButton
