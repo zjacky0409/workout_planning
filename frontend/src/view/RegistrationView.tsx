@@ -108,7 +108,7 @@ const RegistrationView = () => {
                 gap: 1,
               }}
             >
-              <img src="/Logo.svg" alt="Logo" width="200" height="100" />
+              <img src="/Logo.svg" alt="Logo" width="200" height="100" onClick={() => {navigate('/')}} />
               <Typography variant="button" gutterBottom>
                 Registration Successfully
               </Typography>
@@ -122,7 +122,7 @@ const RegistrationView = () => {
             <CardActions>
               <Button
                 size="small"
-                sx={{margin:'auto'}}
+                sx={{ margin: 'auto' }}
                 onClick={() => {
                   navigate("/");
                 }}
@@ -142,7 +142,7 @@ const RegistrationView = () => {
                 gap: 3,
               }}
             >
-              <img src="/Logo.svg" alt="Logo" width="200" height="100" />
+              <img src="/Logo.svg" alt="Logo" width="200" height="100" onClick={() => {navigate('/')}}/>
               {/* <Typography variant="h6" sx={{marginRight:'auto'}}>Registration:</Typography> */}
               <div
                 style={{
