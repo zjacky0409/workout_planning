@@ -21,7 +21,7 @@ import Alert from "@mui/material/Alert";
 import { useEffect } from "react";
 import axios from "axios";
 import { selectAuth, setAuthentication } from "../store/authSlice";
-import CustomButton from "../Button/CustomButton";
+import CustomButton from "../components/Button/CustomButton";
 
 const LoginView = () => {
   const { t } = useTranslation();
@@ -192,9 +192,6 @@ const LoginView = () => {
                 throw new Error("Function not implemented.");
               }}
             />
-            {/* <Button disabled={status === 1} size="small" type="submit">
-              Login
-            </Button> */}
           </CardActions>
         </form>
       </Card>

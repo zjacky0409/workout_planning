@@ -11,9 +11,36 @@ interface StyledButtonProps {
   variant: string;
 }
 
+
+const variantToColor = (variant: string): string => {
+
+  let buttonColor = '#ea4c89'
+  switch (variant) {
+    case 'primary':
+      buttonColor = '#ea4c89'
+      break;
+    case 'danger':
+      buttonColor = "#d9534f";
+      break;
+    case 'info':
+      buttonColor = "#5bc0de"
+      break;
+    case "warning":
+      buttonColor = "#f0ad4e"
+      break;
+    case "cancel":
+      buttonColor = '#c2c2c2';
+      break;
+    default:
+      buttonColor = "#ea4c89";
+  }
+
+  return buttonColor
+}
+
 const StyledButton = styled.button<StyledButtonProps>`
   background-color: ${(props) =>
-    props.variant === "normal" ? "#ea4c89 " : "red"}; // should do switch here
+    variantToColor(props.variant)}; // should do switch here
   border-radius: 4px;
   border-style: none;
   color: #ffffff;

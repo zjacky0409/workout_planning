@@ -16,10 +16,12 @@ import * as yup from "yup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
-import { createUser } from "../store/authSlice";
+import { createUser, selectStatus } from "../store/authSlice";
 import { useAppSelector, useAppDispatch } from "../store/hook";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+import CustomButton from '../components/Button/CustomButton'
+import ConfirmDialog from '../components/Dialog/ConfirmDialog'
 
 interface IFormInput {
   firstName: string;
@@ -40,7 +42,10 @@ const schema = yup
     username: yup.string().required(),
     phoneNumber: yup.number().required(),
     emailAddress: yup.string().email().required(),
-    password: yup.string().required(),
+    password: yup.string().required().matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    ),
     confirmPassword: yup
       .string()
       .required()
@@ -51,28 +56,42 @@ const schema = yup
   .required();
 
 const RegistrationView = () => {
-  const [dShowPassword, setDShowPassword] = useState(true);
+  const [dShowPassword, setDShowPassword] = useState(false);
+  const [open, setOpen] = useState(false)
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [regSuccess, setRegSuccess] = useState(false);
 
+  const submitStatus = useAppSelector(selectStatus)
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const onSubmit = () => {
+    setOpen(true)
+  }
+
   const {
     register,
     control,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>({
     resolver: yupResolver(schema),
   });
-  const methods = useForm();
 
-  const onSubmit: SubmitHandler<any> = (data) => {
-    console.log(data);
-    dispatch(createUser(data))
+  const userInput = watch()
+
+  const sendDataToServer = () => {
+    console.log(userInput);
+    dispatch(createUser(userInput))
       .unwrap()
       .then((result) => {
         if (result.create_user === true) {
           setRegSuccess(true);
+          setOpen(false)
         } else {
           setRegSuccess(false);
         }
@@ -88,6 +107,7 @@ const RegistrationView = () => {
     setDShowPassword(event.target.checked);
   };
 
+
   return (
     <div
       style={{
@@ -97,7 +117,7 @@ const RegistrationView = () => {
         alignItems: "center",
       }}
     >
-      <Card raised sx={{ width: { xs: "90%", md: "50%" } }}>
+      <Card raised sx={{ width: { xs: "90%", md: "40%" } }}>
         {regSuccess && (
           <>
             <CardContent
@@ -108,7 +128,7 @@ const RegistrationView = () => {
                 gap: 1,
               }}
             >
-              <img src="/Logo.svg" alt="Logo" width="200" height="100" onClick={() => {navigate('/')}} />
+              <img src="/Logo.svg" style={{ cursor: "pointer" }} alt="Logo" width="200" height="100" onClick={() => { navigate('/') }} />
               <Typography variant="button" gutterBottom>
                 Registration Successfully
               </Typography>
@@ -142,7 +162,7 @@ const RegistrationView = () => {
                 gap: 3,
               }}
             >
-              <img src="/Logo.svg" alt="Logo" width="200" height="100" onClick={() => {navigate('/')}}/>
+              <img src="/Logo.svg" style={{ cursor: "pointer" }} alt="Logo" width="200" height="100" onClick={() => { navigate('/') }} />
               {/* <Typography variant="h6" sx={{marginRight:'auto'}}>Registration:</Typography> */}
               <div
                 style={{
@@ -359,16 +379,17 @@ const RegistrationView = () => {
                 </div>
               </div>
             </CardContent>
-            <CardActions sx={{ float: "right" }}>
-              <Button size="small" type="submit">
-                Register
-              </Button>
+            <CardActions sx={{ float: "right", p: 3 }}>
+              <CustomButton shownText="Register" type="submit" handler={function (): void {
+                throw new Error("Function not implemented.");
+              }} variant={""} />
             </CardActions>
           </form>
         )}
 
         {/* </FormProvider> */}
       </Card>
+      <ConfirmDialog disabled={submitStatus === 'loading'} hanlder={sendDataToServer} header={"Confirmation"} content={"Are you sure to submit the content"} open={open} handleClose={handleClose} />
     </div>
   );
 };
