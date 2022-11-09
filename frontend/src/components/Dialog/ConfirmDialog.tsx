@@ -6,14 +6,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CustomButton from '../Button/CustomButton';
 
 interface DialogProps {
-    hanlder: () => void;
-    header: string;
-    content: string;
-    open: boolean;
+    hanlder: () => void; // the action after the user click the confirm button
+    header: string; // content for the header
+    content: string; // content for the main body
+    open: boolean; // control the dialog open or not
     handleClose: () => void
-    disabled: boolean;
+    disabled: boolean; // disable the confirm button or not
 }
 
+// A Dialog Component
 const ConfirmDialog = ({ hanlder, header, content, open, handleClose, disabled }: DialogProps) => {
     return <Dialog
         open={open}

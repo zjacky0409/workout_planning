@@ -7,9 +7,8 @@ import GetConfigLayout from "./layout/GetConfigLayout";
 import { SideBarObject } from "./common";
 import RoutingLayout from "./layout/RoutingLayout";
 function App() {
-  // const routing = useRoutes(routes); // if we change the route, we will triger the rerander
+  // const routing = useRoutes(routes); // if we change the route, we will triger the re-render
   const [sideContent, setSideContent] = useState<SideBarObject[]>([]);
-  console.log("HIHI");
   return (
     <SideBarContext.Provider value={{ sideContent, setSideContent }}>
       <GetConfigLayout>

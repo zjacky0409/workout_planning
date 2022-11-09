@@ -1,16 +1,12 @@
 import {
   useForm,
   Controller,
-  SubmitHandler,
-  FormProvider,
 } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
-// import Input from "@mui/material/Card"
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import FormTextInput from "../components/form/FormTextInput";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Checkbox from "@mui/material/Checkbox";
@@ -23,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import CustomButton from '../components/Button/CustomButton'
 import ConfirmDialog from '../components/Dialog/ConfirmDialog'
 
+// declare the form structure
 interface IFormInput {
   firstName: string;
   lastName: string;
@@ -35,33 +32,36 @@ interface IFormInput {
   age: number;
 }
 
+// do the form vaildation with yup library
 const schema = yup
   .object({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    username: yup.string().required(),
-    phoneNumber: yup.number().required(),
-    emailAddress: yup.string().email().required(),
-    password: yup.string().required().matches(
+    firstName: yup.string().required('Please enter the first name'),
+    lastName: yup.string().required('Please enter the last name'),
+    username: yup.string().required('Please enter the username'),
+    phoneNumber: yup.number().typeError('Please enter a vaild phone number').required('Please enter a phone number'),
+    emailAddress: yup.string().email('Please enter a vaild email address').required('Please enter a email address'),
+    password: yup.string().required('Please enter the password').matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     ),
     confirmPassword: yup
       .string()
-      .required()
+      .required('Please enter the confirm password')
       .oneOf([yup.ref("password")], "Your password do not match."),
-    dateOfBirth: yup.string().required(),
-    age: yup.number().positive().integer().required(),
+    dateOfBirth: yup.string().required('Please enter or select a valid date'),
+    age: yup.number().positive().integer().required('Please enter the age'),
   })
   .required();
 
 const RegistrationView = () => {
-  const [dShowPassword, setDShowPassword] = useState(false);
-  const [open, setOpen] = useState(false)
+
+
+  const [dShowPassword, setDShowPassword] = useState(false); // show the password or not
+  const [open, setOpen] = useState(false) // open the confirm dialog or not
+  const [regSuccess, setRegSuccess] = useState(false); // registrate success or not
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [regSuccess, setRegSuccess] = useState(false);
-
   const submitStatus = useAppSelector(selectStatus)
 
   const handleClose = () => {
@@ -73,7 +73,6 @@ const RegistrationView = () => {
   }
 
   const {
-    register,
     control,
     watch,
     handleSubmit,
@@ -84,6 +83,8 @@ const RegistrationView = () => {
 
   const userInput = watch()
 
+
+  // Send the user data to the server and create the user object in the db
   const sendDataToServer = () => {
     console.log(userInput);
     dispatch(createUser(userInput))
@@ -100,6 +101,8 @@ const RegistrationView = () => {
       .catch((rejectedValueOrSerializedError) => {
         console.log(rejectedValueOrSerializedError);
         // handle error here
+        // TODO: error handling 
+        // 1. what if the user name already exist???
       });
   };
 
@@ -118,7 +121,7 @@ const RegistrationView = () => {
       }}
     >
       <Card raised sx={{ width: { xs: "90%", md: "40%" } }}>
-        {regSuccess && (
+        {regSuccess && ( // when registration successfully, we show the success view
           <>
             <CardContent
               sx={{
@@ -152,7 +155,7 @@ const RegistrationView = () => {
             </CardActions>
           </>
         )}
-        {!regSuccess && (
+        {!regSuccess && ( // show the reg form to the user
           <form onSubmit={handleSubmit(onSubmit)}>
             <CardContent
               sx={{
@@ -163,7 +166,6 @@ const RegistrationView = () => {
               }}
             >
               <img src="/Logo.svg" style={{ cursor: "pointer" }} alt="Logo" width="200" height="100" onClick={() => { navigate('/') }} />
-              {/* <Typography variant="h6" sx={{marginRight:'auto'}}>Registration:</Typography> */}
               <div
                 style={{
                   display: "flex",
@@ -172,6 +174,11 @@ const RegistrationView = () => {
                   gap: 5,
                 }}
               >
+                {/* 
+                  ref: https://react-hook-form.com/get-started#IntegratingwithUIlibraries 
+                  --> how to apply react hook form to the ui library with controller 
+                  --> TODO: implement it with component form? ref: https://react-hook-form.com/api/useformcontext
+                 */}
                 <Controller
                   name="firstName"
                   control={control}
@@ -349,12 +356,12 @@ const RegistrationView = () => {
                         {...field}
                         size="small"
                         // sx={{ flexGrow: 0.7 }}
-                        error={!!errors["age"]}
+                        error={!!errors["dateOfBirth"]}
                         InputLabelProps={{ shrink: true }}
                         label="Age"
                         type={"date"}
                         fullWidth
-                        helperText={errors["age"] ? errors["age"].message : ""}
+                        helperText={errors["dateOfBirth"] ? errors["dateOfBirth"].message : ""}
                       />
                     )}
                   />
@@ -363,14 +370,13 @@ const RegistrationView = () => {
                   <Controller
                     name="age"
                     control={control}
-                    // defaultValue={null}
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        // sx={{flexGrow: 0.3}}
                         size="small"
                         error={!!errors["age"]}
                         label="Age"
+                        type={'numebr'}
                         fullWidth
                         helperText={errors["age"] ? errors["age"].message : ""}
                       />
@@ -382,7 +388,7 @@ const RegistrationView = () => {
             <CardActions sx={{ float: "right", p: 3 }}>
               <CustomButton shownText="Register" type="submit" handler={function (): void {
                 throw new Error("Function not implemented.");
-              }} variant={""} />
+              }} variant="primary" />
             </CardActions>
           </form>
         )}

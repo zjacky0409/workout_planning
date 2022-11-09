@@ -1,4 +1,6 @@
-export const navigations = [
+// To define the content of the navigation bar content and  the relationship between different routes
+import { NavObject } from "./common"
+export const navigations: NavObject[] = [
     {
         name: 'Diet',
         path: '/diet/trainning_day',

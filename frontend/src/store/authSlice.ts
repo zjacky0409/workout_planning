@@ -10,25 +10,27 @@ export interface AuthState {
 
 const initialState: AuthState = {
   authentication: localStorage.getItem('access_token') !== null,
+  // if the localStorage have the access_token, we set the auth state to true, 
+  // then we will send the token to server in the GetConfigLayout to check the tkoken
   status: 'idle',
   username: '',
   userId: -999
 };
 
+// get the user infomation and config from the server and check the jwt token vaild or not
 export const getUserWithJwt = createAsyncThunk(
   'auth/getUser',
   async () => {
     const response = await getUser();
-    // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );
 
+// for registration page to create user
 export const createUser = createAsyncThunk(
   'auth/createUser',
   async (userData: any) => {
     const response = await createUserAPI(userData);
-    // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );
@@ -53,29 +55,24 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserWithJwt.pending, (state) => {
-        console.log('fetching data from the backend')
         state.status = 'loading';
       })
       .addCase(getUserWithJwt.fulfilled, (state, action) => {
         state.status = 'idle';
+        // set the username and userID
         state.username = action.payload.username;
         state.userId = action.payload.userId;
       })
       .addCase(getUserWithJwt.rejected, (state) => {
-        // state.authentication = false;
         state.status = 'failed';
       })
       .addCase(createUser.pending, (state) => {
-        console.log('fetching data from the backend')
         state.status = 'loading';
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.status = 'idle';
-        // state.username = action.payload.username;
-        // state.userId = action.payload.userId;
       })
       .addCase(createUser.rejected, (state) => {
-        // state.authentication = false;
         state.status = 'failed';
       });
   },

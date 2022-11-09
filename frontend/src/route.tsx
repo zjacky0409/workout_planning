@@ -9,6 +9,9 @@ import { Navigate } from "react-router-dom";
 import LoginView from "./view/LoginView";
 import ProtectedRoute from "./layout/ProtectedRoute";
 import RegistrationView from "./view/RegistrationView";
+
+// To define different route
+// ref: https://reactrouter.com/en/main/hooks/use-routes
 const routes: RouteObject[] = [
   {
     path: "/",

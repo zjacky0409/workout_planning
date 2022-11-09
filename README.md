@@ -1,5 +1,7 @@
 Hi Everyone, this is my new project. 
 
+If you want to know the details of frontend or backend, please read the README.md inside frontend or backend folder
+
 Frontend: ReactJS (Typescript)
 
 1. Add Mui For My material ui framework

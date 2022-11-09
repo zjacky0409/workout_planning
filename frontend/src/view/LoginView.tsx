@@ -1,16 +1,13 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useSSR, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -26,27 +23,31 @@ import CustomButton from "../components/Button/CustomButton";
 const LoginView = () => {
   const { t } = useTranslation();
 
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false); // if ture, we display the password to the user
   const dispatch = useAppDispatch();
 
   const auth = useAppSelector(selectAuth);
 
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [status, setStatus] = React.useState(0);
+  const [status, setStatus] = React.useState<'idle' | 'loading' | 'error'>('idle'); // login api status
   const navigate = useNavigate();
 
+  // go to main page when we detect the user already login
   useEffect(() => {
     if (auth) {
       navigate("/diet");
     }
   }, [auth, navigate]);
 
+
+  // send the account name and the password to the server and perform checking.
+  // if the user enter correct account and password, we store the jwt token to the localStorage and set auth state to true
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // alert("TODO: Login");
-    setStatus(1);
+    setStatus('loading');
 
+    // one way to fetch the data
     async function fetchData() {
       const loginInPromise = new Promise((resolve, reject) => {
         axios
@@ -64,14 +65,14 @@ const LoginView = () => {
       let result: any;
       try {
         result = await loginInPromise;
-        console.log("result == ", result);
-        setStatus(1);
+        setStatus('idle');
+        // we store the jwt token to the localStorage and set auth state to true
         localStorage.setItem("access_token", result.data.access_token);
         dispatch(setAuthentication());
         navigate("/");
       } catch (e) {
         console.log(e);
-        setStatus(2);
+        setStatus('error');
       }
     }
     fetchData();
@@ -89,6 +90,7 @@ const LoginView = () => {
     setPassword(event.target.value);
   };
 
+  // change the visibility for the password text box 
   const switchShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -116,12 +118,9 @@ const LoginView = () => {
             <img src="/Logo.svg" alt="Logo" width="200" height="100" />
 
             <FormControl variant="standard" sx={{ width: "90%" }} required>
-              {/* <InputLabel htmlFor="input-with-icon-adornment">
-                Account Name:
-              </InputLabel> */}
               <Input
                 value={username}
-                disabled={status === 1}
+                disabled={status === 'loading'}
                 onChange={(
                   e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
                 ) => handleUsername(e)}
@@ -130,7 +129,6 @@ const LoginView = () => {
                     <AccountCircle />
                   </InputAdornment>
                 }
-                // required
               />
               <FormHelperText>Account Name</FormHelperText>
             </FormControl>
@@ -139,25 +137,21 @@ const LoginView = () => {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  // justifyContent: "space-between",
                   alignContent: "center",
                   alignItems: "center",
                 }}
               >
                 <div style={{ width: "90%" }}>
-                  {/* <InputLabel htmlFor="input-with-icon-adornment">
-                    Password:
-                  </InputLabel> */}
                   <Input
                     value={password}
-                    disabled={status === 1}
+                    disabled={status === 'loading'}
                     onChange={(
                       e: React.ChangeEvent<
                         HTMLTextAreaElement | HTMLInputElement
                       >
                     ) => handlePassword(e)}
                     sx={{ width: "100%" }}
-                    type={!showPassword ? "password" : "text"}
+                    type={!showPassword ? "password" : "text"} // here to set the visibility for the password
                   />
                   <FormHelperText>Password</FormHelperText>
                 </div>
@@ -167,9 +161,9 @@ const LoginView = () => {
               </div>
             </FormControl>
 
-            {status === 1 && <CircularProgress />}
+            {status === 'loading' && <CircularProgress />}
 
-            {status === 2 && (
+            {status === 'error' && (
               <Alert severity="error" sx={{ width: "90%" }}>
                 Incorrect Account or Incorrect Password
               </Alert>
@@ -181,13 +175,13 @@ const LoginView = () => {
                 navigate("/registration");
               }}
               shownText="Register"
-              variant={"TEST"}
+              variant={"primary"}
             />
             <CustomButton
               type="submit"
               shownText="Login"
-              variant={"normal"}
-              disabled={status === 1}
+              variant={"primary"}
+              disabled={status === 'loading'}
               handler={function (): void {
                 throw new Error("Function not implemented.");
               }}

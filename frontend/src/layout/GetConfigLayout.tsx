@@ -11,8 +11,8 @@ const GetConfigLayout = (props: PropsType) => {
   const auth = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
 
-  console.log("HIHI");
-
+  // when the auth state is true(i.e. the jwt token exist on the localstorage or we login successfully)
+  // we need to get the user info and the config from the server
   useEffect(() => {
     if (auth === true) {
       dispatch(getUserWithJwt());

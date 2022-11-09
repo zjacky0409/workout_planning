@@ -1,10 +1,5 @@
-import Box from "@mui/material/Box";
-import SideBar from "./SideBar";
-import TopBar from "./TopBar";
-import Typography from "@mui/material/Typography";
-import { selectCount } from "../store/counterSlice";
 import { selectAuth, selectStatus } from "../store/authSlice";
-import { useAppSelector, useAppDispatch } from "../store/hook";
+import { useAppSelector } from "../store/hook";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -15,16 +10,20 @@ interface PropsType {
 
 const ProtectedRoute = (props: PropsType) => {
   const auth = useAppSelector(selectAuth);
+
+  // status for vertify the jet token and get the user info from the server
   const status = useAppSelector(selectStatus);
 
   const navigate = useNavigate();
 
+  // if the auth state is false, we redirect to the login page
   useEffect(() => {
     if (!auth) {
       navigate("/login");
     }
   }, [auth, navigate]);
 
+  // when we vertify the jet token and get the user info from the server, we show loading page to the user
   if (status !== "idle") {
     return (
       <div
@@ -32,14 +31,18 @@ const ProtectedRoute = (props: PropsType) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height:'100vh'
+          height:'100vh',
+          flexDirection:'column'
         }}
       >
         <CircularProgress />
+        <h1>Loading...</h1>
       </div>
     );
   }
 
+
+  // when we vertify the jwt token, everything are correct
   return <>{props.children}</>;
 };
 export default ProtectedRoute;

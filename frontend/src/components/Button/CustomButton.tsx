@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 interface ButtonProp extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  shownText: string;
-  handler: () => void;
-  variant: string;
+  shownText: string; // The text in the button
+  handler: () => void; // the action after clicking the button
+  variant: 'primary' | 'danger' | 'info' | 'warning' | 'cancel'; // i define different variant for the button
 }
+// React.ButtonHTMLAttributes<HTMLButtonElement> means that we also accept other props that from the button html 
 
 interface StyledButtonProps {
   variant: string;
@@ -38,6 +39,8 @@ const variantToColor = (variant: string): string => {
   return buttonColor
 }
 
+// I try to use styled-component to perform css 
+// noted that if we want to use styled-component in ts, we need to npm install another package called @types/styled-components
 const StyledButton = styled.button<StyledButtonProps>`
   background-color: ${(props) =>
     variantToColor(props.variant)}; // should do switch here

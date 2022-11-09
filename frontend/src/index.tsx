@@ -11,8 +11,11 @@ import { Provider } from 'react-redux';
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+// https://stackoverflow.com/questions/61254372/my-react-component-is-rendering-twice-because-of-strict-mode
+
 root.render(
-  <React.StrictMode>
+  <React.StrictMode> 
     <Provider store={store}>
       <Router>
         <App />
