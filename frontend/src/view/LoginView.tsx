@@ -170,7 +170,7 @@ const LoginView = () => {
 
             {status === 'error' && (
               <Alert severity="error" sx={{ width: "90%" }}>
-                Incorrect Account or Incorrect Password
+                {t('Incorrect Account or Incorrect Password')}
               </Alert>
             )}
           </CardContent>

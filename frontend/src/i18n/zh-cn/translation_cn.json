@@ -22,5 +22,7 @@
   "Registration Successfully":"注册成功",
   "Now you can go to login page to explore a new journey.":"现在您可以进入登录页面探索新的旅程。",
   "Remember: Eat, Train, Sleep and Enjoy":"记住：吃饭、训练、睡觉和享受",
-  "Explore Now":"立即探索"
+  "Explore Now":"立即探索",
+  "Incorrect Account or Incorrect Password":"帐户或密码错误",
+  "Loading...":"正在加载..."
 }

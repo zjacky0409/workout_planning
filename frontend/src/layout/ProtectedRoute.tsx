@@ -3,7 +3,7 @@ import { useAppSelector } from "../store/hook";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import { useTranslation } from 'react-i18next'
 interface PropsType {
   children: JSX.Element;
 }
@@ -13,6 +13,8 @@ const ProtectedRoute = (props: PropsType) => {
 
   // status for vertify the jet token and get the user info from the server
   const status = useAppSelector(selectStatus);
+
+  const { t } = useTranslation()
 
   const navigate = useNavigate();
 
@@ -31,12 +33,12 @@ const ProtectedRoute = (props: PropsType) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height:'100vh',
-          flexDirection:'column'
+          height: '100vh',
+          flexDirection: 'column'
         }}
       >
         <CircularProgress />
-        <h1>Loading...</h1>
+        <h1>{t('Loading...')}</h1>
       </div>
     );
   }
