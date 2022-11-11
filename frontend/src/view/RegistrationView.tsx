@@ -61,7 +61,7 @@ const RegistrationView = () => {
 
   const [dShowPassword, setDShowPassword] = useState(false); // show the password or not
   const [open, setOpen] = useState(false) // open the confirm dialog or not
-  const [regSuccess, setRegSuccess] = useState(true); // registrate success or not
+  const [regSuccess, setRegSuccess] = useState(false); // registrate success or not
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
