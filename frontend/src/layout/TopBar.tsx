@@ -42,13 +42,17 @@ const TopBar = () => {
   const dispatch = useAppDispatch()
 
   const userName = useAppSelector(selectUsername)
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
+
+  
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
 
+  // for setting the language setting popover
   const [anchorElLang, setAnchorElLang] = React.useState<null | HTMLElement>(
     null
   );
@@ -65,6 +69,7 @@ const TopBar = () => {
 
   const { t, i18n } = useTranslation();
 
+  // change the lanuage
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
@@ -88,12 +93,15 @@ const TopBar = () => {
     setAnchorElUser(null);
   };
 
+  // when we logout, we remove the access_token and set auth state to false 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
     dispatch(clearAuthentication())
     setAnchorElUser(null);
   }
 
+
+  // to set the user meun content
   const settings = [{ name: "Logout", action: handleLogout }];
 
 

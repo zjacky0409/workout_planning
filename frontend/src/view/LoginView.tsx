@@ -19,10 +19,15 @@ import { useEffect } from "react";
 import axios from "axios";
 import { selectAuth, setAuthentication } from "../store/authSlice";
 import CustomButton from "../components/Button/CustomButton";
+import ChangeLangSelect from "../components/ChangeLangSelect";
+const lang_choice = [
+  { name: "English", value: "en" },
+  { name: "繁體中文", value: "zh_hk" },
+  { name: "简体中文", value: "zh_cn" },
+];
 
 const LoginView = () => {
-  const { t } = useTranslation();
-
+  const { t, i18n } = useTranslation();
   const [showPassword, setShowPassword] = React.useState(false); // if ture, we display the password to the user
   const dispatch = useAppDispatch();
 
@@ -30,7 +35,7 @@ const LoginView = () => {
 
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [status, setStatus] = React.useState<'idle' | 'loading' | 'error'>('idle'); // login api status
+  const [status, setStatus] = React.useState<'idle' | 'pending' | 'error'>('idle'); // login api status
   const navigate = useNavigate();
 
   // go to main page when we detect the user already login
@@ -45,7 +50,7 @@ const LoginView = () => {
   // if the user enter correct account and password, we store the jwt token to the localStorage and set auth state to true
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setStatus('loading');
+    setStatus('pending');
 
     // one way to fetch the data
     async function fetchData() {
@@ -120,7 +125,7 @@ const LoginView = () => {
             <FormControl variant="standard" sx={{ width: "90%" }} required>
               <Input
                 value={username}
-                disabled={status === 'loading'}
+                disabled={status === 'pending'}
                 onChange={(
                   e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
                 ) => handleUsername(e)}
@@ -130,7 +135,7 @@ const LoginView = () => {
                   </InputAdornment>
                 }
               />
-              <FormHelperText>Account Name</FormHelperText>
+              <FormHelperText>{t('Account Name')}</FormHelperText>
             </FormControl>
             <FormControl variant="standard" sx={{ width: "90%" }} required>
               <div
@@ -144,7 +149,7 @@ const LoginView = () => {
                 <div style={{ width: "90%" }}>
                   <Input
                     value={password}
-                    disabled={status === 'loading'}
+                    disabled={status === 'pending'}
                     onChange={(
                       e: React.ChangeEvent<
                         HTMLTextAreaElement | HTMLInputElement
@@ -153,7 +158,7 @@ const LoginView = () => {
                     sx={{ width: "100%" }}
                     type={!showPassword ? "password" : "text"} // here to set the visibility for the password
                   />
-                  <FormHelperText>Password</FormHelperText>
+                  <FormHelperText>{t('Password')}</FormHelperText>
                 </div>
                 <Button onClick={switchShowPassword}>
                   {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -161,7 +166,7 @@ const LoginView = () => {
               </div>
             </FormControl>
 
-            {status === 'loading' && <CircularProgress />}
+            {status === 'pending' && <CircularProgress />}
 
             {status === 'error' && (
               <Alert severity="error" sx={{ width: "90%" }}>
@@ -169,23 +174,28 @@ const LoginView = () => {
               </Alert>
             )}
           </CardContent>
-          <CardActions sx={{ float: "right" }}>
-            <CustomButton
-              handler={() => {
-                navigate("/registration");
-              }}
-              shownText="Register"
-              variant={"primary"}
-            />
-            <CustomButton
-              type="submit"
-              shownText="Login"
-              variant={"primary"}
-              disabled={status === 'loading'}
-              handler={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
+          <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ padding: 10 }}>
+              <ChangeLangSelect />
+            </div>
+            <div style={{ display: 'flex', gap: 5 }}>
+              <CustomButton
+                handler={() => {
+                  navigate("/registration");
+                }}
+                shownText={t("Register")}
+                variant={"primary"}
+              />
+              <CustomButton
+                type="submit"
+                shownText={t("Login")}
+                variant={"primary"}
+                disabled={status === 'pending'}
+                handler={function (): void {
+                  throw new Error("Function not implemented.");
+                }}
+              />
+            </div>
           </CardActions>
         </form>
       </Card>

@@ -11,7 +11,7 @@ import { SideBarContext } from "../context/SideBarContext";
 import { Link, useLocation } from "react-router-dom";
 import { navigations } from "../navgation";
 import { SideBarObject, PageObject } from "../common";
-
+import { useTranslation } from "react-i18next";
 const drawerWidth = 240;
 
 interface SideBarProp {
@@ -22,6 +22,9 @@ interface SideBarProp {
 // Drawer aka side bar
 
 export default function SideBar({ content = "Diet" }: SideBarProp) {
+
+  const { t, i18n } = useTranslation();
+
 
   const currentSideBar = React.useContext(SideBarContext);
   const location = useLocation();

@@ -20,7 +20,7 @@ export const resources = {
 
 i18n.use(initReactI18next).init({
     resources,
-    fallbackLng: 'en',
+    fallbackLng: localStorage.getItem('lang') || 'en',
     interpolation: {
         escapeValue: false, // not needed for react as it escapes by default
     },

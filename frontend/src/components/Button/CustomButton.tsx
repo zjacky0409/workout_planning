@@ -53,7 +53,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     sans-serif;
   font-size: 14px;
   font-weight: 500;
-  height: 35px;
+  line-height: 16px;
   padding: 10px 16px;
   position: relative;
   text-align: center;

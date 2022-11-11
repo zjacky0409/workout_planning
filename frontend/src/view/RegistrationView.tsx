@@ -18,7 +18,8 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import CustomButton from '../components/Button/CustomButton'
 import ConfirmDialog from '../components/Dialog/ConfirmDialog'
-
+import { useTranslation } from 'react-i18next'
+import ChangeLangSelect from "../components/ChangeLangSelect";
 // declare the form structure
 interface IFormInput {
   firstName: string;
@@ -55,10 +56,12 @@ const schema = yup
 
 const RegistrationView = () => {
 
+  const { t, i18n } = useTranslation();
+
 
   const [dShowPassword, setDShowPassword] = useState(false); // show the password or not
   const [open, setOpen] = useState(false) // open the confirm dialog or not
-  const [regSuccess, setRegSuccess] = useState(false); // registrate success or not
+  const [regSuccess, setRegSuccess] = useState(true); // registrate success or not
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -133,25 +136,19 @@ const RegistrationView = () => {
             >
               <img src="/Logo.svg" style={{ cursor: "pointer" }} alt="Logo" width="200" height="100" onClick={() => { navigate('/') }} />
               <Typography variant="button" gutterBottom>
-                Registration Successfully
+                {t('Registration Successfully')}
               </Typography>
               <Typography variant="caption" gutterBottom>
-                Now you can go to login page to explore a new journey.
+                {t('Now you can go to login page to explore a new journey.')}
               </Typography>
               <Typography variant="caption" gutterBottom>
-                Remember: Eat, Train, Sleep and Enjoy
+                {t('Remember: Eat, Train, Sleep and Enjoy')}
               </Typography>
             </CardContent>
             <CardActions>
-              <Button
-                size="small"
-                sx={{ margin: 'auto' }}
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                Explore Now
-              </Button>
+              <div style={{ margin: 'auto' }}>
+                <CustomButton shownText={t('Explore Now')} handler={() => navigate("/")} variant={"primary"} />
+              </div>
             </CardActions>
           </>
         )}
@@ -188,7 +185,7 @@ const RegistrationView = () => {
                       {...field}
                       error={!!errors["firstName"]}
                       size="small"
-                      label="First Name"
+                      label={t("First Name")}
                       fullWidth
                       helperText={
                         errors["firstName"] ? errors["firstName"].message : ""
@@ -205,7 +202,7 @@ const RegistrationView = () => {
                       {...field}
                       size="small"
                       error={!!errors["lastName"]}
-                      label="Last Name"
+                      label={t("Last Name")}
                       fullWidth
                       helperText={
                         errors["lastName"] ? errors["lastName"].message : ""
@@ -224,7 +221,7 @@ const RegistrationView = () => {
                     {...field}
                     size="small"
                     error={!!errors["username"]}
-                    label="Username"
+                    label={t("Username")}
                     fullWidth
                     helperText={
                       errors["username"] ? errors["username"].message : ""
@@ -241,7 +238,7 @@ const RegistrationView = () => {
                     {...field}
                     size="small"
                     error={!!errors["phoneNumber"]}
-                    label="Phone Number"
+                    label={t("Phone Number")}
                     fullWidth
                     // type="tel"
                     helperText={
@@ -259,7 +256,7 @@ const RegistrationView = () => {
                     {...field}
                     size="small"
                     error={!!errors["emailAddress"]}
-                    label="Email Address"
+                    label={t("Email Address")}
                     type="email"
                     fullWidth
                     helperText={
@@ -295,7 +292,7 @@ const RegistrationView = () => {
                         {...field}
                         size="small"
                         error={!!errors["password"]}
-                        label="Password"
+                        label={t("Password")}
                         type={dShowPassword ? "text" : "password"}
                         fullWidth
                         helperText={
@@ -313,7 +310,7 @@ const RegistrationView = () => {
                         {...field}
                         size="small"
                         error={!!errors["confirmPassword"]}
-                        label="Confirm Password"
+                        label={t("Confirm Password")}
                         type={dShowPassword ? "text" : "password"}
                         fullWidth
                         helperText={
@@ -334,7 +331,7 @@ const RegistrationView = () => {
                       onChange={handleChange}
                     />
                   }
-                  label="Show Password"
+                  label={t("Show Password")}
                 />
               </div>
 
@@ -358,7 +355,7 @@ const RegistrationView = () => {
                         // sx={{ flexGrow: 0.7 }}
                         error={!!errors["dateOfBirth"]}
                         InputLabelProps={{ shrink: true }}
-                        label="Age"
+                        label={t("Age")}
                         type={"date"}
                         fullWidth
                         helperText={errors["dateOfBirth"] ? errors["dateOfBirth"].message : ""}
@@ -375,7 +372,7 @@ const RegistrationView = () => {
                         {...field}
                         size="small"
                         error={!!errors["age"]}
-                        label="Age"
+                        label={t("Age")}
                         type={'numebr'}
                         fullWidth
                         helperText={errors["age"] ? errors["age"].message : ""}
@@ -385,8 +382,11 @@ const RegistrationView = () => {
                 </div>
               </div>
             </CardContent>
-            <CardActions sx={{ float: "right", p: 3 }}>
-              <CustomButton shownText="Register" type="submit" handler={function (): void {
+            <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ padding: 10 }}>
+                <ChangeLangSelect />
+              </div>
+              <CustomButton shownText={t("Register")} type="submit" handler={function (): void {
                 throw new Error("Function not implemented.");
               }} variant="primary" />
             </CardActions>
@@ -395,7 +395,7 @@ const RegistrationView = () => {
 
         {/* </FormProvider> */}
       </Card>
-      <ConfirmDialog disabled={submitStatus === 'loading'} hanlder={sendDataToServer} header={"Confirmation"} content={"Are you sure to submit the content"} open={open} handleClose={handleClose} />
+      <ConfirmDialog disabled={submitStatus === 'pending'} hanlder={sendDataToServer} header={"Confirmation"} content={"Are you sure to submit the content"} open={open} handleClose={handleClose} />
     </div>
   );
 };

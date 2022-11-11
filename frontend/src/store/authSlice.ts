@@ -3,9 +3,10 @@ import { RootState } from './store';
 import { getUser, createUserAPI } from '../api/authApi';
 export interface AuthState {
   authentication: boolean;
-  status: 'idle' | 'loading' | 'failed';
+  status: 'idle' | 'pending' | 'failed';
   username: string,
-  userId: number
+  userId: number,
+  currentRequestId?: string
 }
 
 const initialState: AuthState = {
@@ -14,7 +15,8 @@ const initialState: AuthState = {
   // then we will send the token to server in the GetConfigLayout to check the tkoken
   status: 'idle',
   username: '',
-  userId: -999
+  userId: -999,
+  currentRequestId: undefined,
 };
 
 // get the user infomation and config from the server and check the jwt token vaild or not
@@ -54,31 +56,57 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUserWithJwt.pending, (state) => {
-        state.status = 'loading';
+      .addCase(getUserWithJwt.pending, (state, action) => {
+        state.status = 'pending';
+        state.currentRequestId = action.meta.requestId
       })
       .addCase(getUserWithJwt.fulfilled, (state, action) => {
-        state.status = 'idle';
-        // set the username and userID
-        state.username = action.payload.username;
-        state.userId = action.payload.userId;
+        const { requestId } = action.meta
+        if (
+          state.status === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          state.status = 'idle';
+          // set the username and userID
+          state.username = action.payload.username;
+          state.userId = action.payload.userId;
+        }
+
       })
-      .addCase(getUserWithJwt.rejected, (state) => {
-        state.status = 'failed';
+      .addCase(getUserWithJwt.rejected, (state, action) => {
+        const { requestId } = action.meta
+        if (
+          state.status === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          state.status = 'failed';
+        }
       })
       .addCase(createUser.pending, (state) => {
-        state.status = 'loading';
+        state.status = 'pending';
       })
       .addCase(createUser.fulfilled, (state, action) => {
-        state.status = 'idle';
+        const { requestId } = action.meta
+        if (
+          state.status === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          state.status = 'idle';
+        }
       })
-      .addCase(createUser.rejected, (state) => {
-        state.status = 'failed';
+      .addCase(createUser.rejected, (state, action) => {
+        const { requestId } = action.meta
+        if (
+          state.status === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          state.status = 'failed';
+        }
       });
   },
 });
 
-export const { setAuthentication,clearAuthentication, setUsername, setUserId  } = authSlice.actions;
+export const { setAuthentication, clearAuthentication, setUsername, setUserId } = authSlice.actions;
 
 export const selectUsername = (state: RootState) => state.auth.username;
 export const selectUserId = (state: RootState) => state.auth.userId;

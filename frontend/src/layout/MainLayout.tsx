@@ -2,12 +2,16 @@ import Box from "@mui/material/Box";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar";
 import Typography from "@mui/material/Typography";
+import { useTranslation } from "react-i18next";
+
 interface PropsType {
   children: JSX.Element;
   content: string;
 }
 
 const MainLayout = (props: PropsType) => {
+  const { t, i18n } = useTranslation();
+
   return (
     <div>
       {/* <CssBaseline /> */}
@@ -59,7 +63,7 @@ const MainLayout = (props: PropsType) => {
               gutterBottom
               sx={{ textAlign: "center" }}
             >
-              Copyright © Jacky Luo. Just For Fun
+              {t("Copyright")}
             </Typography>
           </div>
         </div>

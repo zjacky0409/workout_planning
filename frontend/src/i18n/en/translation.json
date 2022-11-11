@@ -3,5 +3,25 @@
   "Program": "Program",
   "Exercises": "Exercises",
   "Resource": "Resource",
-  "Progress": "Progress"
+  "Progress": "Progress",
+  "Copyright": "Copyright © Jacky Luo. Just For Fun",
+  "Account Name": "Account Name",
+  "Password": "Password",
+  "Register": "Register",
+  "Login": "Login",
+  "Language": "Language",
+  "First Name":"First Name",
+  "Last Name":"First Name",
+  "Username":"Username",
+  "Phone Number":"Phone Number",
+  "Email Address": "Email Address",
+  "Confirm Password":"Confirm Password",
+  "Show Password":"Show Password",
+  "Date Of Birth": "Date of Birth",
+  "Age":"Age",
+  "Registration Successfully":"Registration Successfully",
+  "Now you can go to login page to explore a new journey.":"Now you can go to login page to explore a new journey.",
+  "Remember: Eat, Train, Sleep and Enjoy":"Remember: Eat, Train, Sleep and Enjoy",
+  "Explore Now":"Explore Now"
+
 }
