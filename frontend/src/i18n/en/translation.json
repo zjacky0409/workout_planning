@@ -24,5 +24,18 @@
   "Remember: Eat, Train, Sleep and Enjoy":"Remember: Eat, Train, Sleep and Enjoy",
   "Explore Now":"Explore Now",
   "Incorrect Account or Incorrect Password":"Incorrect Account or Incorrect Password",
-  "Loading...":"Loading..."
+  "Loading...":"Loading...",
+  "Please enter the first name":"Please enter the first name",
+  "Please enter the last name":"Please enter the last name",
+  "Please enter the username":"Please enter the username",
+  "Please enter a valid phone number":"Please enter a valid phone number",
+  "Please enter a phone number": "Please enter a phone number",
+  "Please enter a valid email address":"Please enter a valid email address",
+  "Please enter the password":"Please enter the password",
+  "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character":"Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character",
+  "Please enter the confirm password":"Please enter the confirm password",
+  "Your password do not match":"Your password do not match",
+  "Please enter or select a valid date": "Please enter or select a valid date",
+  "Please enter the age": "Please enter the age",
+  "Please enter a email address":"Please enter a email address"
 }

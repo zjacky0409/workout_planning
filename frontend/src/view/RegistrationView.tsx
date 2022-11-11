@@ -1,7 +1,4 @@
-import {
-  useForm,
-  Controller,
-} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -16,9 +13,9 @@ import { createUser, selectStatus } from "../store/authSlice";
 import { useAppSelector, useAppDispatch } from "../store/hook";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import CustomButton from '../components/Button/CustomButton'
-import ConfirmDialog from '../components/Dialog/ConfirmDialog'
-import { useTranslation } from 'react-i18next'
+import CustomButton from "../components/Button/CustomButton";
+import ConfirmDialog from "../components/Dialog/ConfirmDialog";
+import { useTranslation } from "react-i18next";
 import ChangeLangSelect from "../components/ChangeLangSelect";
 // declare the form structure
 interface IFormInput {
@@ -33,47 +30,54 @@ interface IFormInput {
   age: number;
 }
 
-// do the form vaildation with yup library
+// do the form validation with yup library
 const schema = yup
   .object({
-    firstName: yup.string().required('Please enter the first name'),
-    lastName: yup.string().required('Please enter the last name'),
-    username: yup.string().required('Please enter the username'),
-    phoneNumber: yup.number().typeError('Please enter a vaild phone number').required('Please enter a phone number'),
-    emailAddress: yup.string().email('Please enter a vaild email address').required('Please enter a email address'),
-    password: yup.string().required('Please enter the password').matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-    ),
+    firstName: yup.string().required("Please enter the first name"),
+    lastName: yup.string().required("Please enter the last name"),
+    username: yup.string().required("Please enter the username"),
+    phoneNumber: yup
+      .number()
+      .typeError("Please enter a valid phone number")
+      .required("Please enter a phone number"),
+    emailAddress: yup
+      .string()
+      .email("Please enter a valid email address")
+      .required("Please enter a email address"),
+    password: yup
+      .string()
+      .required("Please enter the password")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      ),
     confirmPassword: yup
       .string()
-      .required('Please enter the confirm password')
-      .oneOf([yup.ref("password")], "Your password do not match."),
-    dateOfBirth: yup.string().required('Please enter or select a valid date'),
-    age: yup.number().positive().integer().required('Please enter the age'),
+      .required("Please enter the confirm password")
+      .oneOf([yup.ref("password")], "Your password do not match"),
+    dateOfBirth: yup.string().required("Please enter or select a valid date"),
+    age: yup.number().positive().integer().required("Please enter the age"),
   })
   .required();
 
 const RegistrationView = () => {
-
   const { t, i18n } = useTranslation();
 
-
   const [dShowPassword, setDShowPassword] = useState(false); // show the password or not
-  const [open, setOpen] = useState(false) // open the confirm dialog or not
+  const [open, setOpen] = useState(false); // open the confirm dialog or not
   const [regSuccess, setRegSuccess] = useState(false); // registrate success or not
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const submitStatus = useAppSelector(selectStatus)
+  const submitStatus = useAppSelector(selectStatus);
 
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const onSubmit = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const {
     control,
@@ -84,8 +88,7 @@ const RegistrationView = () => {
     resolver: yupResolver(schema),
   });
 
-  const userInput = watch()
-
+  const userInput = watch();
 
   // Send the user data to the server and create the user object in the db
   const sendDataToServer = () => {
@@ -95,7 +98,7 @@ const RegistrationView = () => {
       .then((result) => {
         if (result.create_user === true) {
           setRegSuccess(true);
-          setOpen(false)
+          setOpen(false);
         } else {
           setRegSuccess(false);
         }
@@ -104,7 +107,7 @@ const RegistrationView = () => {
       .catch((rejectedValueOrSerializedError) => {
         console.log(rejectedValueOrSerializedError);
         // handle error here
-        // TODO: error handling 
+        // TODO: error handling
         // 1. what if the user name already exist???
       });
   };
@@ -112,7 +115,6 @@ const RegistrationView = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDShowPassword(event.target.checked);
   };
-
 
   return (
     <div
@@ -134,20 +136,33 @@ const RegistrationView = () => {
                 gap: 1,
               }}
             >
-              <img src="/Logo.svg" style={{ cursor: "pointer" }} alt="Logo" width="200" height="100" onClick={() => { navigate('/') }} />
+              <img
+                src="/Logo.svg"
+                style={{ cursor: "pointer" }}
+                alt="Logo"
+                width="200"
+                height="100"
+                onClick={() => {
+                  navigate("/");
+                }}
+              />
               <Typography variant="button" gutterBottom>
-                {t('Registration Successfully')}
+                {t("Registration Successfully")}
               </Typography>
               <Typography variant="caption" gutterBottom>
-                {t('Now you can go to login page to explore a new journey.')}
+                {t("Now you can go to login page to explore a new journey.")}
               </Typography>
               <Typography variant="caption" gutterBottom>
-                {t('Remember: Eat, Train, Sleep and Enjoy')}
+                {t("Remember: Eat, Train, Sleep and Enjoy")}
               </Typography>
             </CardContent>
             <CardActions>
-              <div style={{ margin: 'auto' }}>
-                <CustomButton shownText={t('Explore Now')} handler={() => navigate("/")} variant={"primary"} />
+              <div style={{ margin: "auto" }}>
+                <CustomButton
+                  shownText={t("Explore Now")}
+                  handler={() => navigate("/")}
+                  variant={"primary"}
+                />
               </div>
             </CardActions>
           </>
@@ -162,7 +177,16 @@ const RegistrationView = () => {
                 gap: 3,
               }}
             >
-              <img src="/Logo.svg" style={{ cursor: "pointer" }} alt="Logo" width="200" height="100" onClick={() => { navigate('/') }} />
+              <img
+                src="/Logo.svg"
+                style={{ cursor: "pointer" }}
+                alt="Logo"
+                width="200"
+                height="100"
+                onClick={() => {
+                  navigate("/");
+                }}
+              />
               <div
                 style={{
                   display: "flex",
@@ -188,7 +212,12 @@ const RegistrationView = () => {
                       label={t("First Name")}
                       fullWidth
                       helperText={
-                        errors["firstName"] ? errors["firstName"].message : ""
+                        errors["firstName"]
+                          ? t(
+                              errors["firstName"]
+                                .message as unknown as TemplateStringsArray
+                            )
+                          : ""
                       }
                     />
                   )}
@@ -205,7 +234,12 @@ const RegistrationView = () => {
                       label={t("Last Name")}
                       fullWidth
                       helperText={
-                        errors["lastName"] ? errors["lastName"].message : ""
+                        errors["lastName"]
+                          ? t(
+                              errors["lastName"]
+                                .message as unknown as TemplateStringsArray
+                            )
+                          : ""
                       }
                     />
                   )}
@@ -224,7 +258,12 @@ const RegistrationView = () => {
                     label={t("Username")}
                     fullWidth
                     helperText={
-                      errors["username"] ? errors["username"].message : ""
+                      errors["username"]
+                        ? t(
+                            errors["username"]
+                              .message as unknown as TemplateStringsArray
+                          )
+                        : ""
                     }
                   />
                 )}
@@ -242,7 +281,12 @@ const RegistrationView = () => {
                     fullWidth
                     // type="tel"
                     helperText={
-                      errors["phoneNumber"] ? errors["phoneNumber"].message : ""
+                      errors["phoneNumber"]
+                        ? t(
+                            errors["phoneNumber"]
+                              .message as unknown as TemplateStringsArray
+                          )
+                        : ""
                     }
                   />
                 )}
@@ -261,7 +305,10 @@ const RegistrationView = () => {
                     fullWidth
                     helperText={
                       errors["emailAddress"]
-                        ? errors["emailAddress"].message
+                        ? t(
+                            errors["emailAddress"]
+                              .message as unknown as TemplateStringsArray
+                          )
                         : ""
                     }
                   />
@@ -296,7 +343,12 @@ const RegistrationView = () => {
                         type={dShowPassword ? "text" : "password"}
                         fullWidth
                         helperText={
-                          errors["password"] ? errors["password"].message : ""
+                          errors["password"]
+                            ? t(
+                                errors["password"]
+                                  .message as unknown as TemplateStringsArray
+                              )
+                            : ""
                         }
                       />
                     )}
@@ -315,7 +367,10 @@ const RegistrationView = () => {
                         fullWidth
                         helperText={
                           errors["confirmPassword"]
-                            ? errors["confirmPassword"].message
+                            ? t(
+                                errors["confirmPassword"]
+                                  .message as unknown as TemplateStringsArray
+                              )
                             : ""
                         }
                       />
@@ -358,7 +413,14 @@ const RegistrationView = () => {
                         label={t("Age")}
                         type={"date"}
                         fullWidth
-                        helperText={errors["dateOfBirth"] ? errors["dateOfBirth"].message : ""}
+                        helperText={
+                          errors["dateOfBirth"]
+                            ? t(
+                                errors["dateOfBirth"]
+                                  .message as unknown as TemplateStringsArray
+                              )
+                            : ""
+                        }
                       />
                     )}
                   />
@@ -373,29 +435,50 @@ const RegistrationView = () => {
                         size="small"
                         error={!!errors["age"]}
                         label={t("Age")}
-                        type={'numebr'}
+                        type={"numebr"}
                         fullWidth
-                        helperText={errors["age"] ? errors["age"].message : ""}
+                        helperText={
+                          errors["age"]
+                            ? t(
+                                errors["age"]
+                                  .message as unknown as TemplateStringsArray
+                              )
+                            : ""
+                        }
                       />
                     )}
                   />
                 </div>
               </div>
             </CardContent>
-            <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <CardActions
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
               <div style={{ padding: 10 }}>
                 <ChangeLangSelect />
               </div>
-              <CustomButton shownText={t("Register")} type="submit" handler={function (): void {
-                throw new Error("Function not implemented.");
-              }} variant="primary" />
+              <CustomButton
+                shownText={t("Register")}
+                type="submit"
+                handler={function (): void {
+                  throw new Error("Function not implemented.");
+                }}
+                variant="primary"
+              />
             </CardActions>
           </form>
         )}
 
         {/* </FormProvider> */}
       </Card>
-      <ConfirmDialog disabled={submitStatus === 'pending'} hanlder={sendDataToServer} header={"Confirmation"} content={"Are you sure to submit the content"} open={open} handleClose={handleClose} />
+      <ConfirmDialog
+        disabled={submitStatus === "pending"}
+        hanlder={sendDataToServer}
+        header={"Confirmation"}
+        content={"Are you sure to submit the content"}
+        open={open}
+        handleClose={handleClose}
+      />
     </div>
   );
 };

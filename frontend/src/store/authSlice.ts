@@ -19,7 +19,7 @@ const initialState: AuthState = {
   currentRequestId: undefined,
 };
 
-// get the user infomation and config from the server and check the jwt token vaild or not
+// get the user infomation and config from the server and check the jwt token valid or not
 export const getUserWithJwt = createAsyncThunk(
   'auth/getUser',
   async () => {

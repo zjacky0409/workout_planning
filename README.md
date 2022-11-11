@@ -3,18 +3,32 @@ Hi Everyone, this is my new project.
 If you want to know the details of frontend or backend, please read the README.md inside frontend or backend folder
 
 Frontend: ReactJS (Typescript)
+Backend: NestJS (Typescript)
+DB: PostgreDB
 
-1. Add Mui For My material ui framework
-2. Add react router dom v5 for the routing
-3. Basic design for my web app
 
-| Logo | Program | Diet         | Exercises     | Booking | Useful Resource | Progress                               |
-|------|---------|--------------|---------------|---------|-----------------|----------------------------------------|
-|      | Day1    | Rest Day     | Back          |         |                 | Some charts to show the process        |
-|      | Day2    | Training Day | Chest         |         |                 | Volumn....                             |
-|      | .....   | Macro        | ....Body Part |         |                 |                                        |
+To Run My Application:
 
-4. Add i18n for my app
+!! Need Docker in your OS
+
+1. git clone my project
+2. then cd to the project
+3. run docker compose build
+4. then run docker compose up
+
+Process
+
+1. Main layout for my appplication
+2. Login Systme With Jwt Authentication
+3. Internationalization(i18n) for my applcation 
+
+
+
+
+
+
+
+
 
 5. pull before or after commit --> we should pull before commit
 6. For the chart: we may use the chart js
@@ -24,6 +38,17 @@ Frontend: ReactJS (Typescript)
     so we need to use another method to achieve the goal.
 
 
-Backend: NestJS (Typescript)
-    DB: PostgreDB
-    TypeORM
+
+
+
+
+
+
+
+
+Basic Layout for my applciaton:
+| Logo | Program | Diet         | Exercises     | Booking | Useful Resource | Progress                               |
+|------|---------|--------------|---------------|---------|-----------------|----------------------------------------|
+|      | Day1    | Rest Day     | Back          |         |                 | Some charts to show the process        |
+|      | Day2    | Training Day | Chest         |         |                 | Volumn....                             |
+|      | .....   | Macro        | ....Body Part |         |                 |                                        |

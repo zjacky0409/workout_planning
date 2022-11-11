@@ -24,5 +24,18 @@
   "Remember: Eat, Train, Sleep and Enjoy":"记住：吃饭、训练、睡觉和享受",
   "Explore Now":"立即探索",
   "Incorrect Account or Incorrect Password":"帐户或密码错误",
-  "Loading...":"正在加载..."
+  "Loading...":"正在加载...",
+  "Please enter the first name":"请输入名字",
+  "Please enter the last name":"请输入姓氏",
+  "Please enter the username":"请输入用户名",
+  "Please enter a valid phone number":"请输入有效的电话号码",
+  "Please enter a phone number": "请输入电话号码",
+  "Please enter a valid email address":"请输入有效的电子邮件地址",
+  "Please enter the password":"请输入密码",
+  "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character":"必须包含 8 个字符，一个大写，一个小写，一个数字和一个特殊字符",
+  "Please enter the confirm password":"请输入确认密码",
+  "Your password do not match":"您的密码不匹配",
+  "Please enter or select a valid date": "请输入或选择有效日期",
+  "Please enter the age": "请输入年龄",
+  "Please enter a email address":"请输入电子邮件地址"
 }
