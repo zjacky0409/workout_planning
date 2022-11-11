@@ -38,7 +38,7 @@ const ProtectedRoute = (props: PropsType) => {
         }}
       >
         <CircularProgress />
-        <h1>{t('Loading...')}</h1>
+        <h2>{t('Loading...')}</h2>
       </div>
     );
   }
