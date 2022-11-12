@@ -37,5 +37,7 @@
   "Your password do not match": "您的密碼不匹配",
   "Please enter or select a valid date": "請輸入或選擇有效日期",
   "Please enter the age": "請輸入年齡",
-  "Please enter a email address":"請輸入電子郵件地址"
+  "Please enter a email address":"請輸入電子郵件地址",
+  "The username already existed":"用戶名已經存在",
+  "The email address already existed":"電子郵件地址已存在"
 }

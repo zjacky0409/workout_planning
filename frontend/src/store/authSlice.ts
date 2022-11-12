@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { getUser, createUserAPI } from '../api/authApi';
+import { getUser, createUserAPI, checkEmailExistAPI, checkUsernameExistAPI } from '../api/authApi';
 export interface AuthState {
   authentication: boolean;
   status: 'idle' | 'pending' | 'failed';
@@ -33,6 +33,25 @@ export const createUser = createAsyncThunk(
   'auth/createUser',
   async (userData: any) => {
     const response = await createUserAPI(userData);
+    return response.data;
+  }
+);
+
+// for registration page to create user
+export const checkEmailExist = createAsyncThunk(
+  'auth/checkEmailExist',
+  async (userData: any) => {
+    const response = await checkEmailExistAPI(userData);
+    return response.data;
+  }
+);
+
+
+// for registration page to create user
+export const checkUsernameExist = createAsyncThunk(
+  'auth/checkUsernameExist',
+  async (userData: any) => {
+    const response = await checkUsernameExistAPI(userData);
     return response.data;
   }
 );
@@ -95,6 +114,50 @@ export const authSlice = createSlice({
         }
       })
       .addCase(createUser.rejected, (state, action) => {
+        const { requestId } = action.meta
+        if (
+          state.status === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          state.status = 'failed';
+        }
+      })
+      .addCase(checkUsernameExist.pending, (state,action) => {
+        state.status = 'pending';
+        state.currentRequestId = action.meta.requestId
+      })
+      .addCase(checkUsernameExist.fulfilled, (state, action) => {
+        const { requestId } = action.meta
+        if (
+          state.status === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          state.status = 'idle';
+        }
+      })
+      .addCase(checkUsernameExist.rejected, (state, action) => {
+        const { requestId } = action.meta
+        if (
+          state.status === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          state.status = 'failed';
+        }
+      })
+      .addCase(checkEmailExist.pending, (state,action) => {
+        state.status = 'pending';
+        state.currentRequestId = action.meta.requestId
+      })
+      .addCase(checkEmailExist.fulfilled, (state, action) => {
+        const { requestId } = action.meta
+        if (
+          state.status === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          state.status = 'idle';
+        }
+      })
+      .addCase(checkEmailExist.rejected, (state, action) => {
         const { requestId } = action.meta
         if (
           state.status === 'pending' &&

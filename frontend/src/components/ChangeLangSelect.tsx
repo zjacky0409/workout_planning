@@ -26,7 +26,7 @@ const ChangeLangSelect = () => {
             <select value={lang} onChange={handleChange}>
                 {
                     lang_choice.map((lang) => {
-                        return <option value={lang.value}>{lang.name}</option>
+                        return <option key={lang.value} value={lang.value}>{lang.name}</option>
                     })
                 }
             </select>

@@ -3,13 +3,18 @@ import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
-import { createUser, selectStatus } from "../store/authSlice";
+import {
+  createUser,
+  selectStatus,
+  checkEmailExist,
+  checkUsernameExist,
+} from "../store/authSlice";
 import { useAppSelector, useAppDispatch } from "../store/hook";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +36,7 @@ interface IFormInput {
 }
 
 // do the form validation with yup library
+// TODO: I should use test for the username and email checking
 const schema = yup
   .object({
     firstName: yup.string().required("Please enter the first name"),
@@ -61,11 +67,14 @@ const schema = yup
   .required();
 
 const RegistrationView = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const [dShowPassword, setDShowPassword] = useState(false); // show the password or not
   const [open, setOpen] = useState(false); // open the confirm dialog or not
   const [regSuccess, setRegSuccess] = useState(false); // registrate success or not
+
+  const [usernameExist, setUsernameExist] = useState(false);
+  const [emailExist, setEmailExist] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -83,6 +92,9 @@ const RegistrationView = () => {
     control,
     watch,
     handleSubmit,
+    setError,
+    getValues,
+    clearErrors,
     formState: { errors },
   } = useForm<IFormInput>({
     resolver: yupResolver(schema),
@@ -90,9 +102,52 @@ const RegistrationView = () => {
 
   const userInput = watch();
 
+  const usernameExistChecking = () => {
+    dispatch(checkUsernameExist({ username: userInput.username }))
+      .unwrap()
+      .then((result) => {
+        if (result.exist === true) {
+          setUsernameExist(true);
+          setError("username", { type: "focus" }, { shouldFocus: false })
+        } else {
+          setUsernameExist(false);
+          clearErrors("username")
+        }
+        // handle result here
+      })
+      .catch((rejectedValueOrSerializedError) => {
+        console.log(rejectedValueOrSerializedError);
+        // handle error here
+        // TODO: error handling
+        // 1. what if the user name already exist???
+      });
+  };
+
+  const emailExistChecking = () => {
+    dispatch(checkEmailExist({ emailAddress: userInput.emailAddress }))
+      .unwrap()
+      .then((result) => {
+        if (result.exist === true) {
+          setEmailExist(true);
+          setError("emailAddress", { type: "focus" }, { shouldFocus: true })
+        } else {
+          setEmailExist(false);
+          clearErrors("emailAddress")
+        }
+        // handle result here
+      })
+      .catch((rejectedValueOrSerializedError) => {
+        console.log(rejectedValueOrSerializedError);
+        // handle error here
+        // TODO: error handling
+        // 1. what if the user name already exist???
+      });
+  };
+
+  console.log(getValues())
+
   // Send the user data to the server and create the user object in the db
   const sendDataToServer = () => {
-    console.log(userInput);
     dispatch(createUser(userInput))
       .unwrap()
       .then((result) => {
@@ -114,6 +169,22 @@ const RegistrationView = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDShowPassword(event.target.checked);
+  };
+
+  const handleDuplicateError = (type: "username" | "emailAddress"): string => {
+    if (usernameExist && type === "username") {
+      return t("The username already existed");
+    }
+
+    if (emailExist && type === "emailAddress") {
+      return t("The email address already existed");
+    }
+
+    if (errors[type]) {
+      // TODO here quite confuse, why i need to add ? here 
+      return t(errors[type]?.message as unknown as TemplateStringsArray);
+    }
+    return "";
   };
 
   return (
@@ -256,22 +327,16 @@ const RegistrationView = () => {
                     size="small"
                     error={!!errors["username"]}
                     label={t("Username")}
+                    onBlur={() => usernameExistChecking()}
                     fullWidth
-                    helperText={
-                      errors["username"]
-                        ? t(
-                            errors["username"]
-                              .message as unknown as TemplateStringsArray
-                          )
-                        : ""
-                    }
+                    helperText={handleDuplicateError("username")}
                   />
                 )}
               />
               <Controller
                 name="phoneNumber"
                 control={control}
-                // defaultValue=
+                defaultValue={1}
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -279,7 +344,8 @@ const RegistrationView = () => {
                     error={!!errors["phoneNumber"]}
                     label={t("Phone Number")}
                     fullWidth
-                    // type="tel"
+                    // type="number"
+                    inputProps={{ inputMode: 'numeric'}}
                     helperText={
                       errors["phoneNumber"]
                         ? t(
@@ -301,16 +367,10 @@ const RegistrationView = () => {
                     size="small"
                     error={!!errors["emailAddress"]}
                     label={t("Email Address")}
+                    onBlur={() => emailExistChecking()}
                     type="email"
                     fullWidth
-                    helperText={
-                      errors["emailAddress"]
-                        ? t(
-                            errors["emailAddress"]
-                              .message as unknown as TemplateStringsArray
-                          )
-                        : ""
-                    }
+                    helperText={handleDuplicateError("emailAddress")}
                   />
                 )}
               />
@@ -322,12 +382,13 @@ const RegistrationView = () => {
                   width: "100%",
                 }}
               >
-                <div
-                  style={{
+                <Box
+                  sx={{
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection: { xs: "column", md: "row" },
+                    // flexWrap: 'wrap',
                     width: "100%",
-                    gap: 5,
+                    gap: 1,
                   }}
                 >
                   <Controller
@@ -376,7 +437,7 @@ const RegistrationView = () => {
                       />
                     )}
                   />
-                </div>
+                </Box>
                 <FormControlLabel
                   sx={{ marginRight: "auto", p: 0 }}
                   control={
@@ -410,7 +471,7 @@ const RegistrationView = () => {
                         // sx={{ flexGrow: 0.7 }}
                         error={!!errors["dateOfBirth"]}
                         InputLabelProps={{ shrink: true }}
-                        label={t("Age")}
+                        label={t("Date Of Birth")}
                         type={"date"}
                         fullWidth
                         helperText={
@@ -429,13 +490,15 @@ const RegistrationView = () => {
                   <Controller
                     name="age"
                     control={control}
+                    defaultValue={1}
                     render={({ field }) => (
                       <TextField
                         {...field}
                         size="small"
                         error={!!errors["age"]}
                         label={t("Age")}
-                        type={"numebr"}
+                        // type="number"
+                        inputProps={{ inputMode: 'numeric'}}
                         fullWidth
                         helperText={
                           errors["age"]

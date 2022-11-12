@@ -16,3 +16,20 @@ export async function createUserAPI(jsonData: any) {
         jsonData,);
     return response
 }
+
+export async function checkEmailExistAPI(jsonData: any) {
+    const response = await axios.post("http://localhost:4000/user/check_email_duplicate",
+        jsonData,);
+    return response
+}
+
+export async function checkUsernameExistAPI(jsonData: any) {
+    const response = await axios.post("http://localhost:4000/user/check_username_duplicate",
+        jsonData,);
+    return response
+}
+
+
+
+
+

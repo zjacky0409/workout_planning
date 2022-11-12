@@ -37,5 +37,7 @@
   "Your password do not match":"Your password do not match",
   "Please enter or select a valid date": "Please enter or select a valid date",
   "Please enter the age": "Please enter the age",
-  "Please enter a email address":"Please enter a email address"
+  "Please enter a email address":"Please enter a email address",
+  "The username already existed":"The username already existed",
+  "The email address already existed":"The email address already existed"
 }
