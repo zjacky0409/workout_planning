@@ -8,12 +8,14 @@ import * as crypto from 'crypto';
 import { CheckUserNameDto } from './dto/check-username.dto';
 import e from 'express';
 import { CheckEmailDto } from './dto/check-email.dto';
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async checkUsernameExist(data: CheckUserNameDto): Promise<boolean> {
     const user = await this.userRepository.findOneBy({
@@ -45,10 +47,12 @@ export class UserService {
       isActive: true,
     };
 
-    user['password'] = crypto
-      .createHash('md5')
-      .update(user['password'] + 'workout_planning_test_salt')
-      .digest('hex');
+    const saltOrRounds = 10;
+    const afterHashSalted = await bcrypt.hash(user['password'], saltOrRounds);
+    // i use bcrypt for my password hashing function
+    // i use md5 before but there is some risk for md5
+
+    user['password'] = afterHashSalted;
     const insertToDB = { ...user, ...metaData };
     console.log('insertToDB --> ', insertToDB);
 

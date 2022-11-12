@@ -27,6 +27,18 @@ interface IFormInput {
   firstName: string;
   lastName: string;
   username: string;
+  phoneNumber: string;
+  emailAddress: string;
+  password: string;
+  dateOfBirth: string;
+  confirmPassword: string;
+  age: string;
+}
+
+interface ServerInput {
+  firstName: string;
+  lastName: string;
+  username: string;
   phoneNumber: number;
   emailAddress: string;
   password: string;
@@ -95,6 +107,7 @@ const RegistrationView = () => {
     setError,
     getValues,
     clearErrors,
+    reset,
     formState: { errors },
   } = useForm<IFormInput>({
     resolver: yupResolver(schema),
@@ -108,10 +121,10 @@ const RegistrationView = () => {
       .then((result) => {
         if (result.exist === true) {
           setUsernameExist(true);
-          setError("username", { type: "focus" }, { shouldFocus: false })
+          setError("username", { type: "focus" }, { shouldFocus: false });
         } else {
           setUsernameExist(false);
-          clearErrors("username")
+          clearErrors("username");
         }
         // handle result here
       })
@@ -129,10 +142,10 @@ const RegistrationView = () => {
       .then((result) => {
         if (result.exist === true) {
           setEmailExist(true);
-          setError("emailAddress", { type: "focus" }, { shouldFocus: true })
+          setError("emailAddress", { type: "focus" }, { shouldFocus: true });
         } else {
           setEmailExist(false);
-          clearErrors("emailAddress")
+          clearErrors("emailAddress");
         }
         // handle result here
       })
@@ -144,16 +157,28 @@ const RegistrationView = () => {
       });
   };
 
-  console.log(getValues())
-
   // Send the user data to the server and create the user object in the db
   const sendDataToServer = () => {
-    dispatch(createUser(userInput))
+
+    var sendToServer: ServerInput = { 
+      firstName: userInput.firstName,
+      lastName: userInput.lastName,
+      username: userInput.username,
+      phoneNumber: parseInt(userInput.phoneNumber),
+      emailAddress: userInput.emailAddress,
+      password: userInput.password,
+      dateOfBirth: userInput.dateOfBirth,
+      confirmPassword: userInput.confirmPassword,
+      age: parseInt(userInput.age),
+    };
+
+    dispatch(createUser(sendToServer))
       .unwrap()
       .then((result) => {
         if (result.create_user === true) {
           setRegSuccess(true);
           setOpen(false);
+          reset();
         } else {
           setRegSuccess(false);
         }
@@ -181,7 +206,7 @@ const RegistrationView = () => {
     }
 
     if (errors[type]) {
-      // TODO here quite confuse, why i need to add ? here 
+      // TODO here quite confuse, why i need to add ? here
       return t(errors[type]?.message as unknown as TemplateStringsArray);
     }
     return "";
@@ -336,7 +361,7 @@ const RegistrationView = () => {
               <Controller
                 name="phoneNumber"
                 control={control}
-                defaultValue={1}
+                defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -345,7 +370,7 @@ const RegistrationView = () => {
                     label={t("Phone Number")}
                     fullWidth
                     // type="number"
-                    inputProps={{ inputMode: 'numeric'}}
+                    inputProps={{ inputMode: "numeric" }}
                     helperText={
                       errors["phoneNumber"]
                         ? t(
@@ -490,7 +515,7 @@ const RegistrationView = () => {
                   <Controller
                     name="age"
                     control={control}
-                    defaultValue={1}
+                    defaultValue={""}
                     render={({ field }) => (
                       <TextField
                         {...field}
@@ -498,7 +523,7 @@ const RegistrationView = () => {
                         error={!!errors["age"]}
                         label={t("Age")}
                         // type="number"
-                        inputProps={{ inputMode: 'numeric'}}
+                        inputProps={{ inputMode: "numeric" }}
                         fullWidth
                         helperText={
                           errors["age"]
