@@ -15,10 +15,11 @@ import { Exercise } from './exercise/entities/exercise.entity';
     AuthModule,
     UserModule,
     TypeOrmModule.forRoot({
+      //set the typeorm
       type: 'postgres',
       host: 'db',
       port: 5432,
-      username: 'postgres_test',
+      username: 'postgres_test', // we should not set the username and password as plaintext here
       password: 'postgres_tes',
       database: 'postgres',
       entities: [User, Exercise],

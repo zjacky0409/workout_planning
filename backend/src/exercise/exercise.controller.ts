@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ExerciseService } from './exercise.service';
 import CreateExerciseDto from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
@@ -9,31 +17,18 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class ExerciseController {
   constructor(private readonly exerciseService: ExerciseService) {}
 
+  // for creating an exercise record
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Request() req, @Body() createExerciseDto: CreateExerciseDto) {
-    // console.log()
-    // console.log(req.user)
     return this.exerciseService.create(createExerciseDto, req.user);
   }
 
+  // get all exercises from db
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
+  findAll(@Request() req) {
+    console.log(`${req.user.username} request to get all the exercises`);
     return this.exerciseService.findAll();
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.exerciseService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateExerciseDto: UpdateExerciseDto) {
-  //   return this.exerciseService.update(+id, updateExerciseDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.exerciseService.remove(+id);
-  // }
 }

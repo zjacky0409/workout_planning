@@ -18,8 +18,12 @@ import { CheckEmailDto } from './dto/check-email.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  // create an user
+  // i should create a userCreateValidationPipe for this controller
   @Post('/create')
   create(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
+    console.log(`someone want to create an user`);
+    console.log('createUserDto == ', createUserDto);
     return this.userService.create(createUserDto);
   }
 
@@ -47,19 +51,4 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.userService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.userService.update(+id, updateUserDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.userService.remove(+id);
-  // }
 }

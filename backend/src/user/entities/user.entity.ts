@@ -1,15 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-
-//   firstName: string;
-//   lastName: string;
-//   userName: string;
-//   phoneNumber: number;
-//   emailAddress: string;
-//   password: string;
-//   dateOfBirth: string;
-//   confirmPassword: string;
-//   age: number;
+// to define the user structure
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()

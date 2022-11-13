@@ -12,7 +12,6 @@ export class ExerciseService {
     private exerciseRepository: Repository<Exercise>,
   ) {}
   create(createExerciseDto: CreateExerciseDto, user: any) {
-    console.log('createExerciseDto == ', createExerciseDto)
     const metaData: any = {
       created_by: user.username,
       updated_by: user.username,
@@ -22,26 +21,19 @@ export class ExerciseService {
     console.log({
       ...createExerciseDto,
       ...metaData,
-    })
+    });
+    console.log(`user ${user.username} is going to create an exercise`);
+    console.log('exercise content == ', createExerciseDto);
+    // insert to db
     return this.exerciseRepository.insert({
       ...createExerciseDto,
       ...metaData,
     });
   }
 
+
+  // find all exercise from database
   findAll() {
     return this.exerciseRepository.find();
   }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} exercise`;
-  // }
-
-  // update(id: number, updateExerciseDto: UpdateExerciseDto) {
-  //   return `This action updates a #${id} exercise`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} exercise`;
-  // }
 }

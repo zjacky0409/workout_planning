@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+// define exercise structure
 @Entity()
 export class Exercise {
   @PrimaryGeneratedColumn()
@@ -17,9 +17,9 @@ export class Exercise {
   @Column() // should be forgien key of user table
   created_by: string;
 
-  @Column() // should be forgien key of user table
+  @Column()
   created_at: Date;
 
-  @Column() // should be forgien key of user table
+  @Column()
   updated_at: Date;
 }

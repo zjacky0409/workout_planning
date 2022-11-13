@@ -7,9 +7,11 @@ import {
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
+// a pipe to checking the user request fit the dto or not
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
+    // ref: https://ithelp.ithome.com.tw/articles/10191227
     /*不檢查原生JavaScript的型別，因為刻意寫ValidationPipe，就是要使用自定義的DTO class
         的屬性去做參數型別檢查，如果metatype是原生JavaScript的型別，就直接return 原始參數，
         不做ValidationPipe的檢查。
@@ -25,7 +27,7 @@ export class ValidationPipe implements PipeTransform<any> {
     //這裡使用class-transformer的方法，將plain javascript object(像是JSON object)，轉換成一個class的object。
     const object = plainToClass(metatype, value);
     const errors = await validate(object);
-    console.log(errors)
+    console.log(errors);
     if (errors.length > 0) {
       throw new BadRequestException('Invalid input');
     }

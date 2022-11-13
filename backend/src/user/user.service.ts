@@ -15,8 +15,9 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) { }
+  ) {}
 
+  // check the username exist or not
   async checkUsernameExist(data: CheckUserNameDto): Promise<boolean> {
     const user = await this.userRepository.findOneBy({
       username: data.username,
@@ -30,6 +31,7 @@ export class UserService {
     return false;
   }
 
+  // check the email exist or not
   async checkEmailExist(data: CheckEmailDto): Promise<boolean> {
     const user = await this.userRepository.findOneBy({
       emailAddress: data.emailAddress,
@@ -47,6 +49,7 @@ export class UserService {
       isActive: true,
     };
 
+    console.log(`To convert the password by bcrypt`);
     const saltOrRounds = 10;
     const afterHashSalted = await bcrypt.hash(user['password'], saltOrRounds);
     // i use bcrypt for my password hashing function
@@ -56,6 +59,8 @@ export class UserService {
     const insertToDB = { ...user, ...metaData };
     console.log('insertToDB --> ', insertToDB);
 
+    console.log('checking the username exsit or not');
+    // maybe we do the process in the pipe?
     if (
       (await this.checkUsernameExist({ username: insertToDB.username })) ===
       true
@@ -63,6 +68,8 @@ export class UserService {
       return { create_user: false }; // should not happen
     }
 
+    console.log('checking the email address exsit or not');
+    // maybe we do the process in the pipe?
     if (
       (await this.checkEmailExist({
         emailAddress: insertToDB.emailAddress,
@@ -73,19 +80,23 @@ export class UserService {
     const new_user = this.userRepository.create(insertToDB);
     try {
       await this.userRepository.save(new_user);
+      console.log(`create user successfully`);
       return { create_user: true };
-    } catch {
+    } catch (e) {
+      console.log(`create user fail with error == ${e}`);
       return { create_user: false };
     }
     // return 'HI'
   }
 
+  // find all user from the database
   findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  findOne(username: string): Promise<User> {
-    return this.userRepository.findOneBy({ username: username });
+  // find the user information from the database
+  async findOne(username: string): Promise<User> {
+    return await this.userRepository.findOneBy({ username: username });
   }
 
   async remove(id: string): Promise<void> {

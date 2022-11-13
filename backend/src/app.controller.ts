@@ -8,33 +8,14 @@ import { RolesGuard } from './role_checker/role.guard';
 
 @Controller()
 export class AppController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
-  async login(@Request() req) {
-
-    // console.log('Hi, someone call the login api')
-    // function wait(ms: any): any {
-    //   return new Promise(resolve => setTimeout(() => resolve(''), ms));
-    // };
-
-    // // 调用方法；
-    // await wait(5000);
-    return this.authService.login(req.user);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Post('auth/getUser')
-  async getProfile(@Request() req) {
-    return req.user;
-  }
-
+  // for acl checking demo
   @Roles(Role.Admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('test/role')
   onlyAdmin(@Request() req) {
-    console.log('someone is an admin')
+    console.log('someone is an admin');
     return req.user;
   }
 }
