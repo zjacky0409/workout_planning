@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useTranslation } from 'react-i18next'
+import LoadingSpinner from '../components/Loading/LoadingSpinner'
+
 interface PropsType {
   children: JSX.Element;
 }
@@ -38,6 +40,7 @@ const ProtectedRoute = (props: PropsType) => {
         }}
       >
         <CircularProgress />
+        <LoadingSpinner />
         <h2>{t('Loading...')}</h2>
       </div>
     );
