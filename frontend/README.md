@@ -41,6 +41,8 @@ src/view: to store different page
 
 navgation.ts: to define the content of the navigation bar content and  the relationship between different routes
 
+src/common: to define some common functions that may be used among different file
+
 
 
 
