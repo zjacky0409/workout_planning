@@ -39,8 +39,8 @@ const ProtectedRoute = (props: PropsType) => {
           flexDirection: 'column'
         }}
       >
-        <CircularProgress />
-        <LoadingSpinner />
+        {/* <CircularProgress /> */}
+        <LoadingSpinner variant="primary" size="medium" />
         <h2>{t('Loading...')}</h2>
       </div>
     );

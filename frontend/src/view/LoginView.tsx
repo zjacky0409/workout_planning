@@ -35,7 +35,9 @@ const LoginView = () => {
 
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [status, setStatus] = React.useState<'idle' | 'pending' | 'error'>('idle'); // login api status
+  const [status, setStatus] = React.useState<"idle" | "pending" | "error">(
+    "idle"
+  ); // login api status
   const navigate = useNavigate();
 
   // go to main page when we detect the user already login
@@ -45,12 +47,11 @@ const LoginView = () => {
     }
   }, [auth, navigate]);
 
-
   // send the account name and the password to the server and perform checking.
   // if the user enter correct account and password, we store the jwt token to the localStorage and set auth state to true
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setStatus('pending');
+    setStatus("pending");
 
     // one way to fetch the data
     async function fetchData() {
@@ -70,14 +71,14 @@ const LoginView = () => {
       let result: any;
       try {
         result = await loginInPromise;
-        setStatus('idle');
+        setStatus("idle");
         // we store the jwt token to the localStorage and set auth state to true
         localStorage.setItem("access_token", result.data.access_token);
         dispatch(setAuthentication());
         navigate("/");
       } catch (e) {
         console.log(e);
-        setStatus('error');
+        setStatus("error");
       }
     }
     fetchData();
@@ -95,7 +96,7 @@ const LoginView = () => {
     setPassword(event.target.value);
   };
 
-  // change the visibility for the password text box 
+  // change the visibility for the password text box
   const switchShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -125,7 +126,7 @@ const LoginView = () => {
             <FormControl variant="standard" sx={{ width: "90%" }} required>
               <Input
                 value={username}
-                disabled={status === 'pending'}
+                disabled={status === "pending"}
                 onChange={(
                   e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
                 ) => handleUsername(e)}
@@ -135,7 +136,7 @@ const LoginView = () => {
                   </InputAdornment>
                 }
               />
-              <FormHelperText>{t('Account Name')}</FormHelperText>
+              <FormHelperText>{t("Account Name")}</FormHelperText>
             </FormControl>
             <FormControl variant="standard" sx={{ width: "90%" }} required>
               <div
@@ -149,7 +150,7 @@ const LoginView = () => {
                 <div style={{ width: "90%" }}>
                   <Input
                     value={password}
-                    disabled={status === 'pending'}
+                    disabled={status === "pending"}
                     onChange={(
                       e: React.ChangeEvent<
                         HTMLTextAreaElement | HTMLInputElement
@@ -158,7 +159,7 @@ const LoginView = () => {
                     sx={{ width: "100%" }}
                     type={!showPassword ? "password" : "text"} // here to set the visibility for the password
                   />
-                  <FormHelperText>{t('Password')}</FormHelperText>
+                  <FormHelperText>{t("Password")}</FormHelperText>
                 </div>
                 <Button onClick={switchShowPassword}>
                   {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -166,31 +167,39 @@ const LoginView = () => {
               </div>
             </FormControl>
 
-            {status === 'pending' && <CircularProgress />}
+            {status === "pending" && <CircularProgress />}
 
-            {status === 'error' && (
+            {status === "error" && (
               <Alert severity="error" sx={{ width: "90%" }}>
-                {t('Incorrect Account or Incorrect Password')}
+                {t("Incorrect Account or Incorrect Password")}
               </Alert>
             )}
           </CardContent>
-          <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <CardActions
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
             <div style={{ padding: 10 }}>
               <ChangeLangSelect />
             </div>
-            <div style={{ display: 'flex', gap: 5 }}>
+            <div style={{ display: "flex", gap: 5 }}>
               <CustomButton
                 handler={() => {
                   navigate("/registration");
                 }}
                 shownText={t("Register")}
                 variant={"primary"}
+                type="button"
+                // https://stackoverflow.com/questions/73484680/pressing-enter-key-on-input-field-triggers-button-click-function
+                // When you have a button in a form, 
+                // it defaults to type "submit" which means the first button in a form will have its onclick event triggered 
+                // by the ENTER key. To prevent this from happening, simply assign type="button" to the button, 
+                // and enter key will no longer affect it.
               />
               <CustomButton
                 type="submit"
                 shownText={t("Login")}
                 variant={"primary"}
-                disabled={status === 'pending'}
+                disabled={status === "pending"}
                 handler={function (): void {
                   throw new Error("Function not implemented.");
                 }}

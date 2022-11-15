@@ -89,6 +89,7 @@ export const authSlice = createSlice({
           // set the username and userID
           state.username = action.payload.username;
           state.userId = action.payload.userId;
+          state.authentication = true;
         }
 
       })
@@ -99,6 +100,8 @@ export const authSlice = createSlice({
           state.currentRequestId === requestId
         ) {
           state.status = 'failed';
+          // if the jwt token is not vaild, we should let user go to login page
+          state.authentication = false; 
         }
       })
       .addCase(createUser.pending, (state) => {

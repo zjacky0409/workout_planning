@@ -24,4 +24,4 @@ const variantToColor = (variant: string): string => {
     return buttonColor
   }
 
-  export default {variantToColor}
+  export default variantToColor
