@@ -22,6 +22,7 @@ import CustomButton from "../components/Button/CustomButton";
 import ConfirmDialog from "../components/Dialog/ConfirmDialog";
 import { useTranslation } from "react-i18next";
 import ChangeLangSelect from "../components/ChangeLangSelect";
+import { createUserJson } from "../api/authApi";
 // declare the form structure
 interface IFormInput {
   firstName: string;
@@ -33,18 +34,6 @@ interface IFormInput {
   dateOfBirth: string;
   confirmPassword: string;
   age: string;
-}
-
-interface ServerInput {
-  firstName: string;
-  lastName: string;
-  username: string;
-  phoneNumber: number;
-  emailAddress: string;
-  password: string;
-  dateOfBirth: string;
-  confirmPassword: string;
-  age: number;
 }
 
 // do the form validation with yup library
@@ -137,7 +126,11 @@ const RegistrationView = () => {
   };
 
   const emailExistChecking = () => {
-    dispatch(checkEmailExist({ emailAddress: userInput.emailAddress }))
+    dispatch(
+      checkEmailExist({
+        emailAddress: userInput.emailAddress,
+      })
+    )
       .unwrap()
       .then((result) => {
         if (result.exist === true) {
@@ -159,8 +152,7 @@ const RegistrationView = () => {
 
   // Send the user data to the server and create the user object in the db
   const sendDataToServer = () => {
-
-    var sendToServer: ServerInput = { 
+    var sendToServer: createUserJson = {
       firstName: userInput.firstName,
       lastName: userInput.lastName,
       username: userInput.username,

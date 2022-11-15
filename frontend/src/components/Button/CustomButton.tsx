@@ -45,6 +45,7 @@ export default function CustomButton({
   ...props
 }: ButtonProp) {
   return (
+    // may no need handler here, we directly pass onClick as React.ButtonHTMLAttributes here 
     <StyledButton onClick={handler} variant={variant} {...props}>
       {shownText}
     </StyledButton>

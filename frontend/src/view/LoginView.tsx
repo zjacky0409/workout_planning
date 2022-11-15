@@ -20,11 +20,6 @@ import axios from "axios";
 import { selectAuth, setAuthentication } from "../store/authSlice";
 import CustomButton from "../components/Button/CustomButton";
 import ChangeLangSelect from "../components/ChangeLangSelect";
-const lang_choice = [
-  { name: "English", value: "en" },
-  { name: "繁體中文", value: "zh_hk" },
-  { name: "简体中文", value: "zh_cn" },
-];
 
 const LoginView = () => {
   const { t, i18n } = useTranslation();

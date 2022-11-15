@@ -12,6 +12,7 @@ type FormProps = {
   name: string;
 } & TextFieldProps;
 
+// a react hook form input field component
 const FormTextInput: FC<FormProps> = ({ name, ...otherProps }) => {
   const {
     control,

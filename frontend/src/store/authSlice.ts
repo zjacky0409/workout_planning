@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { getUser, createUserAPI, checkEmailExistAPI, checkUsernameExistAPI } from '../api/authApi';
+import { createUserJson, checkEmailExistJson, checkUsernameExistJson } from '../api/authApi';
 export interface AuthState {
   authentication: boolean;
   status: 'idle' | 'pending' | 'failed';
@@ -31,7 +32,7 @@ export const getUserWithJwt = createAsyncThunk(
 // for registration page to create user
 export const createUser = createAsyncThunk(
   'auth/createUser',
-  async (userData: any) => {
+  async (userData: createUserJson) => {
     const response = await createUserAPI(userData);
     return response.data;
   }
@@ -40,7 +41,7 @@ export const createUser = createAsyncThunk(
 // for registration page to create user
 export const checkEmailExist = createAsyncThunk(
   'auth/checkEmailExist',
-  async (userData: any) => {
+  async (userData: checkEmailExistJson) => {
     const response = await checkEmailExistAPI(userData);
     return response.data;
   }
@@ -50,7 +51,7 @@ export const checkEmailExist = createAsyncThunk(
 // for registration page to create user
 export const checkUsernameExist = createAsyncThunk(
   'auth/checkUsernameExist',
-  async (userData: any) => {
+  async (userData: checkUsernameExistJson) => {
     const response = await checkUsernameExistAPI(userData);
     return response.data;
   }

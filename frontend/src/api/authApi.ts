@@ -9,21 +9,47 @@ export async function getUser() {
     return response 
 }
 
+
 // for sending create user request to server
-// no need to require jwt token
-export async function createUserAPI(jsonData: any) {
+// no need to require jwt toke
+
+export interface createUserJson {
+    firstName: string;
+    lastName: string;
+    username: string;
+    phoneNumber: number;
+    emailAddress: string;
+    password: string;
+    dateOfBirth: string;
+    confirmPassword: string;
+    age: number;
+}
+export async function createUserAPI(jsonData: createUserJson) {
     const response = await axios.post("http://localhost:4000/user/create",
         jsonData,);
     return response
 }
 
-export async function checkEmailExistAPI(jsonData: any) {
+// check the user email address exist or not
+// jsonData: {
+//      emailAddress: string
+// }
+export interface checkEmailExistJson {
+    emailAddress: string
+}
+export async function checkEmailExistAPI(jsonData: checkEmailExistJson) {
     const response = await axios.post("http://localhost:4000/user/check_email_duplicate",
         jsonData,);
     return response
 }
 
-export async function checkUsernameExistAPI(jsonData: any) {
+
+// check the user email address exist or not
+export interface checkUsernameExistJson {
+    username: string
+}
+
+export async function checkUsernameExistAPI(jsonData: checkUsernameExistJson) {
     const response = await axios.post("http://localhost:4000/user/check_username_duplicate",
         jsonData,);
     return response
