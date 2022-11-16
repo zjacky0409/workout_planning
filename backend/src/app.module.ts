@@ -5,9 +5,12 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 // import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/entities/user.entity';
+import { User } from './database/user.entity';
 import { ExerciseModule } from './exercise/exercise.module';
-import { Exercise } from './exercise/entities/exercise.entity';
+import { Exercise } from './database/exercise.entity';
+import { Coach } from './database/coach.entity';
+import { Diet } from './database/diet.entity';
+import { Food } from './database/food.entity';
 // import { ExerciseController } from './exercise/exercise.controller';
 
 @Module({
@@ -22,7 +25,7 @@ import { Exercise } from './exercise/entities/exercise.entity';
       username: 'postgres_test', // we should not set the username and password as plaintext here
       password: 'postgres_tes',
       database: 'postgres',
-      entities: [User, Exercise],
+      entities: [User, Exercise, Coach, Diet, Food],
       synchronize: true,
     }),
     ExerciseModule,
