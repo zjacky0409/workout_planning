@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne,CreateDateColumn ,UpdateDateColumn  } from 'typeorm';
 import { Food } from './food.entity';
 import { User } from './user.entity';
 import { Coach } from './coach.entity';
@@ -27,6 +27,12 @@ export class Diet {
 
   @ManyToOne(() => Coach, (coach) => coach.diets)
   created_by: Coach
+
+  @CreateDateColumn()
+  created_at: Date
+
+  @UpdateDateColumn()
+  updated_at: Date
   
 
 

@@ -12,6 +12,9 @@ import { Coach } from './database/coach.entity';
 import { Diet } from './database/diet.entity';
 import { Food } from './database/food.entity';
 // import { ExerciseController } from './exercise/exercise.controller';
+import { DietModule } from './diet/diet.module';
+import { FoodModule } from './food/food.module';
+import { DietModule } from './diet/diet.module';
 
 @Module({
   imports: [
@@ -29,6 +32,8 @@ import { Food } from './database/food.entity';
       synchronize: true,
     }),
     ExerciseModule,
+    DietModule,
+    FoodModule,
     // , ConfigModule.forRoot({ isGlobal: true }),
     //   TypeOrmModule.forRoot({
     //     type: 'postgres',

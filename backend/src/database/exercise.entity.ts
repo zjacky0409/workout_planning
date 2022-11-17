@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,CreateDateColumn ,UpdateDateColumn  } from 'typeorm';
 import { User } from './user.entity';
 import { Coach } from './coach.entity'
 // define exercise structure
@@ -19,9 +19,9 @@ export class Exercise {
   @ManyToOne(() => Coach, (coach) => coach.exercises)
   created_by: Coach;
 
-  @Column()
-  created_at: Date;
+  @CreateDateColumn()
+  created_at: Date
 
-  @Column()
-  updated_at: Date;
+  @UpdateDateColumn()
+  updated_at: Date
 }

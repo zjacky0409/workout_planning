@@ -15,8 +15,8 @@ export class ExerciseService {
     const metaData: any = {
       created_by: user.username,
       updated_by: user.username,
-      created_at: new Date(Date.now()).toISOString(),
-      updated_at: new Date(Date.now()).toISOString(),
+      // created_at: new Date(Date.now()).toISOString(), // should be no need to set created_at here because we has already set the @CreateDateColumn
+      // updated_at: new Date(Date.now()).toISOString(),
     };
     console.log({
       ...createExerciseDto,

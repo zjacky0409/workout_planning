@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany,CreateDateColumn ,UpdateDateColumn  } from 'typeorm';
 import { Food } from './food.entity';
 import { Exercise } from './exercise.entity';
 import { Diet } from './diet.entity';
