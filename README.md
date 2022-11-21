@@ -1,4 +1,4 @@
-Hi Everyone, this is my new project. 
+:) Hello, Everyone, this is my new project. 
 
 If you want to know the details of frontend or backend, please read the README.md inside frontend or backend folder
 
@@ -21,6 +21,7 @@ Process
 1. Main layout for my appplication
 2. Login Systme With Jwt Authentication
 3. Internationalization(i18n) for my applcation 
+4. !!! really to design the database structure !!!
 
 
 

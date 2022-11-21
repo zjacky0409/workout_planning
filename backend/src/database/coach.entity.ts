@@ -1,7 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany,CreateDateColumn ,UpdateDateColumn  } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+  OneToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Food } from './food.entity';
 import { Exercise } from './exercise.entity';
 import { Diet } from './diet.entity';
+import { Company } from './company.entity';
 // to define the user structure
 @Entity()
 export class Coach {
@@ -46,4 +56,8 @@ export class Coach {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToOne(() => Company)
+  @JoinColumn()
+  company: Company;
 }

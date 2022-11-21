@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,CreateDateColumn ,UpdateDateColumn  } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn,
+} from 'typeorm';
 import { User } from './user.entity';
 import { Coach } from './coach.entity'
 // define exercise structure
@@ -16,7 +24,11 @@ export class Exercise {
   @Column()
   details: string;
 
+  // @Column()
+  // created_by: number;
+
   @ManyToOne(() => Coach, (coach) => coach.exercises)
+  @JoinColumn({ name: 'created_by' }) // to specify the column name?
   created_by: Coach;
 
   @CreateDateColumn()

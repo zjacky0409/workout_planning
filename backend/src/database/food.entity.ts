@@ -21,14 +21,14 @@ export class Food {
   fat: number;
 
   @OneToMany(() => Diet, (diet) => diet.food) // or ManyToMany??
-  diets: Diet[]
+  diets: Diet[];
 
   @ManyToOne(() => Coach, (coach) => coach.foods)
-  created_by: Coach
+  created_by: Coach;
 
   @CreateDateColumn()
-  created_at: Date
+  created_at: Date;
 
   @UpdateDateColumn()
-  updated_at: Date
+  updated_at: Date;
 }
