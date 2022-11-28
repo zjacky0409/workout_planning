@@ -39,5 +39,12 @@
   "Please enter the age": "请输入年龄",
   "Please enter a email address":"请输入电子邮件地址",
   "The username already existed":"用户名已经存在",
-  "The email address already existed":"电子邮件地址已存在"
+  "The email address already existed":"电子邮件地址已存在",
+  "Food":"食物",
+  "Protein":"Protein",
+  "Carbs":"Carbs",
+  "Fat":"Fat",
+  "Food Name":"Food Name",
+  "Please enter food name": "Please enter food name",
+  "Please enter a number": "Please enter a number"
 }

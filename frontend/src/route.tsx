@@ -9,6 +9,7 @@ import { Navigate } from "react-router-dom";
 import LoginView from "./view/LoginView";
 import ProtectedRoute from "./layout/ProtectedRoute";
 import RegistrationView from "./view/RegistrationView";
+import FoodView from "./view/FoodView";
 
 // To define different route
 // ref: https://reactrouter.com/en/main/hooks/use-routes
@@ -54,6 +55,7 @@ const routes: RouteObject[] = [
         element: <DietView day="trainning_day" />,
       },
       { path: "/diet/rest_day", element: <DietView day="rest_day" /> },
+      { path: "/diet/food", element: <FoodView day="rest_day" /> },
     ],
   },
   {

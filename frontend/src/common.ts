@@ -19,3 +19,13 @@ export interface NavObject {
     icon: string;
     children: PageObject[];
 }
+
+export interface FoodObject {
+    id: number,
+    name: string,
+    carbs: number,
+    protein: number,
+    fat: number,
+    created_at: string,
+    updated_at: string
+}

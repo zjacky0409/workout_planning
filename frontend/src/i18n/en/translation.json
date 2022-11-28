@@ -39,5 +39,12 @@
   "Please enter the age": "Please enter the age",
   "Please enter a email address":"Please enter a email address",
   "The username already existed":"The username already existed",
-  "The email address already existed":"The email address already existed"
+  "The email address already existed":"The email address already existed",
+  "Food":"Food",
+  "Protein":"Protein",
+  "Carbs":"Carbs",
+  "Fat":"Fat",
+  "Food Name":"Food Name",
+  "Please enter food name": "Please enter food name",
+  "Please enter a number": "Please enter a number"
 }

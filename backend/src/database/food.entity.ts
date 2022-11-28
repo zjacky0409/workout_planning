@@ -1,4 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn,ManyToOne, OneToMany,CreateDateColumn ,UpdateDateColumn  } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn,
+} from 'typeorm';
 import {User} from './user.entity'
 import { Coach } from './coach.entity';
 import { Diet } from './diet.entity';
@@ -20,11 +29,15 @@ export class Food {
   @Column()
   fat: number;
 
+  @Column()
+  created_by: number;
+
   @OneToMany(() => Diet, (diet) => diet.food) // or ManyToMany??
   diets: Diet[];
 
   @ManyToOne(() => Coach, (coach) => coach.foods)
-  created_by: Coach;
+  @JoinColumn({ name: 'created_by' })
+  coach: Coach;
 
   @CreateDateColumn()
   created_at: Date;

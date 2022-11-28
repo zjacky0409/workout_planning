@@ -33,7 +33,7 @@ export class AuthService {
     const payload = {
       username: user.username,
       sub: user.id,
-      role: [user.role],
+      role: ['coach'],
     };
     console.log(`user ${user.username}:${user.id} login successfully`);
     return {

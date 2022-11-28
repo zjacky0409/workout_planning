@@ -35,6 +35,21 @@ export const navigations: NavObject[] = [
                 //         path: '/diet/rest_day',
                 //     },
                 // ]
+            },
+            {
+                name: 'Food',
+                path: '/diet/food',
+                icon: '🧘'
+                // children: [
+                //     {
+                //         name: 'Trainning Day',
+                //         path: '/diet/trainning_day',
+                //     },
+                //     {
+                //         name: 'Rest Day',
+                //         path: '/diet/rest_day',
+                //     },
+                // ]
             }
         ]
     },

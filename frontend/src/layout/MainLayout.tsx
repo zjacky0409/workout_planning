@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 interface PropsType {
   children: JSX.Element;
-  content: string;
+  content: string; // for showing the navgation bar to user
 }
 
 const MainLayout = (props: PropsType) => {
