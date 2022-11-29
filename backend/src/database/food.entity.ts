@@ -42,7 +42,7 @@ export class Food {
   @JoinColumn({ name: 'created_by' })
   coach: Coach;
 
-  @CreateDateColumn()
+  @CreateDateColumn() 
   created_at: Date;
 
   @UpdateDateColumn()
