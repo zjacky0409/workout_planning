@@ -29,13 +29,16 @@ export class Food {
   @Column()
   fat: number;
 
-  @Column()
-  created_by: number;
+  // @Column()
+  // created_by: number;
 
   @OneToMany(() => Diet, (diet) => diet.food) // or ManyToMany??
   diets: Diet[];
 
-  @ManyToOne(() => Coach, (coach) => coach.foods)
+  @ManyToOne(() => Coach, (coach) => coach.foods, {
+    eager: true,
+    nullable: false,
+  })
   @JoinColumn({ name: 'created_by' })
   coach: Coach;
 

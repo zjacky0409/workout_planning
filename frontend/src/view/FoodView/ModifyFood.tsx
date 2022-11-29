@@ -14,7 +14,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useForm, Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { createFoodJson, updateFoodJson } from "../../api/dietApi";
-import { createFood, updateFood } from "../../store/dietSlice";
+import { createFood, updateFood, getFood } from "../../store/dietSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FoodObject } from "../../common";
@@ -91,9 +91,11 @@ const ModifyFood = ({
       dispatch(updateFood(sendToServer))
         .unwrap()
         .then((result) => {
-          if (result.create_food === true) {
+          console.log(result)
+          if (result.update_food === true) {
             setOpen(false);
             reset();
+            dispatch(getFood());
           } else {
             // setRegSuccess(false);
             console.log("error");
@@ -120,6 +122,7 @@ const ModifyFood = ({
           if (result.create_food === true) {
             setOpen(false);
             reset();
+            dispatch(getFood());
           } else {
             // setRegSuccess(false);
             console.log("error");

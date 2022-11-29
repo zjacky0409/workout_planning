@@ -5,6 +5,7 @@ import {
   UseGuards,
   Request,
   Get,
+  ParseIntPipe
 } from '@nestjs/common';
 import { FoodService } from './food.service';
 import { ValidationPipe } from '../pipes/validate.pipe';
@@ -14,6 +15,7 @@ import { RolesGuard } from 'src/role_checker/role.guard';
 import { Role } from 'src/role_checker/role.enum';
 import { Roles } from 'src/role_checker/roles.decorator';
 import { UpdateFoodDto } from './dto/update-exercise.dto';
+import DeleteFoodDto from './dto/delete-food.dto';
 @Controller('food')
 export class FoodController {
   constructor(private readonly foodService: FoodService) { }
@@ -42,5 +44,15 @@ export class FoodController {
     @Body(new ValidationPipe()) updateFoodDto: UpdateFoodDto,
   ) {
     return this.foodService.updateFood(updateFoodDto, req.user);
+  }
+
+  @Roles(Role.Coach)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post('delete')
+  delete(
+    @Request() req,
+    @Body(new ValidationPipe()) toBedelete: DeleteFoodDto,
+  ) {
+    return this.foodService.deleteFood(toBedelete, req.user);
   }
 }

@@ -14,7 +14,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useForm, Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { createFoodJson } from "../api/dietApi";
-import { createFood, selectFoodList, selectStatus } from "../store/dietSlice";
+import { deleteFood, selectFoodList, selectStatus } from "../store/dietSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ModifyFood from "./FoodView/ModifyFood";
 import { getFood } from "../store/dietSlice";
@@ -35,7 +35,7 @@ const FoodView = (props: PropsType) => {
     setVersion(version + 1);
   };
   const [modify, setModify] = useState({
-    modify: true,
+    modify: false,
     data: {
       id: -999,
       name: "",
@@ -71,6 +71,26 @@ const FoodView = (props: PropsType) => {
   };
 
   console.log("foodList == ", foodList);
+
+  const callDeleteFoodApi = (toBeDelete: number) => {
+    dispatch(deleteFood(toBeDelete))
+        .unwrap()
+        .then((result) => {
+          console.log(result)
+          if (result.delete_food === true) {
+            dispatch(getFood());
+          } else {
+            console.log("error");
+          }
+          // handle result here
+        })
+        .catch((rejectedValueOrSerializedError) => {
+          console.log(rejectedValueOrSerializedError);
+          // handle error here
+          // TODO: error handling
+          // 1. what if the user name already exist???
+        });
+  }
 
   if (status === "pending") {
     return (
@@ -111,7 +131,8 @@ const FoodView = (props: PropsType) => {
                   setModify({ modify: true, data: values });
                   setOpen(true);
                 }}
-              ></button>
+              >Modify</button>
+              <button onClick={() => callDeleteFoodApi(values.id)}>Delete</button>
             </>
           );
         })}

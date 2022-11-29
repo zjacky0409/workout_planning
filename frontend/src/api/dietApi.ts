@@ -30,6 +30,13 @@ export async function updateFoodAPI(jsonData: updateFoodJson) {
     return response
 }
 
+
+export async function deleteFoodAPI(toBeDelete: number) {
+    const response = await axios.post("http://localhost:4000/food/delete",
+        { toBeDelete: toBeDelete }, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } });
+    return response
+}
+
 export async function getFoodListAPI() {
     const response = await axios.get("http://localhost:4000/food/get",
         { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })

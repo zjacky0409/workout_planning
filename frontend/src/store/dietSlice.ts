@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { createFoodAPI, getFoodListAPI, updateFoodAPI } from '../api/dietApi';
+import { createFoodAPI, getFoodListAPI, updateFoodAPI, deleteFoodAPI } from '../api/dietApi';
 import { createFoodJson } from '../api/dietApi';
 import { updateFoodJson } from '../api/dietApi';
 import { FoodObject } from '../common';
@@ -24,6 +24,15 @@ export const createFood = createAsyncThunk(
         return response.data;
     }
 );
+
+export const deleteFood = createAsyncThunk(
+    'diet/delete',
+    async (toBeDelete: number) => {
+        const response = await deleteFoodAPI(toBeDelete);
+        return response.data;
+    }
+);
+
 
 export const updateFood = createAsyncThunk(
     'diet/update',
@@ -118,6 +127,31 @@ export const dietSlice = createSlice({
                     state.status = 'failed';
                 }
             })
+
+            .addCase(deleteFood.pending, (state, action) => {
+                state.status = 'pending';
+                state.currentRequestId = action.meta.requestId
+            })
+            .addCase(deleteFood.fulfilled, (state, action) => {
+                const { requestId } = action.meta
+                if (
+                    state.status === 'pending' &&
+                    state.currentRequestId === requestId
+                ) {
+                    state.status = 'idle';
+                }
+
+            })
+            .addCase(deleteFood.rejected, (state, action) => {
+                const { requestId } = action.meta
+                if (
+                    state.status === 'pending' &&
+                    state.currentRequestId === requestId
+                ) {
+                    state.status = 'failed';
+                }
+            })
+            
     },
 });
 

@@ -45,7 +45,7 @@ export class Coach {
   @Column()
   role: string;
 
-  @OneToMany(() => Food, (food) => food.created_by)
+  @OneToMany(() => Food, (food) => food.coach)
   foods: Food[];
 
   @OneToMany(() => Diet, (diet) => diet.created_by)
