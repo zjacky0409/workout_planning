@@ -31,3 +31,12 @@ export interface FoodObject {
     comment: string;
     recommendation: string;
 }
+
+export interface ExerciseObject {
+    id: number,
+    name: string,
+    details: string,
+    type: string,
+    created_at: string,
+    updated_at: string,
+}

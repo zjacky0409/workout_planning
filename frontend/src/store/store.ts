@@ -2,11 +2,13 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from './counterSlice';
 import authReducer from './authSlice';
 import dietSlice from './dietSlice';
+import exerciseSlice from './exerciseSlice';
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     auth: authReducer,
-    diet: dietSlice
+    diet: dietSlice,
+    exercise: exerciseSlice,
   },
 });
 

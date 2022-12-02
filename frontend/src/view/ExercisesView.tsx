@@ -10,51 +10,64 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import CustomButton from "../components/Button/CustomButton";
+import { useAppSelector, useAppDispatch } from "../store/hook";
+import { selectRole } from "../store/authSlice";
+import ModifyExercise from "./ExerciseView/ModifyExercise";
+import { getExercise, selectExerciseList, selectStatus } from "../store/exerciseSlice";
+import { ExerciseObject } from "../common";
 interface Exercise {
-  id: number,
-  name: string,
-  details: string
+  id: number;
+  name: string;
+  details: string;
 }
 type GetExerciseResponse = {
   data: Exercise[];
 };
 const ExercisesView = () => {
   const { t } = useTranslation();
+  const status = useAppSelector(selectStatus)
+  const exerciseList = useAppSelector(selectExerciseList)
+  const dispatch = useAppDispatch()
+  const role = useAppSelector(selectRole);
 
-  const [exercise, setExercise] = useState<Exercise[]>([]);
+  const [open, setOpen] = useState(false);
+  const [version, setVersion] = useState(0);
 
-  const [status, setStatus] = useState<Boolean>(false);
+  const [modify, setModify] = useState({
+    modify: false,
+    data: {
+      id: -999,
+      name: "",
+      details: "",
+      type: "",
+      created_at: "",
+      updated_at: "",
+    },
+  });
+
+  const handleReset = () => {
+    setVersion(version + 1);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setModify({
+      ...modify,
+      modify: false,
+    });
+    handleReset();
+    setOpen(false);
+  };
 
   useEffect(() => {
-    async function fetchData() {
-      try{
-        const result = await axios.get<Exercise[]>("http://localhost:4000/exercise");
-        console.log(result)
-        setExercise(result.data)
-        setStatus(false);
-      }catch(error){
-        console.log('error --> ', error)
-      }
-      
-    }
+    dispatch(getExercise())
+  }, [dispatch]);
 
-    fetchData();
-
-    // should be make the clean up function
-  }, []);
-
-  // const exercise = [
-  //   { name: "DB Flat Bench Press", details: "Test" },
-  //   { name: "DB Fly", details: "Test" },
-  //   { name: "DB Incline Bench Press", details: "Test" },
-  //   { name: "Cable Fly", details: "Test" },
-  //   { name: "Chest Machine", details: "Test" },
-  //   { name: "Chest Machine Upper", details: "Test" },
-  //   { name: "Lower Chest Machine Upper", details: "Test" },
-  //   { name: "Middle Chest Machine Upper", details: "Test" },
-  // ];
-  if (status === true) {
+  if (status !== 'idle') {
     return (
       <MainLayout content="Exercise">
         <div
@@ -62,7 +75,7 @@ const ExercisesView = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height:'100%'
+            height: "100%",
           }}
         >
           <CircularProgress />
@@ -72,11 +85,34 @@ const ExercisesView = () => {
   }
   return (
     <MainLayout content="Exercise">
-      <>
-        <p>This is the {t("Exercises")} Page</p>
+      <div
+        style={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: 15,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <p>This is the {t("Exercises")} Page</p>
+          {role.includes("coach") && (
+            <CustomButton
+              shownText={"Add New Exercise"}
+              handler={handleClickOpen}
+              variant={"primary"}
+              style={{ width: 180, height: 50 }}
+            />
+          )}
+        </div>
 
         <Grid container spacing={2}>
-          {exercise.map((value) => {
+          {exerciseList.map((value: ExerciseObject) => {
             return (
               <Grid item xs={12} sm={6} md={6} lg={4} key={value.id}>
                 {" "}
@@ -90,12 +126,11 @@ const ExercisesView = () => {
                       {value.name}
                     </Typography>
                     <Typography variant="h5" component="div">
-                      {value.name}
+                      {value.type}
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      {value.name}
+                    <Typography variant="body2">
+                      {value.details.toString()}
                     </Typography>
-                    <Typography variant="body2">{value.details.toString()}</Typography>
                   </CardContent>
                   <CardActions>
                     <Button size="small">Learn More</Button>
@@ -105,7 +140,15 @@ const ExercisesView = () => {
             );
           })}
         </Grid>
-      </>
+        <ModifyExercise
+          open={open}
+          handleClose={handleClose}
+          setOpen={setOpen}
+          modify={modify.modify}
+          data={modify.data}
+          key={version}
+        />
+      </div>
     </MainLayout>
   );
 };

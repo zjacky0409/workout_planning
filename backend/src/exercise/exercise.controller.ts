@@ -12,14 +12,17 @@ import CreateExerciseDto from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Request, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/role_checker/role.guard';
+import { Role } from 'src/role_checker/role.enum';
+import { Roles } from 'src/role_checker/roles.decorator';
 
 @Controller('exercise')
 export class ExerciseController {
   constructor(private readonly exerciseService: ExerciseService) {}
 
-  // for creating an exercise record
-  @UseGuards(JwtAuthGuard)
-  @Post()
+  @Roles(Role.Coach)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post('/create')
   create(@Request() req, @Body() createExerciseDto: CreateExerciseDto) {
     return this.exerciseService.create(createExerciseDto, req.user);
   }

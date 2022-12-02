@@ -4,18 +4,18 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Exercise } from 'src/database/exercise.entity';
+import { UserService } from 'src/user/user.service';
 @Injectable()
 export class ExerciseService {
   constructor(
     @InjectRepository(Exercise)
     private exerciseRepository: Repository<Exercise>,
-  ) {}
-  create(createExerciseDto: CreateExerciseDto, user: any) {
+    private userServive: UserService,
+  ) { }
+  async create(createExerciseDto: CreateExerciseDto, user: any) {
+    const user_to = await this.userServive.findOne(user.username);
     const metaData: any = {
-      created_by: user.username,
-      updated_by: user.username,
-      // created_at: new Date(Date.now()).toISOString(), // should be no need to set created_at here because we has already set the @CreateDateColumn
-      // updated_at: new Date(Date.now()).toISOString(),
+      created_by: user_to.coach,
     };
     console.log({
       ...createExerciseDto,
@@ -24,15 +24,19 @@ export class ExerciseService {
     console.log(`user ${user.username} is going to create an exercise`);
     console.log('exercise content == ', createExerciseDto);
     // insert to db
-    return this.exerciseRepository.insert({
-      ...createExerciseDto,
-      ...metaData,
-    });
+    try {
+      await this.exerciseRepository.insert({
+        ...createExerciseDto,
+        ...metaData,
+      });
+      return { create_exercise: true };
+    } catch (e) {
+      return { create_exercise: false };
+    }
   }
 
-
   // find all exercise from database
-  findAll() {
-    return this.exerciseRepository.find();
+  async findAll() {
+    return { exercise_list: await this.exerciseRepository.find() }
   }
 }
