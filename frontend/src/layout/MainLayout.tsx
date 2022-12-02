@@ -31,19 +31,20 @@ const MainLayout = (props: PropsType) => {
           style={{
             width: "100%",
             backgroundColor: "#f5f5f5",
-            display: 'flex',
+            display: "flex",
             // overflow: 'scroll',
             flexDirection: "column",
+            justifyContent: "space-between",
           }}
         >
           <div style={{ height: 65 }}></div>
           <div
             style={{
-              // height: `calc(100% - ${170}px)`, 
+              // height: `calc(100% - ${170}px)`,
               // https://stackoverflow.com/questions/58548583/why-does-height-100-on-a-child-element-not-apply-when-the-parent-element-has-a
               // minHeight: `calc(100% - ${170}px)`,
               padding: 20,
-              flexGrow: 0.9
+              flexGrow: 0.9,
             }}
           >
             {props.children}
@@ -53,7 +54,7 @@ const MainLayout = (props: PropsType) => {
               minHeight: "60px",
               backgroundColor: "white",
               display: "flex",
-              flexGrow: 0.1,
+              flexGrow: 0.05,
               alignItems: "center",
               justifyContent: "center",
             }}

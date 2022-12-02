@@ -7,11 +7,15 @@ import {
   OneToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Food } from './food.entity';
 import { Exercise } from './exercise.entity';
 import { Diet } from './diet.entity';
 import { Company } from './company.entity';
+import { User } from './user.entity';
+import { Student } from './student.entity';
 // to define the user structure
 @Entity()
 export class Coach {
@@ -19,31 +23,11 @@ export class Coach {
   id: number;
 
   @Column()
-  username: string;
+  introduction: string;
 
-  @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
-
-  @Column()
-  phoneNumber: number;
-
-  @Column()
-  emailAddress: string;
-
-  @Column()
-  dateOfBirth: string;
-
-  @Column()
-  age: number;
-
-  @Column()
-  password: string;
-
-  @Column()
-  role: string;
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User;
 
   @OneToMany(() => Food, (food) => food.coach)
   foods: Food[];
@@ -53,9 +37,6 @@ export class Coach {
 
   @OneToMany(() => Exercise, (exercise) => exercise.created_by)
   exercises: Exercise[];
-
-  @Column({ default: true })
-  isActive: boolean;
 
   @OneToOne(() => Company)
   @JoinColumn()

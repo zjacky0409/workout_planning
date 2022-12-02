@@ -12,6 +12,7 @@ import { Coach } from './database/coach.entity';
 import { Diet } from './database/diet.entity';
 import { Food } from './database/food.entity';
 import { Company } from './database/company.entity';
+import { Student } from './database/student.entity';
 // import { ExerciseController } from './exercise/exercise.controller';
 import { FoodModule } from './food/food.module';
 import { DietModule } from './diet/diet.module';
@@ -28,7 +29,7 @@ import { DietModule } from './diet/diet.module';
       username: 'postgres_test', // we should not set the username and password as plaintext here
       password: 'postgres_tes',
       database: 'postgres',
-      entities: [User, Exercise, Coach, Diet, Food, Company],
+      entities: [User, Exercise, Coach, Diet, Food, Company, Student],
       synchronize: true,
     }),
     ExerciseModule,

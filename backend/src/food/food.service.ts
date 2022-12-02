@@ -16,16 +16,16 @@ export class FoodService {
   ) { }
 
   async create(createFoood: CreateFoodDto, user: any) {
-    const user_to = await this.userServive.findOneById(user.userId);
+    console.log(`${user.userId} want to create a food`);
+    console.log('food content == ', createFoood);
+    const user_to = await this.userServive.findOne(user.username);
     const metaData: any = {
-      created_by: user_to,
+      coach: user_to.coach,
     };
-    console.log({
+    console.log('To be inserted data ==> ', {
       ...createFoood,
       ...metaData,
     });
-    console.log(`user ${user.username} is going to create an food`);
-    console.log('exercise content == ', createFoood);
     // insert to db
     try {
       await this.foodRepository.insert({
@@ -34,6 +34,9 @@ export class FoodService {
       });
       return { create_food: true };
     } catch (e) {
+      console.log(
+        `error occur when ${user.username} want to create a food with error ${e}`,
+      );
       return { create_food: false };
     }
   }
@@ -45,6 +48,7 @@ export class FoodService {
   }
 
   async updateFood(food: UpdateFoodDto, user: any) {
+    console.log('user == ', user)
     console.log(`user ${user.userId} request to get the food list`);
     // const result = await this.foodRepository.update({id: });
     const foodToUpdate = await this.foodRepository.find({
@@ -56,13 +60,15 @@ export class FoodService {
 
     console.log('foodToUpdate == ', foodToUpdate[0]);
 
-    if (foodToUpdate[0].coach.id !== user.userId) {
+    if (foodToUpdate[0].coach.id !== user.coach_id) {
       throw new UnauthorizedException(); // should not happen
     }
     foodToUpdate[0].name = food.name;
     foodToUpdate[0].carbs = food.carbs;
     foodToUpdate[0].protein = food.protein;
     foodToUpdate[0].fat = food.fat;
+    foodToUpdate[0].comment = food.comment;
+    foodToUpdate[0].recommendation = food.recommendation;
     try {
       await this.foodRepository.save(foodToUpdate[0]);
       return { update_food: true };

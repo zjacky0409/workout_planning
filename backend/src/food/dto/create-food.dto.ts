@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
+import { IsString, IsNumber, IsNotEmpty, IsEnum } from 'class-validator';
 
 export default class CreateFoodDto {
   @IsString()
@@ -12,4 +12,13 @@ export default class CreateFoodDto {
 
   @IsNumber()
   fat: number;
+
+  @IsString()
+  comment: string;
+
+  @IsEnum(['Recommand', 'Not Bad', 'Not Recommand'])
+  recommendation: string;
+
+  // @IsString()
+  // base64string: string;
 }

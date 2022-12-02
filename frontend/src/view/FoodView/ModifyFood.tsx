@@ -18,6 +18,10 @@ import { createFood, updateFood, getFood } from "../../store/dietSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FoodObject } from "../../common";
+import FormHelperText from "@mui/material/FormHelperText";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 interface PropsType {
   open: boolean;
   handleClose: any;
@@ -32,8 +36,11 @@ interface IFormInput {
   carbs: number;
   protein: number;
   fat: number;
+  comment: string;
+  recommendation: string;
   created_at: string;
   updated_at: string;
+  // file: string;
 }
 
 const ModifyFood = ({
@@ -49,9 +56,13 @@ const ModifyFood = ({
   const schema = yup
     .object({
       name: yup.string().required("Please enter food name"),
-      protein: yup.number().positive().required("Please enter a number"),
-      fat: yup.number().positive().required("Please enter a number"),
-      carbs: yup.number().positive().required("Please enter a number"),
+      protein: yup.number().required("Please enter a number"),
+      fat: yup.number().required("Please enter a number"),
+      carbs: yup.number().required("Please enter a number"),
+      recommendation: yup
+        .string()
+        .oneOf(["Recommand", "Not Bad", "Not Recommand"])
+        .required("Please enter food name"),
     })
     .required();
 
@@ -70,6 +81,8 @@ const ModifyFood = ({
 
   const values = watch();
 
+  console.log(values);
+
   useEffect(() => {
     if (modify) {
       reset(data);
@@ -86,12 +99,15 @@ const ModifyFood = ({
         fat: Number(values.fat),
         name: values.name,
         id: data?.id,
+        comment: values.comment,
+        recommendation: values.recommendation,
+        // base64string: 'test'
       };
 
       dispatch(updateFood(sendToServer))
         .unwrap()
         .then((result) => {
-          console.log(result)
+          console.log(result);
           if (result.update_food === true) {
             setOpen(false);
             reset();
@@ -114,6 +130,9 @@ const ModifyFood = ({
         protein: Number(values.protein),
         fat: Number(values.fat),
         name: values.name,
+        comment: values.comment,
+        recommendation: values.recommendation,
+        // base64string: 'test'
       };
 
       dispatch(createFood(sendToServer))
@@ -228,6 +247,75 @@ const ModifyFood = ({
                         : ""
                     }
                   />
+                )}
+              />
+              <Controller
+                name="comment"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    error={!!errors["comment"]}
+                    size="small"
+                    label={t("comment")}
+                    fullWidth
+                    helperText={
+                      errors["comment"]
+                        ? t(
+                            errors["comment"]
+                              .message as unknown as TemplateStringsArray
+                          )
+                        : ""
+                    }
+                  />
+                )}
+              />
+
+              {/* <Controller
+                name="recommendation"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    error={!!errors["recommendation"]}
+                    size="small"
+                    label={t("recommendation")}
+                    fullWidth
+                    helperText={
+                      errors["recommendation"]
+                        ? t(
+                            errors["recommendation"]
+                              .message as unknown as TemplateStringsArray
+                          )
+                        : ""
+                    }
+                  />
+                )}
+              /> */}
+              <Controller
+                name="recommendation"
+                control={control}
+                defaultValue="None"
+                render={({ field }) => (
+                  <FormControl>
+                  <Select
+                    {...field}
+                    size="small"
+                  >
+                    <MenuItem value="None">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={"Recommand"}>Recommand</MenuItem>
+                    <MenuItem value={"Not Bad"}>Not Bad</MenuItem>
+                    <MenuItem value={"Not Recommand"}>Not Recommand</MenuItem>
+                  </Select>
+                  <FormHelperText sx={{color: 'red'}}>{errors["recommendation"]
+                        ? t(
+                            errors["recommendation"]
+                              .message as unknown as TemplateStringsArray
+                          )
+                        : ""}</FormHelperText>
+                  </FormControl>
                 )}
               />
             </div>

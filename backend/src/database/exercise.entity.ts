@@ -24,9 +24,6 @@ export class Exercise {
   @Column()
   details: string;
 
-  // @Column()
-  // created_by: number;
-
   @ManyToOne(() => Coach, (coach) => coach.exercises)
   @JoinColumn({ name: 'created_by' }) // to specify the column name?
   created_by: Coach;

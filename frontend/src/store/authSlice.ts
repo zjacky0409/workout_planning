@@ -8,6 +8,7 @@ export interface AuthState {
   username: string,
   userId: number,
   currentRequestId?: string
+  role: string[]
 }
 
 const initialState: AuthState = {
@@ -18,6 +19,7 @@ const initialState: AuthState = {
   username: '',
   userId: -999,
   currentRequestId: undefined,
+  role: []
 };
 
 // get the user infomation and config from the server and check the jwt token valid or not
@@ -90,6 +92,7 @@ export const authSlice = createSlice({
           // set the username and userID
           state.username = action.payload.username;
           state.userId = action.payload.userId;
+          state.role = action.payload.role
           state.authentication = true;
         }
 
@@ -178,6 +181,7 @@ export const { setAuthentication, clearAuthentication, setUsername, setUserId } 
 export const selectUsername = (state: RootState) => state.auth.username;
 export const selectUserId = (state: RootState) => state.auth.userId;
 export const selectAuth = (state: RootState) => state.auth.authentication;
-export const selectStatus = (state: RootState) => state.auth.status
+export const selectStatus = (state: RootState) => state.auth.status;
+export const selectRole = (state: RootState) => state.auth.role
 
 export default authSlice.reducer;

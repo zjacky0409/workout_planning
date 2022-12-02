@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
+  IsNull,
 } from 'typeorm';
 import {User} from './user.entity'
 import { Coach } from './coach.entity';
@@ -28,6 +29,12 @@ export class Food {
 
   @Column()
   fat: number;
+
+  @Column()
+  comment: string;
+
+  @Column()
+  recommendation: string;
 
   // @Column()
   // created_by: number;

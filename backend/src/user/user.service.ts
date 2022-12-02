@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User } from '../database/user.entity';
 // import CreateExerciseDto from 'src/exercise/dto/create-exercise.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as crypto from 'crypto';
@@ -9,6 +9,7 @@ import { CheckUserNameDto } from './dto/check-username.dto';
 import e from 'express';
 import { CheckEmailDto } from './dto/check-email.dto';
 import * as bcrypt from 'bcrypt';
+import { Coach } from 'src/database/coach.entity';
 
 @Injectable()
 export class UserService {
@@ -60,6 +61,8 @@ export class UserService {
     console.log('insertToDB --> ', insertToDB);
 
     console.log('checking the username exsit or not');
+
+    // console.log(await this.coachRepository.findOneBy({ id: user.coach_id }));
     // maybe we do the process in the pipe?
     if (
       (await this.checkUsernameExist({ username: insertToDB.username })) ===
@@ -96,7 +99,14 @@ export class UserService {
 
   // find the user information from the database
   async findOne(username: string): Promise<User> {
-    return await this.userRepository.findOneBy({ username: username });
+    const user = await this.userRepository.find({
+      where: { username: username },
+      relations: {
+        coach: true,
+        student: true,
+      },
+    });
+    return user[0];
   }
   async findOneById(id: number): Promise<User> {
     return await this.userRepository.findOneBy({ id: id });

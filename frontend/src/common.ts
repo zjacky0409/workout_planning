@@ -27,5 +27,7 @@ export interface FoodObject {
     protein: number,
     fat: number,
     created_at: string,
-    updated_at: string
+    updated_at: string,
+    comment: string;
+    recommendation: string;
 }

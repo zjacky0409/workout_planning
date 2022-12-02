@@ -46,5 +46,7 @@
   "Fat":"Fat",
   "Food Name":"Food Name",
   "Please enter food name": "Please enter food name",
-  "Please enter a number": "Please enter a number"
+  "Please enter a number": "Please enter a number",
+  "comment": "comment",
+  "recommendation": "recommandation"
 }

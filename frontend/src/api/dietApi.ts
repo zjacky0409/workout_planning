@@ -9,6 +9,9 @@ export interface createFoodJson {
     carbs: number;
     protein: number;
     fat: number
+    comment: string;
+    recommendation: string;
+    // base64string: string;
 }
 export async function createFoodAPI(jsonData: createFoodJson) {
     const response = await axios.post("http://localhost:4000/food/create",
@@ -22,7 +25,10 @@ export interface updateFoodJson {
     name: string;
     carbs: number;
     protein: number;
-    fat: number
+    fat: number;
+    comment: string;
+    recommendation: string;
+    // base64string: string;
 }
 export async function updateFoodAPI(jsonData: updateFoodJson) {
     const response = await axios.post("http://localhost:4000/food/update",
