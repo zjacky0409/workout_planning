@@ -36,7 +36,20 @@ export interface ExerciseObject {
     id: number,
     name: string,
     details: string,
-    type: string,
+    type: "Chest"| "Back"| "Arms"| "Legs"| "Core"| "Shoulder" | "None",
+    subtype: string,
     created_at: string,
     updated_at: string,
+}
+
+export const Body_Part = ["Chest", "Back", "Arms", "Legs", "Core", "Shoulder"]
+
+export const Body_Part_Subtype = {
+    "None": [],
+    'Chest': ["Upper", "Lower", "Middle", "Inner", "Outter"],
+    'Back': ["Lat", "Upper", "Trap"],
+    'Shoulder': ["Rear Delt", "Side Delt", "Front Delt"],
+    "Arms": ["Former", "Tricept", "Bicept"],
+    "Legs": ["Quad", "Harmstring", "Hip"],
+    "Core": ["Upper", "Lower","Full"]
 }

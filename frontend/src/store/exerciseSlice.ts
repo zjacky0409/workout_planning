@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { createExerciseJson, createExerciseAPI, getExerciseAPI } from '../api/exerciseApi';
+import { createExerciseJson, createExerciseAPI, getExerciseAPI, updateExerciseJson, updateExerciseAPI, deleteExerciseAPI } from '../api/exerciseApi';
 import { ExerciseObject } from '../common';
 
 export interface DietState {
@@ -24,13 +24,22 @@ export const createExercise = createAsyncThunk(
     }
 );
 
-// export const deleteFood = createAsyncThunk(
-//     'diet/delete',
-//     async (toBeDelete: number) => {
-//         const response = await deleteFoodAPI(toBeDelete);
-//         return response.data;
-//     }
-// );
+// get the user infomation and config from the server and check the jwt token valid or not
+export const updateExercise = createAsyncThunk(
+    'exercise/update',
+    async (exerciseData: updateExerciseJson) => {
+        const response = await updateExerciseAPI(exerciseData);
+        return response.data;
+    }
+);
+
+export const deleteExercise = createAsyncThunk(
+    'exercise/delete',
+    async (toBeDelete: number) => {
+        const response = await deleteExerciseAPI(toBeDelete);
+        return response.data;
+    }
+);
 
 
 // export const updateFood = createAsyncThunk(
@@ -102,55 +111,54 @@ export const exerciseSlice = createSlice({
                     state.status = 'failed';
                 }
             })
+            .addCase(updateExercise.pending, (state, action) => {
+                state.status = 'pending';
+                state.currentRequestId = action.meta.requestId
+            })
+            .addCase(updateExercise.fulfilled, (state, action) => {
+                const { requestId } = action.meta
+                if (
+                    state.status === 'pending' &&
+                    state.currentRequestId === requestId
+                ) {
+                    state.status = 'idle';
+                }
 
-            // .addCase(updateFood.pending, (state, action) => {
-            //     state.status = 'pending';
-            //     state.currentRequestId = action.meta.requestId
-            // })
-            // .addCase(updateFood.fulfilled, (state, action) => {
-            //     const { requestId } = action.meta
-            //     if (
-            //         state.status === 'pending' &&
-            //         state.currentRequestId === requestId
-            //     ) {
-            //         state.status = 'idle';
-            //     }
+            })
+            .addCase(updateExercise.rejected, (state, action) => {
+                const { requestId } = action.meta
+                if (
+                    state.status === 'pending' &&
+                    state.currentRequestId === requestId
+                ) {
+                    state.status = 'failed';
+                }
+            })
 
-            // })
-            // .addCase(updateFood.rejected, (state, action) => {
-            //     const { requestId } = action.meta
-            //     if (
-            //         state.status === 'pending' &&
-            //         state.currentRequestId === requestId
-            //     ) {
-            //         state.status = 'failed';
-            //     }
-            // })
+            .addCase(deleteExercise.pending, (state, action) => {
+                state.status = 'pending';
+                state.currentRequestId = action.meta.requestId
+            })
+            .addCase(deleteExercise.fulfilled, (state, action) => {
+                const { requestId } = action.meta
+                if (
+                    state.status === 'pending' &&
+                    state.currentRequestId === requestId
+                ) {
+                    state.status = 'idle';
+                }
 
-            // .addCase(deleteFood.pending, (state, action) => {
-            //     state.status = 'pending';
-            //     state.currentRequestId = action.meta.requestId
-            // })
-            // .addCase(deleteFood.fulfilled, (state, action) => {
-            //     const { requestId } = action.meta
-            //     if (
-            //         state.status === 'pending' &&
-            //         state.currentRequestId === requestId
-            //     ) {
-            //         state.status = 'idle';
-            //     }
+            })
+            .addCase(deleteExercise.rejected, (state, action) => {
+                const { requestId } = action.meta
+                if (
+                    state.status === 'pending' &&
+                    state.currentRequestId === requestId
+                ) {
+                    state.status = 'failed';
+                }
+            })
 
-            // })
-            // .addCase(deleteFood.rejected, (state, action) => {
-            //     const { requestId } = action.meta
-            //     if (
-            //         state.status === 'pending' &&
-            //         state.currentRequestId === requestId
-            //     ) {
-            //         state.status = 'failed';
-            //     }
-            // })
-            
     },
 });
 

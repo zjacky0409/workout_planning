@@ -14,7 +14,12 @@ import CustomButton from "../components/Button/CustomButton";
 import { useAppSelector, useAppDispatch } from "../store/hook";
 import { selectRole } from "../store/authSlice";
 import ModifyExercise from "./ExerciseView/ModifyExercise";
-import { getExercise, selectExerciseList, selectStatus } from "../store/exerciseSlice";
+import {
+  deleteExercise,
+  getExercise,
+  selectExerciseList,
+  selectStatus,
+} from "../store/exerciseSlice";
 import { ExerciseObject } from "../common";
 interface Exercise {
   id: number;
@@ -26,21 +31,25 @@ type GetExerciseResponse = {
 };
 const ExercisesView = () => {
   const { t } = useTranslation();
-  const status = useAppSelector(selectStatus)
-  const exerciseList = useAppSelector(selectExerciseList)
-  const dispatch = useAppDispatch()
+  const status = useAppSelector(selectStatus);
+  const exerciseList = useAppSelector(selectExerciseList);
+  const dispatch = useAppDispatch();
   const role = useAppSelector(selectRole);
 
   const [open, setOpen] = useState(false);
   const [version, setVersion] = useState(0);
 
-  const [modify, setModify] = useState({
+  const [modify, setModify] = useState<{
+    modify: boolean;
+    data: ExerciseObject;
+  }>({
     modify: false,
     data: {
       id: -999,
       name: "",
       details: "",
-      type: "",
+      type: "None",
+      subtype: "None",
       created_at: "",
       updated_at: "",
     },
@@ -64,10 +73,10 @@ const ExercisesView = () => {
   };
 
   useEffect(() => {
-    dispatch(getExercise())
+    dispatch(getExercise());
   }, [dispatch]);
 
-  if (status !== 'idle') {
+  if (status !== "idle") {
     return (
       <MainLayout content="Exercise">
         <div
@@ -115,25 +124,43 @@ const ExercisesView = () => {
           {exerciseList.map((value: ExerciseObject) => {
             return (
               <Grid item xs={12} sm={6} md={6} lg={4} key={value.id}>
-                {" "}
                 <Card sx={{ minWidth: 275 }}>
                   <CardContent>
                     <Typography
-                      sx={{ fontSize: 14 }}
-                      color="text.secondary"
+                      variant="h5"
+                      // color="text.secondary"
                       gutterBottom
                     >
                       {value.name}
                     </Typography>
-                    <Typography variant="h5" component="div">
+                    <Typography component="div">
                       {value.type}
                     </Typography>
                     <Typography variant="body2">
-                      {value.details.toString()}
+                      {value.details}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Learn More</Button>
+                    <CustomButton
+                      // size="small"
+                      shownText="Edit"
+                      handler={() => {
+                        setModify({
+                          modify: true,
+                          data: value,
+                        });
+                        setOpen(true);
+                      }}
+                      variant={"primary"}
+                    />
+                    <CustomButton
+                      // size="small"
+                      shownText="Delete"
+                      handler={() => {
+                        dispatch(deleteExercise(value.id))
+                      }}
+                      variant={"danger"}
+                    />
                   </CardActions>
                 </Card>
               </Grid>

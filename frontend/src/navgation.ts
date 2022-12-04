@@ -105,6 +105,21 @@ export const navigations: NavObject[] = [
                         path: '/exercises/chest/lower_chest',
                         icon: '🈷',
                     },
+                    {
+                        name: 'Middle Chest',
+                        path: '/exercises/chest/middle_chest',
+                        icon: '🈷',
+                    },
+                    {
+                        name: 'Inner Chest',
+                        path: '/exercises/chest/inner_chest',
+                        icon: '🈷',
+                    },
+                    {
+                        name: 'Outer Chest',
+                        path: '/exercises/chest/outer_chest',
+                        icon: '🈷',
+                    },
                 ]
             },
             {
@@ -172,17 +187,17 @@ export const navigations: NavObject[] = [
                         icon: '🦵'
                     },
                     {
-                        name: 'Former',
+                        name: 'Quad',
                         path: '/exercises/leg/quad',
                         icon: '🦵'
                     },
                     {
-                        name: 'Tricept',
+                        name: 'Harmstring',
                         path: '/exercises/leg/harmstring',
                         icon: '🦵'
                     },
                     {
-                        name: 'Bicept',
+                        name: 'Hip',
                         path: '/exercises/leg/hip',
                         icon: '🦵'
                     }]

@@ -22,6 +22,9 @@ export class Exercise {
   type: string;
 
   @Column()
+  subtype: string;
+
+  @Column()
   details: string;
 
   @ManyToOne(() => Coach, (coach) => coach.exercises)

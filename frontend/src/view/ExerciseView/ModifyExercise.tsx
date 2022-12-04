@@ -22,9 +22,9 @@ import FormHelperText from "@mui/material/FormHelperText";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { createExerciseJson } from "../../api/exerciseApi";
-import { createExercise, getExercise } from "../../store/exerciseSlice";
-
+import { createExerciseJson, updateExerciseJson } from "../../api/exerciseApi";
+import { createExercise, getExercise, updateExercise } from "../../store/exerciseSlice";
+import { Body_Part, Body_Part_Subtype } from "../../common";
 interface PropsType {
   open: boolean;
   handleClose: any;
@@ -36,7 +36,8 @@ interface PropsType {
 interface IFormInput {
   id: number;
   name: string;
-  type: string;
+  type: "Chest" | "Back" | "Arms" | "Legs" | "Core" | "Shoulder" | "None";
+  subtype: string;
   details: string;
   created_at: string;
   updated_at: string;
@@ -61,6 +62,10 @@ const ModifyExercise = ({
         .string()
         // .oneOf(["Recommand", "Not Bad", "Not Recommand"])
         .required("Please enter food name"),
+      subtype: yup
+        .string()
+        // .oneOf(["Recommand", "Not Bad", "Not Recommand"])
+        .required("Please enter food name"),
     })
     .required();
 
@@ -74,6 +79,12 @@ const ModifyExercise = ({
     reset,
     formState: { errors },
   } = useForm<IFormInput>({
+    defaultValues: {
+      name: "",
+      details: "",
+      type: "None",
+      subtype: "None",
+    },
     resolver: yupResolver(schema),
   });
 
@@ -91,43 +102,39 @@ const ModifyExercise = ({
     console.log("values == ", values);
 
     if (modify && data) {
-      // TODO: update
-      // let sendToServer: updateFoodJson = {
-      //   carbs: Number(values.carbs),
-      //   protein: Number(values.protein),
-      //   fat: Number(values.fat),
-      //   name: values.name,
-      //   id: data?.id,
-      //   comment: values.comment,
-      //   recommendation: values.recommendation,
-      //   // base64string: 'test'
-      // };
-
-      // dispatch(updateFood(sendToServer))
-      //   .unwrap()
-      //   .then((result) => {
-      //     console.log(result);
-      //     if (result.update_food === true) {
-      //       setOpen(false);
-      //       reset();
-      //       dispatch(getFood());
-      //     } else {
-      //       // setRegSuccess(false);
-      //       console.log("error");
-      //     }
-      //     // handle result here
-      //   })
-      //   .catch((rejectedValueOrSerializedError) => {
-      //     console.log(rejectedValueOrSerializedError);
-      //     // handle error here
-      //     // TODO: error handling
-      //     // 1. what if the user name already exist???
-      //   });
+      let sendToServer: updateExerciseJson = {
+        name: values.name,
+        type: values.type,
+        subtype: values.subtype,
+        details: values.details,
+        id: data.id,
+      };
+      dispatch(updateExercise(sendToServer))
+        .unwrap()
+        .then((result) => {
+          console.log(result);
+          if (result.update_exercise === true) {
+            setOpen(false);
+            reset();
+            dispatch(getExercise());
+          } else {
+            // setRegSuccess(false);
+            console.log("error");
+          }
+          // handle result here
+        })
+        .catch((rejectedValueOrSerializedError) => {
+          console.log(rejectedValueOrSerializedError);
+          // handle error here
+          // TODO: error handling
+          // 1. what if the user name already exist???
+        });
     } else {
       let sendToServer: createExerciseJson = {
         name: values.name,
         type: values.type,
-        details: values.details
+        subtype: values.subtype,
+        details: values.details,
       };
 
       dispatch(createExercise(sendToServer))
@@ -208,26 +215,54 @@ const ModifyExercise = ({
                 defaultValue="None"
                 render={({ field }) => (
                   <FormControl>
-                  <Select
-                    {...field}
-                    size="small"
-                  >
-                    <MenuItem value="None">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={"Chest"}>Chest</MenuItem>
-                    <MenuItem value={"Back"}>Back</MenuItem>
-                    <MenuItem value={"Legs"}>Legs</MenuItem>
-                    <MenuItem value={"Arm"}>Arm</MenuItem>
-                    <MenuItem value={"Shoulder"}>Shoulder</MenuItem>
-                    <MenuItem value={"Core"}>Core</MenuItem>
-                  </Select>
-                  <FormHelperText sx={{color: 'red'}}>{errors["type"]
+                    <Select {...field} size="small">
+                      <MenuItem value="None">
+                        <em>None</em>
+                      </MenuItem>
+                      {Body_Part.map((body_part: string) => (
+                        <MenuItem key={body_part} value={body_part}>
+                          {body_part}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText sx={{ color: "red" }}>
+                      {errors["type"]
                         ? t(
                             errors["type"]
                               .message as unknown as TemplateStringsArray
                           )
-                        : ""}</FormHelperText>
+                        : ""}
+                    </FormHelperText>
+                  </FormControl>
+                )}
+              />
+              <Controller
+                name="subtype"
+                control={control}
+                defaultValue="None"
+                render={({ field }) => (
+                  <FormControl>
+                    <Select {...field} size="small">
+                      <MenuItem value="None">
+                        <em>None</em>
+                      </MenuItem>
+                      {
+                        Body_Part_Subtype[values.type].map(
+                          (subtype: string) => (
+                            <MenuItem key={subtype} value={subtype}>
+                              {subtype}
+                            </MenuItem>
+                          )
+                        )}
+                    </Select>
+                    <FormHelperText sx={{ color: "red" }}>
+                      {errors["subtype"]
+                        ? t(
+                            errors["subtype"]
+                              .message as unknown as TemplateStringsArray
+                          )
+                        : ""}
+                    </FormHelperText>
                   </FormControl>
                 )}
               />
