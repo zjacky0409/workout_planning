@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectRepository, InjectDataSource } from '@nestjs/typeorm';
+import { createQueryBuilder, DataSource, Repository } from 'typeorm';
 import { User } from '../database/user.entity';
 // import CreateExerciseDto from 'src/exercise/dto/create-exercise.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -10,12 +10,15 @@ import e from 'express';
 import { CheckEmailDto } from './dto/check-email.dto';
 import * as bcrypt from 'bcrypt';
 import { Coach } from 'src/database/coach.entity';
+import { Student } from 'src/database/student.entity';
 
 @Injectable()
 export class UserService {
+  private readonly logger = new Logger('UserService')
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectDataSource() private dataSource: DataSource,
   ) {}
 
   // check the username exist or not
@@ -97,8 +100,51 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  // find the user information from the database
+  // find the user information from the database and used by thr getUser Api
+  async findUserWithMeta(username: string): Promise<any> {
+    // role.push('student');
+    const role = [];
+    // role.push('coach');
+    const user = await this.dataSource
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.student', 'student')
+      .leftJoinAndSelect('user.coach', 'coach')
+      .where('user.username = :username', { username: username })
+      .getOne();
+
+    let user_coach = null;
+    if (user.student !== null) {
+      role.push('student');
+      user_coach = await this.dataSource
+        .getRepository(Student)
+        .createQueryBuilder('student')
+        .leftJoinAndSelect('student.coach', 'student_coach')
+        .where('student.id = :id', { id: user.student.id })
+        .getOne();
+    }
+    let coach_student = null
+    if (user.coach !== null) {
+      role.push('coach')
+      coach_student = await this.dataSource
+        .getRepository(Coach)
+        .createQueryBuilder('coach')
+        .leftJoinAndSelect('coach.students', 'student_coach')
+        .where('coach.id = :id', { id: user.coach.id })
+        .getOne();
+    }
+    const { password, ...result } = user;
+    result['role'] = role
+    return {
+      user: result,
+      user_coach: user_coach,
+      coach_student: coach_student,
+    };
+  }
+
   async findOne(username: string): Promise<User> {
+    this.logger.log(`parameter in findOne function = ${username}`);
+    this.logger.log(`going to find user info from the user repository`);
     const user = await this.userRepository.find({
       where: { username: username },
       relations: {
@@ -106,7 +152,12 @@ export class UserService {
         student: true,
       },
     });
-    return user[0];
+    if (user.length > 0) {
+      return user[0];
+    }
+    // only occur when user perform the login action
+    this.logger.error(`no user found in the user repository`);
+    return null;
   }
   async findOneById(id: number): Promise<User> {
     return await this.userRepository.findOneBy({ id: id });

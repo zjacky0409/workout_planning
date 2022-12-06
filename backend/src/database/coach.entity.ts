@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { Food } from './food.entity';
 import { Exercise } from './exercise.entity';
@@ -38,7 +39,11 @@ export class Coach {
   @OneToMany(() => Exercise, (exercise) => exercise.created_by)
   exercises: Exercise[];
 
-  @OneToOne(() => Company)
+  @OneToMany(() => Student, (student) => student.coach)
   @JoinColumn()
-  company: Company;
+  students: Student[]
+
+  // @OneToOne(() => Company)
+  // @JoinColumn()
+  // company: Company;
 }

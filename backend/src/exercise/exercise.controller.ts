@@ -47,8 +47,9 @@ export class ExerciseController {
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Request() req) {
+    console.log('req.user +> ', req.user)
     console.log(`${req.user.username} request to get all the exercises`);
-    return this.exerciseService.findAll();
+    return this.exerciseService.findAll(req.user);
   }
 
   @Roles(Role.Coach)

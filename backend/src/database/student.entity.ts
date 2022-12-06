@@ -9,11 +9,11 @@ import {
   ManyToMany,
   JoinTable,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { Food } from './food.entity';
 import { Exercise } from './exercise.entity';
 import { Diet } from './diet.entity';
-import { Company } from './company.entity';
 import { User } from './user.entity';
 import { Coach } from './coach.entity';
 // to define the user structure
@@ -22,8 +22,8 @@ export class Student {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @Column()
-  // username: string;
+  @Column()
+  username: string;
 
   // @Column()
   // firstName: string;
@@ -65,9 +65,10 @@ export class Student {
   @JoinColumn()
   user: User;
 
-  @ManyToMany(() => Coach)
+  @ManyToOne(() => Coach, (coach) => coach.students)
   @JoinTable()
-  coach: Coach[];
+  @JoinColumn()
+  coach: Coach;
   // @OneToOne(() => Company)
   // @JoinColumn()
   // company: Company;

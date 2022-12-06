@@ -9,6 +9,10 @@ export interface AuthState {
   userId: number,
   currentRequestId?: string
   role: string[]
+  student_coach_id?: number,
+  student_id?: number,
+  coach_id?: number,
+  // student_list?:
 }
 
 const initialState: AuthState = {
@@ -19,7 +23,11 @@ const initialState: AuthState = {
   username: '',
   userId: -999,
   currentRequestId: undefined,
-  role: []
+  role: [],
+  student_coach_id: undefined,
+  student_id: undefined,
+  coach_id: undefined,
+
 };
 
 // get the user infomation and config from the server and check the jwt token valid or not
@@ -89,10 +97,18 @@ export const authSlice = createSlice({
           state.currentRequestId === requestId
         ) {
           state.status = 'idle';
+          console.log('get from db => ', action.payload)
+          if(action.payload.user_coach !== null){
+            state.student_id = action.payload.user_coach.id;
+            state.student_coach_id = action.payload.user_coach.coach.id;
+          }
+          if(action.payload.coach_student !== null){
+            state.coach_id = action.payload.coach_student.id;
+          }
           // set the username and userID
-          state.username = action.payload.username;
-          state.userId = action.payload.userId;
-          state.role = action.payload.role
+          state.username = action.payload.user.username;
+          state.userId = action.payload.user.userId;
+          state.role = action.payload.user.role
           state.authentication = true;
         }
 

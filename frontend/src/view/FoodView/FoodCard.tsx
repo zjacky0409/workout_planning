@@ -69,7 +69,7 @@ const FoodCard = ({
               Fat: {fat}
             </Typography>
           </div>
-          <Typography variant="caption" color="text.secondary" component="div">
+          <Typography variant="caption" color="text.secondary" component="div" noWrap>
             {comment}
           </Typography>
         </CardContent>

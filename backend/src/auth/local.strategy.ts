@@ -2,6 +2,7 @@ import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { Logger } from '@nestjs/common';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -10,20 +11,13 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(username: string, password: string): Promise<any> {
-    // console.log('Hi, someone call the login api')
-    // function wait(ms: any): any {
-    //   return new Promise(resolve => setTimeout(() => resolve(''), ms));
-    // };
-
-    // // 调用方法；
-    // await wait(5000);
+    // call function to vaildate user's password and useranme
+    Logger.log(`username ${username} -- login action`, 'LocalStrategy');
     const user = await this.authService.validateUser(username, password);
     if (!user) {
+      Logger.log(`wrong user name or password`);
       throw new UnauthorizedException();
     }
-    // if(user.student !== null){
-    //   user.role
-    // }
     return user;
   }
 }

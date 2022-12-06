@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -16,6 +16,7 @@ import { Student } from './database/student.entity';
 // import { ExerciseController } from './exercise/exercise.controller';
 import { FoodModule } from './food/food.module';
 import { DietModule } from './diet/diet.module';
+import { RequestLoggerMiddleware } from './middleware/request.middleware';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { DietModule } from './diet/diet.module';
       username: 'postgres_test', // we should not set the username and password as plaintext here
       password: 'postgres_tes',
       database: 'postgres',
-      entities: [User, Exercise, Coach, Diet, Food, Company, Student],
+      entities: [User, Exercise, Coach, Diet, Food, Student],
       synchronize: true,
     }),
     ExerciseModule,
@@ -51,4 +52,8 @@ import { DietModule } from './diet/diet.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(RequestLoggerMiddleware).forRoutes('*');
+  }
+}

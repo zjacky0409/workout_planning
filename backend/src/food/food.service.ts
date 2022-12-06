@@ -7,6 +7,8 @@ import { Repository } from 'typeorm';
 import { UserService } from 'src/user/user.service';
 import { UnauthorizedException } from '@nestjs/common';
 import DeleteFoodDto from './dto/delete-food.dto';
+import { userInfo } from 'src/share/common';
+
 @Injectable()
 export class FoodService {
   constructor(
@@ -15,7 +17,7 @@ export class FoodService {
     private userServive: UserService,
   ) { }
 
-  async create(createFoood: CreateFoodDto, user: any) {
+  async create(createFoood: CreateFoodDto, user: userInfo) {
     console.log(`${user.userId} want to create a food`);
     console.log('food content == ', createFoood);
     const user_to = await this.userServive.findOne(user.username);
@@ -41,10 +43,19 @@ export class FoodService {
     }
   }
 
-  async getFood(user: any) {
+  async getFood(user: userInfo) {
     console.log(`user ${user.userId} request to get the food list`);
-    const result = await this.foodRepository.find();
-    return { food_list: result };
+    let toBeSerachedId = -999;
+    if (user.student_coach_id !== -999) {
+      toBeSerachedId = user.student_coach_id;
+    } else {
+      toBeSerachedId = user.coach_id;
+    }
+    return {
+      food_list: await this.foodRepository.find({
+        where: { coach: { id: toBeSerachedId } },
+      }),
+    };
   }
 
   async updateFood(food: UpdateFoodDto, user: any) {
@@ -78,7 +89,7 @@ export class FoodService {
     }
   }
 
-  async deleteFood(toBeDelete: DeleteFoodDto, user: any) {
+  async deleteFood(toBeDelete: DeleteFoodDto, user: userInfo) {
     // console.log(`user ${user.userId} request to get the food list`);
     // // const result = await this.foodRepository.update({id: });
     // const foodToUpdate = await this.foodRepository.find({
@@ -97,7 +108,7 @@ export class FoodService {
     try {
       deleteResult = await this.foodRepository.delete({
         id: toBeDelete.toBeDelete,
-        coach: user.userId,
+        coach: { id: user.userId },
       });
 
       // if (result.affected === 0) {

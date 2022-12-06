@@ -11,10 +11,14 @@ import { Request, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
+import { UserService } from 'src/user/user.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   // deal with user login, if login successfully, we return a jwt token to the user
   @UseGuards(LocalAuthGuard)
@@ -27,6 +31,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Post('/getUser')
   async getProfile(@Request() req) {
-    return req.user;
+    const user_meta_data = await this.userService.findUserWithMeta(
+      req.user.username,
+    );
+    console.log(user_meta_data)
+    return user_meta_data;
   }
 }
