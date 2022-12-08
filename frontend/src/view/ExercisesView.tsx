@@ -78,7 +78,7 @@ const ExercisesView = () => {
 
   if (status !== "idle") {
     return (
-      <MainLayout content="Exercise">
+      <MainLayout content="Exercises">
         <div
           style={{
             display: "flex",
@@ -93,7 +93,7 @@ const ExercisesView = () => {
     );
   }
   return (
-    <MainLayout content="Exercise">
+    <MainLayout content="Exercises">
       <div
         style={{
           height: "100%",

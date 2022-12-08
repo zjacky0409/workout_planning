@@ -162,7 +162,7 @@ const ModifyExercise = ({
   return (
     <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={"md"}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogTitle>{"Add a new exercise"}</DialogTitle>
+        <DialogTitle>{t("Add a new exercise")}</DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ paddingTop: 2 }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -175,7 +175,7 @@ const ModifyExercise = ({
                     {...field}
                     error={!!errors["name"]}
                     size="small"
-                    label={t("Food Name")}
+                    label={t("Exercise Name")}
                     fullWidth
                     helperText={
                       errors["name"]
@@ -196,7 +196,7 @@ const ModifyExercise = ({
                     {...field}
                     error={!!errors["details"]}
                     size="small"
-                    label={t("Carbs")}
+                    label={t("Details")}
                     fullWidth
                     helperText={
                       errors["details"]
@@ -221,7 +221,7 @@ const ModifyExercise = ({
                       </MenuItem>
                       {Body_Part.map((body_part: string) => (
                         <MenuItem key={body_part} value={body_part}>
-                          {body_part}
+                          {t(body_part as unknown as TemplateStringsArray) }
                         </MenuItem>
                       ))}
                     </Select>
@@ -250,7 +250,7 @@ const ModifyExercise = ({
                         Body_Part_Subtype[values.type].map(
                           (subtype: string) => (
                             <MenuItem key={subtype} value={subtype}>
-                              {subtype}
+                              {t(subtype as unknown as TemplateStringsArray )}
                             </MenuItem>
                           )
                         )}

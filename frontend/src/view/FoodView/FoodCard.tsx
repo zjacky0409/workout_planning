@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-
+import { useTranslation } from "react-i18next";
 interface PropsType {
   id: number;
   name: string;
@@ -33,6 +33,8 @@ const FoodCard = ({
 }: PropsType) => {
   const foodList = useAppSelector(selectFoodList);
 
+  const { t } = useTranslation();
+
   return (
     <Card sx={{ display: "flex"}}>
       <Box
@@ -52,21 +54,21 @@ const FoodCard = ({
               color="text.secondary"
               component="div"
             >
-              Carbs: {carbs}
+              {t("Carbs")}: {carbs}
             </Typography>
             <Typography
               variant="caption"
               color="text.secondary"
               component="div"
             >
-              Protein: {protein}
+              {t("Protein")}: {protein}
             </Typography>
             <Typography
               variant="caption"
               color="text.secondary"
               component="div"
             >
-              Fat: {fat}
+              {t("Fat")}: {fat}
             </Typography>
           </div>
           <Typography variant="caption" color="text.secondary" component="div" noWrap>

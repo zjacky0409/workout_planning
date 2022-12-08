@@ -303,11 +303,11 @@ const ModifyFood = ({
                     size="small"
                   >
                     <MenuItem value="None">
-                      <em>None</em>
+                      <em>{t('None')}</em>
                     </MenuItem>
-                    <MenuItem value={"Recommand"}>Recommand</MenuItem>
-                    <MenuItem value={"Not Bad"}>Not Bad</MenuItem>
-                    <MenuItem value={"Not Recommand"}>Not Recommand</MenuItem>
+                    <MenuItem value={"Recommand"}>{t("Recommand")}</MenuItem>
+                    <MenuItem value={"Not Bad"}>{t("Not Bad")}</MenuItem>
+                    <MenuItem value={"Not Recommand"}>{t("Not Recommand")}</MenuItem>
                   </Select>
                   <FormHelperText sx={{color: 'red'}}>{errors["recommendation"]
                         ? t(

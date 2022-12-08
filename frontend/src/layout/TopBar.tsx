@@ -71,6 +71,7 @@ const TopBar = () => {
 
   // change the lanuage
   const changeLanguage = (lng: string) => {
+    localStorage.setItem('lang', lng)
     i18n.changeLanguage(lng);
   };
 
@@ -157,7 +158,7 @@ const TopBar = () => {
                 <MenuItem key={page.name} sx={{ p: 0 }}>
                   {page.children.length > 0 ? (
                     <NestListItem
-                      shownText={page.icon + page.name}
+                      shownText={page.icon + t(page.name as unknown as TemplateStringsArray)}
                       content={page.children}
                       action={handleCloseNavMenu}
                     />
@@ -220,7 +221,7 @@ const TopBar = () => {
                             sx={{ width: "50%" }}
                           >
                             <ListItemText>
-                              {value.icon} {value.name}
+                              {value.icon} {t(value.name as unknown as TemplateStringsArray )}
                             </ListItemText>
                           </MenuItem>
                         );

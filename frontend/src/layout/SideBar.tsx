@@ -18,13 +18,10 @@ interface SideBarProp {
   content?: string;
 }
 
-
 // Drawer aka side bar
 
 export default function SideBar({ content = "Diet" }: SideBarProp) {
-
   const { t, i18n } = useTranslation();
-
 
   const currentSideBar = React.useContext(SideBarContext);
   const location = useLocation();
@@ -36,14 +33,14 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
 
     if (subNavContent.length > 0) {
       let toBeProcessed = subNavContent[0];
-      if(toBeProcessed.path === location.pathname){
-        return toBeProcessed.children
+      if (toBeProcessed.path === location.pathname) {
+        return toBeProcessed.children;
       }
       toBeProcessed.children.forEach((child: PageObject) => {
         if (child.path === location.pathname) {
           tempContent = toBeProcessed.children;
         }
-        
+
         // https://stackoverflow.com/questions/49610779/typescript-error-ts2532-object-is-possibly-undefined-even-after-undefined-c
         // if(child.children !== undefined){
         //   child.children.forEach((subChild) => {
@@ -62,7 +59,7 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
             }
           }
         }
-      })
+      });
       return tempContent;
     } else {
       return [];
@@ -95,43 +92,41 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
       <Box sx={{ height: 20 }} />
 
       <Stack spacing={1} direction="column">
-        {
-          sideBarContent.map((text: SideBarObject) => (
-            <ListItem
-              key={text.path}
-              disablePadding
-              sx={
-                {
-                  // bgcolor: location.pathname === text.path ? "#cacbcc" : "white",
-                }
+        {sideBarContent.map((text: SideBarObject) => (
+          <ListItem
+            key={text.path}
+            disablePadding
+            sx={
+              {
+                // bgcolor: location.pathname === text.path ? "#cacbcc" : "white",
               }
-            >
-              <ListItemButton component={Link} to={text.path}>
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Divider
-                    orientation="vertical"
-                    // variant="middle"
-                    flexItem
-                    sx={{
-                      background:
-                        location.pathname === text.path ? "skyblue" : "white",
-                      borderRightWidth: 5,
-                    }}
-                  />
-                  <Typography variant="subtitle2" gutterBottom>
-                    <span>{text.icon} </span>
-                    {text.name}
-                  </Typography>
-                </Stack>
-              </ListItemButton>
-            </ListItem>
-          ))
-        }
+            }
+          >
+            <ListItemButton component={Link} to={text.path}>
+              <Stack
+                direction="row"
+                spacing={2}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Divider
+                  orientation="vertical"
+                  // variant="middle"
+                  flexItem
+                  sx={{
+                    background:
+                      location.pathname === text.path ? "skyblue" : "white",
+                    borderRightWidth: 5,
+                  }}
+                />
+                <Typography variant="subtitle2" gutterBottom>
+                  <span>{text.icon} </span>
+                  {t(text.name as unknown as TemplateStringsArray)}
+                </Typography>
+              </Stack>
+            </ListItemButton>
+          </ListItem>
+        ))}
       </Stack>
     </div>
   );

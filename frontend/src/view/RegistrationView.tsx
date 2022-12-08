@@ -213,7 +213,7 @@ const RegistrationView = () => {
         alignItems: "center",
       }}
     >
-      <Card raised sx={{ width: { xs: "90%", md: "40%" } }}>
+      <Card raised sx={{ width: { xs: "90%", md: "40%" }}} >
         {regSuccess && ( // when registration successfully, we show the success view
           <>
             <CardContent
@@ -262,7 +262,7 @@ const RegistrationView = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 3,
+                gap: 1.5,
               }}
             >
               <img

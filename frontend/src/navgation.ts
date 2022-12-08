@@ -54,7 +54,7 @@ export const navigations: NavObject[] = [
         ]
     },
     {
-        name: 'Exercise',
+        name: 'Exercises',
         path: '/exercises',
         icon: '🏋',
         children: [
@@ -150,7 +150,7 @@ export const navigations: NavObject[] = [
                 ]
             },
             {
-                name: 'Arm',
+                name: 'Arms',
                 path: '/exercises/arm',
                 icon: '💪',
                 children: [
@@ -177,7 +177,7 @@ export const navigations: NavObject[] = [
                 ]
             },
             {
-                name: 'Leg',
+                name: 'Legs',
                 path: '/exercises/leg',
                 icon: '🦵',
                 children: [
@@ -304,7 +304,7 @@ export const navigations: NavObject[] = [
         icon: '📋',
         children: [
             {
-                name: 'Exercise',
+                name: 'Exercises',
                 path: '/useful_resources/exercise',
                 icon: '🦵'
                 // children: [
@@ -356,7 +356,7 @@ export const navigations: NavObject[] = [
                 // ]
             },
             {
-                name: 'Training',
+                name: 'Trainning',
                 path: '/progress/trainning',
                 icon: '🦵'
                 // children: [
