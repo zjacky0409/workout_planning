@@ -178,7 +178,7 @@ const LoginView = () => {
             </div>
             <div style={{ display: "flex", gap: 5 }}>
               <CustomButton
-                handler={() => {
+                onClick={() => {
                   navigate("/registration");
                 }}
                 shownText={t("Register")}
@@ -195,9 +195,9 @@ const LoginView = () => {
                 shownText={t("Login")}
                 variant={"primary"}
                 disabled={status === "pending"}
-                handler={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
+                // handler={function (): void {
+                //   throw new Error("Function not implemented.");
+                // }}
               />
             </div>
           </CardActions>

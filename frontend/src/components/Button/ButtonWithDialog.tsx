@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import variantToColor from "../../common/styleFunction";
 import { useTranslation } from "react-i18next";
+import ConfirmDialog from "../Dialog/ConfirmDialog";
 interface ButtonProp extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   shownText: string; // The text in the button
-  // handler: () => void; // the action after clicking the button
+  handler: () => void; // the action after clicking the button
+  disabled: boolean,
+  header: string,
+  content: string,
   variant: "primary" | "danger" | "info" | "warning" | "cancel"; // i define different variant for the button
 }
 // React.ButtonHTMLAttributes<HTMLButtonElement> means that we also accept other props that from the button html
@@ -39,17 +43,33 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export default function CustomButton({
+export default function ButtonWithDialog({
   shownText,
-  // handler,
+  handler,
   variant,
+  disabled,
+  header,
+  content,
   ...props
 }: ButtonProp) {
   const { t } = useTranslation();
+
+  const [open, setOpen] = useState<boolean>(false);
+  console.log(open)
+  
   return (
-    // may no need handler here, we directly pass onClick as React.ButtonHTMLAttributes here
-    <StyledButton variant={variant} {...props}>
-      {t(shownText as unknown as TemplateStringsArray)}
-    </StyledButton>
+    <>
+      <StyledButton variant={variant} onClick={() => setOpen(true)} {...props}>
+        {t(shownText as unknown as TemplateStringsArray)}
+      </StyledButton>
+      <ConfirmDialog
+        hanlder={handler}
+        header={header}
+        content={content}
+        open={open}
+        handleClose={() => setOpen(false)}
+        disabled={disabled}
+      />
+    </>
   );
 }

@@ -104,11 +104,12 @@ export class FoodService {
     // if (foodToUpdate[0].coach.id !== user.userId) {
     //   throw new UnauthorizedException(); // should not happen
     // }
+    console.log(`${user.username} is going to delete a food`)
     let deleteResult
     try {
       deleteResult = await this.foodRepository.delete({
         id: toBeDelete.toBeDelete,
-        coach: { id: user.userId },
+        coach: { id: user.coach_id },
       });
 
       // if (result.affected === 0) {

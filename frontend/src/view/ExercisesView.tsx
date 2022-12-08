@@ -113,7 +113,7 @@ const ExercisesView = () => {
           {role.includes("coach") && (
             <CustomButton
               shownText={"Add a new exercise"}
-              handler={handleClickOpen}
+              onClick={handleClickOpen}
               variant={"primary"}
               style={{ width: 180, height: 50 }}
             />
@@ -144,7 +144,7 @@ const ExercisesView = () => {
                     <CustomButton
                       // size="small"
                       shownText="Edit"
-                      handler={() => {
+                      onClick={() => {
                         setModify({
                           modify: true,
                           data: value,
@@ -156,7 +156,7 @@ const ExercisesView = () => {
                     <CustomButton
                       // size="small"
                       shownText="Delete"
-                      handler={() => {
+                      onClick={() => {
                         dispatch(deleteExercise(value.id))
                       }}
                       variant={"danger"}

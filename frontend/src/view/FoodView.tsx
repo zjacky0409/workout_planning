@@ -68,27 +68,24 @@ const FoodView = (props: PropsType) => {
     setOpen(false);
   };
 
-  console.log("foodList == ", foodList);
-
-  const callDeleteFoodApi = (toBeDelete: number) => {
-    dispatch(deleteFood(toBeDelete))
-      .unwrap()
-      .then((result) => {
-        console.log(result);
-        if (result.delete_food === true) {
-          dispatch(getFood());
-        } else {
-          console.log("error");
-        }
-        // handle result here
-      })
-      .catch((rejectedValueOrSerializedError) => {
-        console.log(rejectedValueOrSerializedError);
-        // handle error here
-        // TODO: error handling
-        // 1. what if the user name already exist???
-      });
-  };
+  // const callDeleteFoodApi = (toBeDelete: number) => {
+  //   dispatch(deleteFood(toBeDelete))
+  //     .unwrap()
+  //     .then((result) => {
+  //       if (result.delete_food === true) {
+  //         // dispatch(getFood());
+  //       } else {
+  //         console.log("error");
+  //       }
+  //       // handle result here
+  //     })
+  //     .catch((rejectedValueOrSerializedError) => {
+  //       console.log(rejectedValueOrSerializedError);
+  //       // handle error here
+  //       // TODO: error handling
+  //       // 1. what if the user name already exist???
+  //     });
+  // };
 
   if (status === "pending") {
     return (
@@ -169,7 +166,7 @@ const FoodView = (props: PropsType) => {
           {role.includes("coach") && (
             <CustomButton
               shownText={"Add New Food"}
-              handler={handleClickOpen}
+              onClick={handleClickOpen}
               variant={"primary"}
               style={{ width: 130, height: 50 }}
             />
@@ -192,7 +189,7 @@ const FoodView = (props: PropsType) => {
                     comment={values.comment}
                     setModify={setModify}
                     setOpen={setOpen}
-                    callDeleteFoodApi={callDeleteFoodApi}
+                    // callDeleteFoodApi={callDeleteFoodApi}
                   />
                 </Grid>
               );
@@ -215,7 +212,7 @@ const FoodView = (props: PropsType) => {
                     comment={values.comment}
                     setModify={setModify}
                     setOpen={setOpen}
-                    callDeleteFoodApi={callDeleteFoodApi}
+                    // callDeleteFoodApi={callDeleteFoodApi}
                   />
                 </Grid>
               );
@@ -238,7 +235,7 @@ const FoodView = (props: PropsType) => {
                     comment={values.comment}
                     setModify={setModify}
                     setOpen={setOpen}
-                    callDeleteFoodApi={callDeleteFoodApi}
+                    // callDeleteFoodApi={callDeleteFoodApi}
                   />
                 </Grid>
               );

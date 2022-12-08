@@ -323,7 +323,7 @@ const ModifyFood = ({
         </DialogContent>
         <DialogActions>
           <CustomButton
-            handler={handleClose}
+            onClick={handleClose}
             shownText="Cancel"
             variant="cancel"
             type="button"
@@ -334,9 +334,9 @@ const ModifyFood = ({
             // handler={handleClose}
             shownText="Comfirm"
             variant="primary"
-            handler={function (): void {
-              throw new Error("Function not implemented.");
-            }}
+            // handler={function (): void {
+            //   throw new Error("Function not implemented.");
+            // }}
           />
         </DialogActions>
       </form>

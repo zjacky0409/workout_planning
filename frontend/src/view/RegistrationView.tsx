@@ -248,7 +248,7 @@ const RegistrationView = () => {
               <div style={{ margin: "auto" }}>
                 <CustomButton
                   shownText={t("Explore Now")}
-                  handler={() => navigate("/")}
+                  onClick={() => navigate("/")}
                   variant={"primary"}
                 />
               </div>
@@ -540,9 +540,9 @@ const RegistrationView = () => {
               <CustomButton
                 shownText={t("Register")}
                 type="submit"
-                handler={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
+                // handler={function (): void {
+                //   throw new Error("Function not implemented.");
+                // }}
                 variant="primary"
               />
             </CardActions>

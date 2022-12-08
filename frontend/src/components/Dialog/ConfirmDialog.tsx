@@ -31,13 +31,13 @@ const ConfirmDialog = ({
       </DialogContent>
       <DialogActions>
         <CustomButton
-          handler={handleClose}
+          onClick={handleClose}
           shownText="Cancel"
           variant="cancel"
         />
         <CustomButton
           disabled={disabled}
-          handler={hanlder}
+          onClick={hanlder}
           shownText="Comfirm"
           variant="primary"
         />
