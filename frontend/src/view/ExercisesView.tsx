@@ -112,7 +112,7 @@ const ExercisesView = () => {
           <p>This is the {t("Exercises")} Page</p>
           {role.includes("coach") && (
             <CustomButton
-              shownText={"Add New Exercise"}
+              shownText={"Add a new exercise"}
               handler={handleClickOpen}
               variant={"primary"}
               style={{ width: 180, height: 50 }}

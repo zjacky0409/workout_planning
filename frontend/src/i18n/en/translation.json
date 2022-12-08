@@ -88,6 +88,9 @@
   "Arms Day": "Arms Day",
   "Other": "Other",
   "Weight": "Weight",
-  "Trainning": "Trainning"
-
+  "Trainning": "Trainning",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "Cancel": "Cancel",
+  "Confirm": "Confirm"
 }

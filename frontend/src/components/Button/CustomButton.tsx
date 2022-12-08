@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import variantToColor from "../../common/styleFunction";
+import { useTranslation } from "react-i18next";
 interface ButtonProp extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   shownText: string; // The text in the button
   handler: () => void; // the action after clicking the button
@@ -44,10 +45,11 @@ export default function CustomButton({
   variant,
   ...props
 }: ButtonProp) {
+  const { t } = useTranslation();
   return (
-    // may no need handler here, we directly pass onClick as React.ButtonHTMLAttributes here 
+    // may no need handler here, we directly pass onClick as React.ButtonHTMLAttributes here
     <StyledButton onClick={handler} variant={variant} {...props}>
-      {shownText}
+      {t(shownText as unknown as TemplateStringsArray)}
     </StyledButton>
   );
 }
