@@ -1,55 +1,31 @@
-Hello Everyone, this is my new project. 
+Hello Everyone, this is my new project.
+It is about gym. It is about workout
+The project allows people and thire personal trainer keep track of their processes such as gym performace, diet etc. Moreover, the application also allow pt to set up some diet/program for their student.
 
 If you want to know the details of frontend or backend, please read the README.md inside frontend or backend folder
 
-Frontend: ReactJS (Typescript)
-Backend: NestJS (Typescript)
-DB: PostgreDB
+Frontend: ReactJS (Typescript) https://reactjs.org/
+Frontend UI framework: MUi https://mui.com/
+Backend: NestJS (Typescript) https://nestjs.com/
+DB: Postgres SQL https://www.postgresql.org/
 
 
 To Run My Application:
 
-!! Need Docker in your OS
+!! Need Docker in your OS !!
+https://docs.docker.com/get-docker/
 
 1. git clone my project
 2. then cd to the project
 3. run docker compose build
 4. then run docker compose up
+5. Go to http://localhost:3000 
 
 Process
 
 1. Main layout for my appplication
 2. Login Systme With Jwt Authentication
 3. Internationalization(i18n) for my applcation 
-4. !!! really to design the database structure !!!
-
-
-
-
-
-
-
-
-
-5. pull before or after commit --> we should pull before commit
-6. For the chart: we may use the chart js
-7. https://mui.com/material-ui/react-drawer/ --> for the side bar 
-
-8. if we use context to store the sidebar content --> it doesnt work for a suitation: if we refresh the page, the context will become null, then the sidebar content will become empty.
-    so we need to use another method to achieve the goal.
-
-
-
-
-
-
-
-
-
-
-Basic Layout for my applciaton:
-| Logo | Program | Diet         | Exercises     | Booking | Useful Resource | Progress                               |
-|------|---------|--------------|---------------|---------|-----------------|----------------------------------------|
-|      | Day1    | Rest Day     | Back          |         |                 | Some charts to show the process        |
-|      | Day2    | Training Day | Chest         |         |                 | Volumn....                             |
-|      | .....   | Macro        | ....Body Part |         |                 |                                        |
+4. Basic design for my application
+5. user registration
+6. food and exercises creation/update/delete
