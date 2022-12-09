@@ -4,10 +4,10 @@ The project allows people and thire personal trainer keep track of their process
 
 If you want to know the details of frontend or backend, please read the README.md inside frontend or backend folder
 
-Frontend: ReactJS (Typescript) https://reactjs.org/ 
-Frontend UI framework: MUi https://mui.com/ 
-Backend: NestJS (Typescript) https://nestjs.com/ 
-DB: Postgres SQL https://www.postgresql.org/ 
+Frontend: ReactJS (Typescript) https://reactjs.org/ , 
+Frontend UI framework: MUi https://mui.com/ ,
+Backend: NestJS (Typescript) https://nestjs.com/  ,
+DB: Postgres SQL https://www.postgresql.org/  ,
 
 
 To Run My Application:
