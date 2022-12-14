@@ -44,6 +44,7 @@ export class AuthService {
       coach_id: -999,
       student_id: -999,
       student_coach_id: -999,
+      isVerified: false,
     };
     let user_coach = null
     if (user.student !== null) {
@@ -56,6 +57,8 @@ export class AuthService {
         .where('student.id = :id', { id: user.student.id })
         .getOne();
       payload.student_coach_id = user_coach.id;
+      console.log('user_coach => ', user_coach)
+      payload.isVerified = user_coach.isVerified;
     }
     if (user.coach !== null) {
       payload.role.push('coach');

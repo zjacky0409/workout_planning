@@ -17,6 +17,7 @@ import { Student } from './database/student.entity';
 import { FoodModule } from './food/food.module';
 import { DietModule } from './diet/diet.module';
 import { RequestLoggerMiddleware } from './middleware/request.middleware';
+import { CoachModule } from './coach/coach.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { RequestLoggerMiddleware } from './middleware/request.middleware';
     ExerciseModule,
     DietModule,
     FoodModule,
+    CoachModule,
     // , ConfigModule.forRoot({ isGlobal: true }),
     //   TypeOrmModule.forRoot({
     //     type: 'postgres',

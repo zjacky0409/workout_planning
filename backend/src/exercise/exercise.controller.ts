@@ -13,12 +13,15 @@ import CreateExerciseDto from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Request, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { RolesGuard } from 'src/role_checker/role.guard';
-import { Role } from 'src/role_checker/role.enum';
-import { Roles } from 'src/role_checker/roles.decorator';
+import { RolesGuard } from 'src/guards/role_checker/role.guard';
+import { Role } from 'src/guards/role_checker/role.enum';
+import { Roles } from 'src/guards/role_checker/roles.decorator';
 import { ValidationPipe } from '../pipes/validate.pipe';
 import { ExerciseValidationPipe } from './pipe/exercise_validate.pipe';
 import DeleteExerciseDto from './dto/delete-exercise.dto';
+import GetExerciseDto from './dto/get-exercise.dto';
+import { IsVerifiedGuard } from 'src/guards/isVerified.guard';
+
 @Controller('exercise')
 export class ExerciseController {
   constructor(private readonly exerciseService: ExerciseService) { }
@@ -44,12 +47,15 @@ export class ExerciseController {
   }
 
   // get all exercises from db
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  findAll(@Request() req) {
-    console.log('req.user +> ', req.user)
+  @UseGuards(JwtAuthGuard, IsVerifiedGuard)
+  @Post('/getExercise')
+  findAll(
+    @Request() req,
+    @Body(new ExerciseValidationPipe()) getExerciseDto: GetExerciseDto,
+  ) {
+    console.log('req.user +> ', req.user);
     console.log(`${req.user.username} request to get all the exercises`);
-    return this.exerciseService.findAll(req.user);
+    return this.exerciseService.findAll(req.user, getExerciseDto);
   }
 
   @Roles(Role.Coach)

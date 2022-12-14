@@ -5,6 +5,7 @@ export const navigations: NavObject[] = [
         name: 'Diet',
         path: '/diet/trainning_day',
         icon: '🍱',
+        role: ['coach', 'student'],
         children: [
             {
                 name: 'Trainning Day',
@@ -56,6 +57,7 @@ export const navigations: NavObject[] = [
     {
         name: 'Exercises',
         path: '/exercises',
+        role: ['coach', 'student'],
         icon: '🏋',
         children: [
             {
@@ -235,6 +237,7 @@ export const navigations: NavObject[] = [
         name: 'Program',
         path: '/program',
         icon: '📝',
+        role: ['coach', 'student'],
         children: [
             {
                 name: 'Push Day',
@@ -301,6 +304,7 @@ export const navigations: NavObject[] = [
     {
         name: 'Resource',
         path: '/useful_resources',
+        role: ['coach', 'student'],
         icon: '📋',
         children: [
             {
@@ -339,6 +343,7 @@ export const navigations: NavObject[] = [
         name: 'Progress',
         path: '/progress',
         icon: '📈',
+        role: ['coach', 'student'],
         children: [
             {
                 name: 'Weight',
@@ -370,6 +375,19 @@ export const navigations: NavObject[] = [
                 //     },
                 // ]
             }
+        ]
+    },
+    {
+        name: 'Coach Area',
+        path: '/coach',
+        icon: '🦵',
+        role: ['coach'],
+        children:[
+            {
+                name: 'Student Management',
+                path: '/coach/student_management',
+                icon: '🦵'
+            },
         ]
     }
 

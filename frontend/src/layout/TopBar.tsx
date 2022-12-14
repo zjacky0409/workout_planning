@@ -24,9 +24,13 @@ import NestListItem from "../components/NestListItem";
 import Divider from "@mui/material/Divider";
 import Dialog from "@mui/material/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
-import { clearAuthentication, selectUsername } from "../store/authSlice";
+import {
+  clearAuthentication,
+  selectRole,
+  selectUsername,
+} from "../store/authSlice";
 import { useAppSelector, useAppDispatch } from "../store/hook";
-import { PageObject } from "../common";
+import { NavObject, PageObject } from "../common";
 const lang_choice = [
   { name: "English", value: "en" },
   { name: "繁體中文", value: "zh_hk" },
@@ -38,16 +42,16 @@ const lang_choice = [
 // }
 
 const TopBar = () => {
+  const dispatch = useAppDispatch();
 
-  const dispatch = useAppDispatch()
+  const userName = useAppSelector(selectUsername);
 
-  const userName = useAppSelector(selectUsername)
+  const role = useAppSelector(selectRole);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
 
-  
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -63,7 +67,10 @@ const TopBar = () => {
 
   const [popperContent, setPopperContent] = React.useState<PageObject[]>([]);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>, children: PageObject[]) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLElement>,
+    children: PageObject[]
+  ) => {
     setPopperContent(children);
   };
 
@@ -71,7 +78,7 @@ const TopBar = () => {
 
   // change the lanuage
   const changeLanguage = (lng: string) => {
-    localStorage.setItem('lang', lng)
+    localStorage.setItem("lang", lng);
     i18n.changeLanguage(lng);
   };
 
@@ -94,17 +101,15 @@ const TopBar = () => {
     setAnchorElUser(null);
   };
 
-  // when we logout, we remove the access_token and set auth state to false 
+  // when we logout, we remove the access_token and set auth state to false
   const handleLogout = () => {
-    localStorage.removeItem('access_token')
-    dispatch(clearAuthentication())
+    localStorage.removeItem("access_token");
+    dispatch(clearAuthentication());
     setAnchorElUser(null);
-  }
-
+  };
 
   // to set the user meun content
   const settings = [{ name: "Logout", action: handleLogout }];
-
 
   const handleCloseLangMenu = () => {
     setAnchorElLang(null);
@@ -140,10 +145,10 @@ const TopBar = () => {
               fullScreen
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-            // TransitionComponent={Transition}
+              // TransitionComponent={Transition}
             >
-              <AppBar sx={{ position: "relative", bgcolor: '#ffffff' }}>
-                <Toolbar sx={{ bgcolor: '#ffffff' }}>
+              <AppBar sx={{ position: "relative", bgcolor: "#ffffff" }}>
+                <Toolbar sx={{ bgcolor: "#ffffff" }}>
                   <IconButton
                     edge="start"
                     // color="inherit"
@@ -154,11 +159,13 @@ const TopBar = () => {
                   </IconButton>
                 </Toolbar>
               </AppBar>
-              {navigations.map((page) => (
+              {navigations.map((page: NavObject) => (
                 <MenuItem key={page.name} sx={{ p: 0 }}>
                   {page.children.length > 0 ? (
                     <NestListItem
-                      shownText={page.icon + t(page.name as unknown as TemplateStringsArray)}
+                      shownText={t(
+                        page.name as unknown as TemplateStringsArray
+                      )}
                       content={page.children}
                       action={handleCloseNavMenu}
                     />
@@ -169,8 +176,8 @@ const TopBar = () => {
                       onClick={handleCloseNavMenu}
                       to={page.path}
                     >
-                      <ListItemText sx={{ fontWeight: 'bold' }}>
-                        {page.icon}{" "}
+                      <ListItemText sx={{ fontWeight: "bold" }}>
+                        {/* {page.icon}{" "} */}
                         {t(page.name as unknown as TemplateStringsArray)}
                       </ListItemText>
                     </MenuItem>
@@ -205,81 +212,89 @@ const TopBar = () => {
           </>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {navigations.map((page) => (
-              <Tooltip
-                key={page.path}
-                placement="bottom-start"
-                title={
-                  <Paper elevation={2} sx={{ width: "40vh" }}>
-                    <MenuList sx={{ display: "flex", flexWrap: "wrap" }}>
-                      {popperContent.map((value: PageObject) => {
-                        return (
-                          <MenuItem
-                            key={value.path + "_menuItem"}
-                            component={Link}
-                            to={value.path}
-                            sx={{ width: "50%" }}
-                          >
-                            <ListItemText>
-                              {value.icon} {t(value.name as unknown as TemplateStringsArray )}
-                            </ListItemText>
-                          </MenuItem>
-                        );
-                      })}
-                    </MenuList>
-                  </Paper>
-                }
-                componentsProps={{
-                  tooltip: {
-                    sx: {
-                      bgcolor: "transparent",
-                      "& .MuiTooltip-arrow": {
-                        color: "transparent",
+            {navigations.map((page: NavObject) => {
+              if (!page.role.some((item) => role.includes(item))) {
+                return <></>;
+              }
+
+              return (
+                <Tooltip
+                  key={page.path}
+                  placement="bottom-start"
+                  title={
+                    <Paper elevation={2} sx={{ width: "40vh" }}>
+                      <MenuList sx={{ display: "flex", flexWrap: "wrap" }}>
+                        {popperContent.map((value: PageObject) => {
+                          return (
+                            <MenuItem
+                              key={value.path + "_menuItem"}
+                              component={Link}
+                              to={value.path}
+                              sx={{ width: "50%" }}
+                            >
+                              <ListItemText>
+                                {t(
+                                  value.name as unknown as TemplateStringsArray
+                                )}
+                              </ListItemText>
+                            </MenuItem>
+                          );
+                        })}
+                      </MenuList>
+                    </Paper>
+                  }
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        bgcolor: "transparent",
+                        "& .MuiTooltip-arrow": {
+                          color: "transparent",
+                        },
                       },
                     },
-                  },
-                }}
-              // sx={{backgroundColor: 'transparent'}}
-              >
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Button
-                    key={page.name}
-                    onClick={handleCloseNavMenu}
-                    sx={{
-                      color: "black",
-                      display: "block",
-                      px: 3,
-                      // "&:hover": {
-                      //   backgroundColor: "#cacbcc",
-                      // },
-                      // bgcolor:
-                      //   location.pathname.split("/")[1] ===
-                      //   page.path.split("/")[1]
-                      //     ? "#cacbcc"
-                      //     : "none",
-                      borderRadius: 0,
-                    }}
-                    component={Link}
-                    to={page.path}
-                    onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
-                      handleClick(e, page.children)
-                    }
-                  >
-                    {page.icon}
-                    {t(page.name as unknown as TemplateStringsArray)}
-                  </Button>
-                  {location.pathname.split("/")[1] ===
-                    page.path.split("/")[1] && (
+                  }}
+                  // sx={{backgroundColor: 'transparent'}}
+                >
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <Button
+                      key={page.name}
+                      onClick={handleCloseNavMenu}
+                      sx={{
+                        color: "black",
+                        display: "block",
+                        px: 3,
+                        // "&:hover": {
+                        //   backgroundColor: "#cacbcc",
+                        // },
+                        // bgcolor:
+                        //   location.pathname.split("/")[1] ===
+                        //   page.path.split("/")[1]
+                        //     ? "#cacbcc"
+                        //     : "none",
+                        borderRadius: 0,
+                      }}
+                      component={Link}
+                      to={page.path}
+                      onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
+                        handleClick(e, page.children)
+                      }
+                    >
+                      {/* {page.icon} */}
+                      {t(page.name as unknown as TemplateStringsArray)}
+                    </Button>
+                    {location.pathname.split("/")[1] ===
+                      page.path.split("/")[1] && (
                       <Divider
                         sx={{ background: "skyblue", borderBottomWidth: 5 }}
                       />
                     )}
-                </div>
-              </Tooltip>
-            ))}
+                  </div>
+                </Tooltip>
+              );
+            })}
           </Box>
           {/* <Box sx={{ flexGrow: 1 }} /> */}
-          <Typography sx={{ color: 'black' }}>Welcome, {userName}</Typography>
+          <Typography sx={{ color: "black" }}>Welcome, {userName}</Typography>
 
           <Box sx={{ xs: "flex" }}>
             <Tooltip title="Change Language">
@@ -288,7 +303,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-              // color="inherit"
+                // color="inherit"
               >
                 <LanguageIcon />
               </IconButton>
@@ -338,7 +353,7 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-              // color="inherit"
+                // color="inherit"
               >
                 <AccountCircle />
               </IconButton>
@@ -360,7 +375,10 @@ const TopBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting.name+'_setting'} onClick={setting.action}>
+                <MenuItem
+                  key={setting.name + "_setting"}
+                  onClick={setting.action}
+                >
                   <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}

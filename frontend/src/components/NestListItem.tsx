@@ -59,7 +59,7 @@ export default function NestListItem({
                   component={Link}
                   to={val.path}
                 >
-                  {val.icon}
+                  {/* {val.icon} */}
                   {val.name}
                 </ListItemButton>
               );
@@ -90,7 +90,7 @@ export default function NestListItem({
                 component={Link}
                 to={val.path}
               >
-                {val.icon}
+                {/* {val.icon} */}
                 {val.name}
               </ListItemButton>
             );

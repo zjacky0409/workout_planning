@@ -120,7 +120,7 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
                   }}
                 />
                 <Typography variant="subtitle2" gutterBottom>
-                  <span>{text.icon} </span>
+                  {/* <span>{text.icon} </span> */}
                   {t(text.name as unknown as TemplateStringsArray)}
                 </Typography>
               </Stack>

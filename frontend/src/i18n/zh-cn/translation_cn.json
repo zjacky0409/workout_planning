@@ -93,5 +93,11 @@
   "Delete": "删除",
   "Cancel": "取消",
   "Confirm": "確認",
-  "Modify":"修改"
+  "Modify":"修改",
+  "Coach Name": "教練名稱",
+  "Please enter the coach name": "請輸入教練名稱",
+  "Please contact your coach to verify your account.": "请联系您的教练以验证您的帐户。",
+  "Warning": "警告",
+  "Coach Area":"教学区",
+  "Student Management": "学生管理"
 }

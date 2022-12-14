@@ -93,5 +93,11 @@
   "Delete": "Delete",
   "Cancel": "Cancel",
   "Confirm": "Confirm",
-  "Modify":"Modify"
+  "Modify":"Modify",
+  "Coach Name": "Coach Name",
+  "Please enter the coach name": "Please enter the coach name",
+  "Please contact your coach to verify your account.": "Please contact your coach to verify your account.",
+  "Warning": "Warning",
+  "Coach Area":"Coach Area",
+  "Student Management": "Student Management"
 }

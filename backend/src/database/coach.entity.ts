@@ -26,9 +26,14 @@ export class Coach {
   @Column()
   introduction: string;
 
-  @OneToOne(() => User)
-  @JoinColumn()
-  user: User;
+  @Column({
+    nullable: true,
+  })
+  display_name: string;
+
+  // @OneToOne(() => User)
+  // @JoinColumn()
+  // user: User;
 
   @OneToMany(() => Food, (food) => food.coach)
   foods: Food[];

@@ -12,6 +12,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
 import { UserService } from 'src/user/user.service';
+import { IsVerifiedGuard } from 'src/guards/isVerified.guard';
 
 @Controller('auth')
 export class AuthController {

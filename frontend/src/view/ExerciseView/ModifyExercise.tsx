@@ -22,8 +22,16 @@ import FormHelperText from "@mui/material/FormHelperText";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { createExerciseJson, updateExerciseJson } from "../../api/exerciseApi";
-import { createExercise, getExercise, updateExercise } from "../../store/exerciseSlice";
+import {
+  createExerciseJson,
+  getExerciseJson,
+  updateExerciseJson,
+} from "../../api/exerciseApi";
+import {
+  createExercise,
+  getExercise,
+  updateExercise,
+} from "../../store/exerciseSlice";
 import { Body_Part, Body_Part_Subtype } from "../../common";
 interface PropsType {
   open: boolean;
@@ -116,7 +124,11 @@ const ModifyExercise = ({
           if (result.update_exercise === true) {
             setOpen(false);
             reset();
-            dispatch(getExercise());
+            let sendToServer: getExerciseJson = {
+              type: "Chest",
+              subtype: "Upper",
+            };
+            dispatch(getExercise(sendToServer));
           } else {
             // setRegSuccess(false);
             console.log("error");
@@ -143,7 +155,11 @@ const ModifyExercise = ({
           if (result.create_exercise === true) {
             setOpen(false);
             reset();
-            dispatch(getExercise());
+            let sendToServer: getExerciseJson = {
+              type: "Chest",
+              subtype: "Upper",
+            };
+            dispatch(getExercise(sendToServer));
           } else {
             // setRegSuccess(false);
             console.log("error");
@@ -221,7 +237,7 @@ const ModifyExercise = ({
                       </MenuItem>
                       {Body_Part.map((body_part: string) => (
                         <MenuItem key={body_part} value={body_part}>
-                          {t(body_part as unknown as TemplateStringsArray) }
+                          {t(body_part as unknown as TemplateStringsArray)}
                         </MenuItem>
                       ))}
                     </Select>
@@ -246,14 +262,11 @@ const ModifyExercise = ({
                       <MenuItem value="None">
                         <em>None</em>
                       </MenuItem>
-                      {
-                        Body_Part_Subtype[values.type].map(
-                          (subtype: string) => (
-                            <MenuItem key={subtype} value={subtype}>
-                              {t(subtype as unknown as TemplateStringsArray )}
-                            </MenuItem>
-                          )
-                        )}
+                      {Body_Part_Subtype[values.type].map((subtype: string) => (
+                        <MenuItem key={subtype} value={subtype}>
+                          {t(subtype as unknown as TemplateStringsArray)}
+                        </MenuItem>
+                      ))}
                     </Select>
                     <FormHelperText sx={{ color: "red" }}>
                       {errors["subtype"]

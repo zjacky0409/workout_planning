@@ -10,21 +10,20 @@ import LoginView from "./view/LoginView";
 import ProtectedRoute from "./layout/ProtectedRoute";
 import RegistrationView from "./view/RegistrationView";
 import FoodView from "./view/FoodView";
-
+import StudentManView from "./view/StudentMan";
+import RoleCheckLayout from "./layout/RoleCheckLayout";
 // To define different route
 // ref: https://reactrouter.com/en/main/hooks/use-routes
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: (
-      <Outlet></Outlet>
-    ),
+    element: <Outlet></Outlet>,
     children: [
-      { path: '/', element: <LoginView /> },
-      { path: '/login', element: <LoginView /> },
+      { path: "/", element: <LoginView /> },
+      { path: "/login", element: <LoginView /> },
       // { path: '401', element: <UnauthorizedView /> },
-      { path: '/registration', element: <RegistrationView /> },
-      { path: '*', element: <LoginView /> },
+      { path: "/registration", element: <RegistrationView /> },
+      { path: "*", element: <LoginView /> },
     ],
   },
   // {
@@ -59,23 +58,26 @@ const routes: RouteObject[] = [
     ],
   },
   {
-    path: "progress", element: <ProtectedRoute><Outlet /></ProtectedRoute>,
-    children:
-      [
-        {
-          path: "/progress",
-          element: <Navigate to="/progress/trainning" replace={true} />,
-        },
-        {
-          path: "/progress/trainning",
-          element: <ProgressView />,
-        },
-        {
-          path: "/progress/weight",
-          element: <ProgressView />,
-        }
-      ]
-
+    path: "progress",
+    element: (
+      <ProtectedRoute>
+        <Outlet />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/progress",
+        element: <Navigate to="/progress/trainning" replace={true} />,
+      },
+      {
+        path: "/progress/trainning",
+        element: <ProgressView />,
+      },
+      {
+        path: "/progress/weight",
+        element: <ProgressView />,
+      },
+    ],
   },
   {
     path: "exercises",
@@ -140,7 +142,6 @@ const routes: RouteObject[] = [
       {
         path: "/exercises/arm",
         element: <Navigate to="/exercises/arm/summary" replace={true} />,
-
       },
       {
         path: "/exercises/arm/summary",
@@ -217,7 +218,7 @@ const routes: RouteObject[] = [
       {
         path: "/exercises/core/full",
         element: <ExercisesView />,
-      }
+      },
     ],
   },
   {
@@ -240,7 +241,7 @@ const routes: RouteObject[] = [
         path: "/useful_resources/other",
         element: <UsefulResourceView />,
       },
-    ]
+    ],
   },
   {
     path: "program",
@@ -269,8 +270,28 @@ const routes: RouteObject[] = [
       {
         path: "/program/arms_day",
         element: <ProgramView />,
-      }
-    ]
+      },
+    ],
+  },
+  {
+    path: "coach",
+    element: (
+      <ProtectedRoute>
+        <RoleCheckLayout requiredRole={"coach"}>
+          <Outlet />
+        </RoleCheckLayout>
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/coach",
+        element: <Navigate to="/coach/student_management" replace={true} />,
+      },
+      {
+        path: "/coach/student_management",
+        element: <StudentManView />,
+      },
+    ],
   },
 ];
 

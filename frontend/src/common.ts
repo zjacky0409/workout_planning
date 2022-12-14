@@ -17,6 +17,7 @@ export interface NavObject {
     name: string;
     path: string;
     icon: string;
+    role: string[];
     children: PageObject[];
 }
 
@@ -40,6 +41,12 @@ export interface ExerciseObject {
     subtype: string,
     created_at: string,
     updated_at: string,
+}
+
+export interface StudentObject {
+    id: number,
+    display_name: string,
+    isVerified: boolean,
 }
 
 export const Body_Part = ["Chest", "Back", "Arms", "Legs", "Core", "Shoulder"]

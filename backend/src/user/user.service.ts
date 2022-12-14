@@ -1,12 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository, InjectDataSource } from '@nestjs/typeorm';
-import { createQueryBuilder, DataSource, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { User } from '../database/user.entity';
 // import CreateExerciseDto from 'src/exercise/dto/create-exercise.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import * as crypto from 'crypto';
 import { CheckUserNameDto } from './dto/check-username.dto';
-import e from 'express';
 import { CheckEmailDto } from './dto/check-email.dto';
 import * as bcrypt from 'bcrypt';
 import { Coach } from 'src/database/coach.entity';
@@ -14,10 +12,14 @@ import { Student } from 'src/database/student.entity';
 
 @Injectable()
 export class UserService {
-  private readonly logger = new Logger('UserService')
+  private readonly logger = new Logger('UserService');
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Coach)
+    private coachRepository: Repository<Coach>,
+    @InjectRepository(Student)
+    private studentRepository: Repository<Student>,
     @InjectDataSource() private dataSource: DataSource,
   ) {}
 
@@ -37,9 +39,12 @@ export class UserService {
 
   // check the email exist or not
   async checkEmailExist(data: CheckEmailDto): Promise<boolean> {
+    const user_test = this.findAll()
+    console.log('user_test --> ', user_test)
     const user = await this.userRepository.findOneBy({
       emailAddress: data.emailAddress,
     });
+    // console.log('user => ', user)
 
     if (user) {
       return true;
@@ -49,9 +54,14 @@ export class UserService {
 
   async create(user: CreateUserDto) {
     const metaData = {
-      role: 'user',
+      role: 'coach',
       isActive: true,
     };
+    // if the role is a user, we need to set the role to user
+    // then, setting isActive to true is by coach
+    if (user.role_type === 'User') {
+      (metaData.role = 'user'), (metaData.isActive = true);
+    }
 
     console.log(`To convert the password by bcrypt`);
     const saltOrRounds = 10;
@@ -60,8 +70,7 @@ export class UserService {
     // i use md5 before but there is some risk for md5
 
     user['password'] = afterHashSalted;
-    const insertToDB = { ...user, ...metaData };
-    console.log('insertToDB --> ', insertToDB);
+    let insertToDB = { ...user, ...metaData };
 
     console.log('checking the username exsit or not');
 
@@ -83,6 +92,45 @@ export class UserService {
     ) {
       return { create_user: false }; // should not happen
     }
+
+    let successInsert = null;
+
+    if (user.role_type === 'Coach') {
+      const coach_meta = {
+        introduction: 'test',
+        display_name: user.coach_name,
+      };
+      const new_caoch = this.coachRepository.create(coach_meta);
+      successInsert = await this.coachRepository.save(new_caoch);
+      insertToDB = {
+        ...insertToDB,
+        ...{ coach: successInsert },
+      };
+    }
+
+    if (user.role_type === 'User') {
+      const student_coach = await this.coachRepository.find({
+        where: { display_name: user.coach_name },
+      });
+
+      if (student_coach.length === 0) {
+        return { create_user: false };
+      }
+
+      const student_meta = {
+        username: 'to_be_insert_by_coach',
+        coach: student_coach[0],
+      };
+      const new_student = this.studentRepository.create(student_meta);
+      successInsert = await this.studentRepository.save(new_student);
+      insertToDB = {
+        ...insertToDB,
+        ...{ student: successInsert },
+      };
+    }
+
+    console.log('insertToDB =>', insertToDB);
+
     const new_user = this.userRepository.create(insertToDB);
     try {
       await this.userRepository.save(new_user);
@@ -92,12 +140,13 @@ export class UserService {
       console.log(`create user fail with error == ${e}`);
       return { create_user: false };
     }
-    // return 'HI'
   }
 
   // find all user from the database
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  async findAll(): Promise<string> {
+    const user = await this.userRepository.find();
+    console.log('user in findall', user)
+    return 'haha'
   }
 
   // find the user information from the database and used by thr getUser Api
@@ -123,9 +172,9 @@ export class UserService {
         .where('student.id = :id', { id: user.student.id })
         .getOne();
     }
-    let coach_student = null
+    let coach_student = null;
     if (user.coach !== null) {
-      role.push('coach')
+      role.push('coach');
       coach_student = await this.dataSource
         .getRepository(Coach)
         .createQueryBuilder('coach')
@@ -134,7 +183,7 @@ export class UserService {
         .getOne();
     }
     const { password, ...result } = user;
-    result['role'] = role
+    result['role'] = role;
     return {
       user: result,
       user_coach: user_coach,

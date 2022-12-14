@@ -29,3 +29,14 @@ Process
 4. Basic design for my application
 5. user registration
 6. food and exercises creation/update/delete
+7. User/ Coach Registration Flow Successfully
+
+
+
+
+Flow for Coach Registration:
+1. Just directly do the registration in the registration page
+
+Flow for User Registration:
+1. directly do the registration in the registration page by entering your coach name
+2. Then, your coach needs to active your account so that you can access the your coach's resources

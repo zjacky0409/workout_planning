@@ -20,4 +20,8 @@ export class CreateUserDto {
   confirmPassword: string;
   @IsNumber()
   age: number;
+  @IsString()
+  role_type: 'Coach' | 'User';
+  @IsString()
+  coach_name: string;
 }

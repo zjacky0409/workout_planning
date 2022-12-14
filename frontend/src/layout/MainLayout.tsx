@@ -3,6 +3,17 @@ import SideBar from "./SideBar";
 import TopBar from "./TopBar";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "../store/hook";
+import {
+  clearAuthentication,
+  selectIsVertified,
+  selectRole,
+} from "../store/authSlice";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import { DialogActions } from "@mui/material";
+import CustomButton from "../components/Button/CustomButton";
 
 interface PropsType {
   children: JSX.Element;
@@ -11,6 +22,17 @@ interface PropsType {
 
 const MainLayout = (props: PropsType) => {
   const { t, i18n } = useTranslation();
+
+  const isVertified = useAppSelector(selectIsVertified);
+  const role = useAppSelector(selectRole);
+  console.log('role in mainlayout -> ', role)
+  const dispatch = useAppDispatch();
+
+  // when we logout, we remove the access_token and set auth state to false
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    dispatch(clearAuthentication());
+  };
 
   return (
     <div>
@@ -47,7 +69,32 @@ const MainLayout = (props: PropsType) => {
               flexGrow: 0.9,
             }}
           >
-            {props.children}
+            {(role.includes("student") && isVertified) ||
+            role.includes("coach") ? (
+              props.children
+            ) : (
+              <Dialog open={true}>
+                <DialogTitle>Warning</DialogTitle>
+                <DialogContent>
+                  <Typography
+                    variant="caption"
+                    display="block"
+                    gutterBottom
+                    sx={{ fontSize: 15 }}
+                  >
+                    {t("Please contact your coach to verify your account.")}
+                  </Typography>
+                </DialogContent>
+                <DialogActions>
+                  <CustomButton
+                    shownText={"Logout"}
+                    variant={"primary"}
+                    onClick={handleLogout}
+                  />
+                </DialogActions>
+              </Dialog>
+            )}
+            {/* {props.children} */}
           </div>
           <div
             style={{
@@ -73,3 +120,6 @@ const MainLayout = (props: PropsType) => {
   );
 };
 export default MainLayout;
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
+}

@@ -11,14 +11,15 @@ import { FoodService } from './food.service';
 import { ValidationPipe } from '../pipes/validate.pipe';
 import CreateFoodDto from './dto/create-food.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { RolesGuard } from 'src/role_checker/role.guard';
-import { Role } from 'src/role_checker/role.enum';
-import { Roles } from 'src/role_checker/roles.decorator';
+import { RolesGuard } from 'src/guards/role_checker/role.guard';
+import { Role } from 'src/guards/role_checker/role.enum';
+import { Roles } from 'src/guards/role_checker/roles.decorator';
 import { UpdateFoodDto } from './dto/update-exercise.dto';
 import DeleteFoodDto from './dto/delete-food.dto';
+import { IsVerifiedGuard } from 'src/guards/isVerified.guard';
 @Controller('food')
 export class FoodController {
-  constructor(private readonly foodService: FoodService) { }
+  constructor(private readonly foodService: FoodService) {}
 
   @Roles(Role.Coach)
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -30,7 +31,7 @@ export class FoodController {
     return this.foodService.create(createFoodDto, req.user);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, IsVerifiedGuard)
   @Get('/get')
   get(@Request() req) {
     return this.foodService.getFood(req.user);

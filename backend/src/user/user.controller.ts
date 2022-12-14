@@ -46,9 +46,4 @@ export class UserController {
     }
     return { exist: false };
   }
-
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
 }

@@ -9,13 +9,8 @@ import { plainToClass } from 'class-transformer';
 
 // a pipe to checking the user request fit the dto or not
 @Injectable()
-export class ExerciseValidationPipe implements PipeTransform<any> {
+export class GetExerciseValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
-    // ref: https://ithelp.ithome.com.tw/articles/10191227
-    /*不檢查原生JavaScript的型別，因為刻意寫ValidationPipe，就是要使用自定義的DTO class
-        的屬性去做參數型別檢查，如果metatype是原生JavaScript的型別，就直接return 原始參數，
-        不做ValidationPipe的檢查。
-        */
     if (!metatype || !this.toValidate(metatype)) {
       return value;
     }
@@ -24,7 +19,6 @@ export class ExerciseValidationPipe implements PipeTransform<any> {
     console.log('value == ');
     console.log(value); // user's input
 
-    //這裡使用class-transformer的方法，將plain javascript object(像是JSON object)，轉換成一個class的object。
     const object = plainToClass(metatype, value);
     const errors = await validate(object);
 
@@ -41,12 +35,12 @@ export class ExerciseValidationPipe implements PipeTransform<any> {
 
     const Body_Part_Subtype = {
       None: [],
-      Chest: ['Upper', 'Lower', 'Middle', 'Inner', 'Outter'],
+      Chest: ['Upper', 'Lower', 'Middle', 'Inner', 'Outter', 'Summary'],
       Back: ['Lat', 'Upper', 'Trap'],
-      Shoulder: ['Rear Delt', 'Side Delt', 'Front Delt'],
-      Arms: ['Former', 'Tricept', 'Bicept'],
-      Legs: ['Quad', 'Harmstring', 'Hip'],
-      Core: ['Upper', 'Lower', 'Full'],
+      Shoulder: ['Rear Delt', 'Side Delt', 'Front Delt', 'Summary'],
+      Arms: ['Former', 'Tricept', 'Bicept', 'Summary'],
+      Legs: ['Quad', 'Harmstring', 'Hip', 'Summary'],
+      Core: ['Upper', 'Lower', 'Full', 'Summary'],
     };
 
     if (!Body_Part_Subtype[value.type].includes(value.subtype)) {

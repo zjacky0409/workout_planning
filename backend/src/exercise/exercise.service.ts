@@ -11,6 +11,7 @@ import { Repository } from 'typeorm';
 import { Exercise } from 'src/database/exercise.entity';
 import { UserService } from 'src/user/user.service';
 import { userInfo } from 'src/share/common';
+import GetExerciseDto from './dto/get-exercise.dto';
 @Injectable()
 export class ExerciseService {
   private readonly logger = new Logger('ExerciseService');
@@ -79,7 +80,7 @@ export class ExerciseService {
   }
 
   // find all exercise from database
-  async findAll(user: userInfo) {
+  async findAll(user: userInfo, getExerciseDto: GetExerciseDto) {
     let toBeSerachedId = -999
     if (user.student_coach_id !== -999) {
       toBeSerachedId = user.student_coach_id;
@@ -88,7 +89,11 @@ export class ExerciseService {
     }
     return {
       exercise_list: await this.exerciseRepository.find({
-        where: { created_by: { id: toBeSerachedId } },
+        where: {
+          created_by: { id: toBeSerachedId },
+          type: getExerciseDto.type,
+          subtype: getExerciseDto.subtype,
+        },
       }),
     };
   }

@@ -23,6 +23,8 @@ export interface createUserJson {
     dateOfBirth: string;
     confirmPassword: string;
     age: number;
+    role_type: string;
+    coach_name: string;
 }
 export async function createUserAPI(jsonData: createUserJson) {
     const response = await axios.post("http://localhost:4000/user/create",

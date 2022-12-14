@@ -21,6 +21,7 @@ import {
   selectStatus,
 } from "../store/exerciseSlice";
 import { ExerciseObject } from "../common";
+import { getExerciseJson } from "../api/exerciseApi";
 interface Exercise {
   id: number;
   name: string;
@@ -73,7 +74,11 @@ const ExercisesView = () => {
   };
 
   useEffect(() => {
-    dispatch(getExercise());
+    let sendToServer: getExerciseJson = {
+      type: "Chest",
+      subtype: "Upper",
+    };
+    dispatch(getExercise(sendToServer));
   }, [dispatch]);
 
   if (status !== "idle") {
@@ -133,12 +138,8 @@ const ExercisesView = () => {
                     >
                       {value.name}
                     </Typography>
-                    <Typography component="div">
-                      {value.type}
-                    </Typography>
-                    <Typography variant="body2">
-                      {value.details}
-                    </Typography>
+                    <Typography component="div">{value.type}</Typography>
+                    <Typography variant="body2">{value.details}</Typography>
                   </CardContent>
                   <CardActions>
                     <CustomButton
@@ -157,7 +158,7 @@ const ExercisesView = () => {
                       // size="small"
                       shownText="Delete"
                       onClick={() => {
-                        dispatch(deleteExercise(value.id))
+                        dispatch(deleteExercise(value.id));
                       }}
                       variant={"danger"}
                     />

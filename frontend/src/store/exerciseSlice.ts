@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { createExerciseJson, createExerciseAPI, getExerciseAPI, updateExerciseJson, updateExerciseAPI, deleteExerciseAPI } from '../api/exerciseApi';
+import { createExerciseJson, createExerciseAPI, getExerciseAPI, updateExerciseJson, updateExerciseAPI, deleteExerciseAPI, getExerciseJson } from '../api/exerciseApi';
 import { ExerciseObject } from '../common';
 
 export interface DietState {
@@ -52,8 +52,8 @@ export const deleteExercise = createAsyncThunk(
 
 export const getExercise = createAsyncThunk(
     'exercise/get',
-    async () => {
-        const response = await getExerciseAPI();
+    async (jsonData: getExerciseJson) => {
+        const response = await getExerciseAPI(jsonData);
         return response.data;
     }
 );

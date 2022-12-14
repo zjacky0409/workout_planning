@@ -23,7 +23,8 @@ export class Student {
   id: number;
 
   @Column()
-  username: string;
+  display_name: string; // easy to select the username for the list of student for a coach
+  // students :  [{id: 1, username: "jacky"}] // maybe this username can be enter by a coach after we activate the user
 
   // @Column()
   // firstName: string;
@@ -58,12 +59,12 @@ export class Student {
   // @OneToMany(() => Exercise, (exercise) => exercise.created_by)
   // exercises: Exercise[];
 
-  // @Column({ default: true })
-  // isActive: boolean;
+  @Column({ default: true })
+  isVerified: boolean; // a field that the student is verified bY coach or not
 
-  @OneToOne(() => User)
-  @JoinColumn()
-  user: User;
+  // @OneToOne(() => User)
+  // @JoinColumn()
+  // user: User;
 
   @ManyToOne(() => Coach, (coach) => coach.students)
   @JoinTable()

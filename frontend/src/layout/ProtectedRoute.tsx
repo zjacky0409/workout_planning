@@ -1,4 +1,4 @@
-import { selectAuth, selectStatus } from "../store/authSlice";
+import { selectAuth, selectRole, selectStatus } from "../store/authSlice";
 import { useAppSelector } from "../store/hook";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -15,6 +15,10 @@ const ProtectedRoute = (props: PropsType) => {
 
   // status for vertify the jet token and get the user info from the server
   const status = useAppSelector(selectStatus);
+  const role = useAppSelector(selectRole)
+
+  console.log('role in pr => ', role)
+  console.log('status in pr => ', status)
 
   const { t } = useTranslation()
 

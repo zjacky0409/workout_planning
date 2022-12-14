@@ -33,8 +33,24 @@ interface IFormInput {
   password: string;
   dateOfBirth: string;
   confirmPassword: string;
+  coach_name: string;
+  role: string;
   age: string;
 }
+
+const defaultValues = {
+  firstName: "",
+  lastName: "",
+  username: "",
+  phoneNumber: "",
+  emailAddress: "",
+  password: "",
+  dateOfBirth: "",
+  confirmPassword: "",
+  coach_name: "",
+  role: "User",
+  age: "",
+};
 
 // do the form validation with yup library
 // TODO: I should use test for the username and email checking
@@ -43,6 +59,7 @@ const schema = yup
     firstName: yup.string().required("Please enter the first name"),
     lastName: yup.string().required("Please enter the last name"),
     username: yup.string().required("Please enter the username"),
+    coach_name: yup.string().required("Please enter the coach name"),
     phoneNumber: yup
       .number()
       .typeError("Please enter a valid phone number")
@@ -51,6 +68,7 @@ const schema = yup
       .string()
       .email("Please enter a valid email address")
       .required("Please enter a email address"),
+
     password: yup
       .string()
       .required("Please enter the password")
@@ -63,7 +81,12 @@ const schema = yup
       .required("Please enter the confirm password")
       .oneOf([yup.ref("password")], "Your password do not match"),
     dateOfBirth: yup.string().required("Please enter or select a valid date"),
-    age: yup.number().positive().integer().required("Please enter the age"),
+    age: yup
+      .number()
+      .typeError("Please enter the age")
+      .positive("Please enter the age")
+      .integer("Please enter the age")
+      .required("Please enter the age"),
   })
   .required();
 
@@ -95,14 +118,18 @@ const RegistrationView = () => {
     handleSubmit,
     setError,
     getValues,
+    register,
     clearErrors,
     reset,
     formState: { errors },
   } = useForm<IFormInput>({
     resolver: yupResolver(schema),
+    defaultValues: defaultValues,
   });
 
   const userInput = watch();
+
+  console.log("userInput => ", userInput);
 
   const usernameExistChecking = () => {
     dispatch(checkUsernameExist({ username: userInput.username }))
@@ -162,6 +189,8 @@ const RegistrationView = () => {
       dateOfBirth: userInput.dateOfBirth,
       confirmPassword: userInput.confirmPassword,
       age: parseInt(userInput.age),
+      role_type: userInput.role,
+      coach_name: userInput.coach_name
     };
 
     dispatch(createUser(sendToServer))
@@ -213,7 +242,7 @@ const RegistrationView = () => {
         alignItems: "center",
       }}
     >
-      <Card raised sx={{ width: { xs: "90%", md: "40%" }}} >
+      <Card raised sx={{ width: { xs: "90%", md: "40%" } }}>
         {regSuccess && ( // when registration successfully, we show the success view
           <>
             <CardContent
@@ -529,6 +558,57 @@ const RegistrationView = () => {
                     )}
                   />
                 </div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
+                  gap: 5,
+                }}
+              >
+                <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+                  <input
+                    {...register("role", { required: true })}
+                    type="radio"
+                    value="User"
+                  />
+                  <label htmlFor="User">User</label>
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+                  <input
+                    {...register("role", { required: true })}
+                    type="radio"
+                    value="Coach"
+                  />
+                  <label htmlFor="Coach">Coach</label>
+                </div>
+
+                <Controller
+                  name="coach_name"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      size="small"
+                      error={!!errors["coach_name"]}
+                      label={t("Coach Name")}
+                      fullWidth
+                      helperText={
+                        errors["coach_name"]
+                          ? t(
+                              errors["coach_name"]
+                                .message as unknown as TemplateStringsArray
+                            )
+                          : ""
+                      }
+                    />
+                  )}
+                />
               </div>
             </CardContent>
             <CardActions
