@@ -21,9 +21,8 @@ interface SideBarProp {
 // Drawer aka side bar
 
 export default function SideBar({ content = "Diet" }: SideBarProp) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
-  const currentSideBar = React.useContext(SideBarContext);
   const location = useLocation();
 
   const sideBarContent = React.useMemo(() => {

@@ -1,3 +1,10 @@
+/* 
+  To make sure that user really want to do the action or not,
+  we can popup a confirm dialog to achieve the process
+  this is the usage for this component
+*/
+
+
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";

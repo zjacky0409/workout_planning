@@ -15,11 +15,7 @@ const ProtectedRoute = (props: PropsType) => {
 
   // status for vertify the jet token and get the user info from the server
   const status = useAppSelector(selectStatus);
-  const role = useAppSelector(selectRole)
-
-  console.log('role in pr => ', role)
-  console.log('status in pr => ', status)
-
+  
   const { t } = useTranslation()
 
   const navigate = useNavigate();

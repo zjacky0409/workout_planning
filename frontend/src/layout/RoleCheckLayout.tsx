@@ -9,8 +9,6 @@ interface PropsType {
   requiredRole: string;
 }
 
-
-// TODO: 
 const RoleCheckLayout = (props: PropsType) => {
   const auth = useAppSelector(selectAuth);
 
@@ -18,14 +16,11 @@ const RoleCheckLayout = (props: PropsType) => {
   const status = useAppSelector(selectStatus);
   const role = useAppSelector(selectRole);
 
-  const { t } = useTranslation()
-
   const navigate = useNavigate();
 
-  // if the auth state is false, we redirect to the login page
+
   useEffect(() => {
-    console.log(role)
-    console.log(props.requiredRole)
+    // if user role is not match the required role, we redirect the user to the main page
     if (!role.includes(props.requiredRole)) {
       navigate("/");
     }

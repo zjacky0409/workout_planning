@@ -127,9 +127,7 @@ const RegistrationView = () => {
     defaultValues: defaultValues,
   });
 
-  const userInput = watch();
-
-  console.log("userInput => ", userInput);
+  const userInput = watch(); // to monitor the user's input
 
   const usernameExistChecking = () => {
     dispatch(checkUsernameExist({ username: userInput.username }))

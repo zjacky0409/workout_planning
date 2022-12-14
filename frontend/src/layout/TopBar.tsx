@@ -18,7 +18,6 @@ import { navigations } from "../navgation";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
-import { SideBarContext } from "../context/SideBarContext";
 import { useLocation } from "react-router-dom";
 import NestListItem from "../components/NestListItem";
 import Divider from "@mui/material/Divider";
@@ -30,28 +29,21 @@ import {
   selectUsername,
 } from "../store/authSlice";
 import { useAppSelector, useAppDispatch } from "../store/hook";
-import { NavObject, PageObject } from "../common";
-const lang_choice = [
-  { name: "English", value: "en" },
-  { name: "繁體中文", value: "zh_hk" },
-  { name: "简体中文", value: "zh_cn" },
-];
-
-// interface PropsType {
-//   children: JSX.Element;
-// }
+import { LANG_CHOICE, NavObject, PageObject } from "../common";
 
 const TopBar = () => {
   const dispatch = useAppDispatch();
 
-  const userName = useAppSelector(selectUsername);
+  const userName = useAppSelector(selectUsername); // get username from the redux-toolkit
 
-  const role = useAppSelector(selectRole);
+  const role = useAppSelector(selectRole); // get the current role for the user
 
+  // the mobile version, for setting up the meun position
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
 
+  // for setting the user setting popover i.e. logout, change user profile ...
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -61,13 +53,13 @@ const TopBar = () => {
     null
   );
 
-  const currentSideBar = React.useContext(SideBarContext);
-
+  // to get the current url/path of the web applciation
   const location = useLocation();
 
   const [popperContent, setPopperContent] = React.useState<PageObject[]>([]);
 
-  const handleClick = (
+  // when user mouse over the item in the topbar
+  const handleMouseOver = (
     event: React.MouseEvent<HTMLElement>,
     children: PageObject[]
   ) => {
@@ -213,10 +205,10 @@ const TopBar = () => {
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {navigations.map((page: NavObject) => {
+              // for acl usage, some pages should be not shown to some role
               if (!page.role.some((item) => role.includes(item))) {
                 return <></>;
               }
-
               return (
                 <Tooltip
                   key={page.path}
@@ -276,7 +268,7 @@ const TopBar = () => {
                       component={Link}
                       to={page.path}
                       onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
-                        handleClick(e, page.children)
+                        handleMouseOver(e, page.children)
                       }
                     >
                       {/* {page.icon} */}
@@ -293,7 +285,6 @@ const TopBar = () => {
               );
             })}
           </Box>
-          {/* <Box sx={{ flexGrow: 1 }} /> */}
           <Typography sx={{ color: "black" }}>Welcome, {userName}</Typography>
 
           <Box sx={{ xs: "flex" }}>
@@ -303,7 +294,6 @@ const TopBar = () => {
                 sx={{ p: 2 }}
                 size="large"
                 edge="end"
-                // color="inherit"
               >
                 <LanguageIcon />
               </IconButton>
@@ -324,7 +314,7 @@ const TopBar = () => {
               open={Boolean(anchorElLang)}
               onClose={handleCloseLangMenu}
             >
-              {lang_choice.map((setting) => (
+              {LANG_CHOICE.map((setting) => (
                 <MenuItem
                   key={setting.name}
                   onClick={() => {

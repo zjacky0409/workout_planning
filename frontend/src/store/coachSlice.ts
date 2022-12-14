@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+/*
+    Redux to store the coach related data 
+    and build some coach related api call
+*/
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { updateStudentAPI, updateStudentJson } from '../api/coachApi';
 import { RootState } from './store';
 

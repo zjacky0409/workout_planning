@@ -36,6 +36,7 @@ export class CoachService {
     }
   }
 
+  // https://stackoverflow.com/questions/73898438/does-the-nestjs-controller-method-have-to-be-async-if-it-returns-a-promise
   async getStudent(user: userInfo): Promise<{
     student_list: Student[];
   }> {

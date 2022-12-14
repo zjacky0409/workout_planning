@@ -1,11 +1,11 @@
+/*
+    A component to change the language for our website
+    It is a select tag to let the user change the language
+*/
+
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-
-const lang_choice = [
-    { name: "English", value: "en" },
-    { name: "繁體中文", value: "zh_hk" },
-    { name: "简体中文", value: "zh_cn" },
-];
+import { LANG_CHOICE } from "../common";
 
 // a component to let user change the language for the website
 const ChangeLangSelect = () => {
@@ -26,7 +26,7 @@ const ChangeLangSelect = () => {
             <label>{t('Language')}: </label>
             <select value={lang} onChange={handleChange}>
                 {
-                    lang_choice.map((lang) => {
+                    LANG_CHOICE.map((lang) => {
                         return <option key={lang.value} value={lang.value}>{lang.name}</option>
                     })
                 }

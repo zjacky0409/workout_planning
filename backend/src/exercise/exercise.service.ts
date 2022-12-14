@@ -87,6 +87,17 @@ export class ExerciseService {
     } else {
       toBeSerachedId = user.coach_id;
     }
+
+    if (getExerciseDto.subtype === 'Summary') {
+      return {
+        exercise_list: await this.exerciseRepository.find({
+          where: {
+            created_by: { id: toBeSerachedId },
+            type: getExerciseDto.type,
+          },
+        }),
+      };
+    }
     return {
       exercise_list: await this.exerciseRepository.find({
         where: {

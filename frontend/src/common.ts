@@ -37,7 +37,7 @@ export interface ExerciseObject {
     id: number,
     name: string,
     details: string,
-    type: "Chest"| "Back"| "Arms"| "Legs"| "Core"| "Shoulder" | "None",
+    type: "Chest" | "Back" | "Arms" | "Legs" | "Core" | "Shoulder" | "None",
     subtype: string,
     created_at: string,
     updated_at: string,
@@ -58,5 +58,11 @@ export const Body_Part_Subtype = {
     'Shoulder': ["Rear Delt", "Side Delt", "Front Delt"],
     "Arms": ["Former", "Tricept", "Bicept"],
     "Legs": ["Quad", "Harmstring", "Hip"],
-    "Core": ["Upper", "Lower","Full"]
+    "Core": ["Upper", "Lower", "Full"]
 }
+
+export const LANG_CHOICE = [
+    { name: "English", value: "en" },
+    { name: "繁體中文", value: "zh_hk" },
+    { name: "简体中文", value: "zh_cn" },
+];

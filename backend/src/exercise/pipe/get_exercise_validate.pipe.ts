@@ -36,7 +36,7 @@ export class GetExerciseValidationPipe implements PipeTransform<any> {
     const Body_Part_Subtype = {
       None: [],
       Chest: ['Upper', 'Lower', 'Middle', 'Inner', 'Outter', 'Summary'],
-      Back: ['Lat', 'Upper', 'Trap'],
+      Back: ['Lat', 'Upper', 'Trap', 'Summary'],
       Shoulder: ['Rear Delt', 'Side Delt', 'Front Delt', 'Summary'],
       Arms: ['Former', 'Tricept', 'Bicept', 'Summary'],
       Legs: ['Quad', 'Harmstring', 'Hip', 'Summary'],

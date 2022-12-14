@@ -21,6 +21,7 @@ import { ExerciseValidationPipe } from './pipe/exercise_validate.pipe';
 import DeleteExerciseDto from './dto/delete-exercise.dto';
 import GetExerciseDto from './dto/get-exercise.dto';
 import { IsVerifiedGuard } from 'src/guards/isVerified.guard';
+import { GetExerciseValidationPipe } from './pipe/get_exercise_validate.pipe';
 
 @Controller('exercise')
 export class ExerciseController {
@@ -51,9 +52,8 @@ export class ExerciseController {
   @Post('/getExercise')
   findAll(
     @Request() req,
-    @Body(new ExerciseValidationPipe()) getExerciseDto: GetExerciseDto,
+    @Body(new GetExerciseValidationPipe()) getExerciseDto: GetExerciseDto,
   ) {
-    console.log('req.user +> ', req.user);
     console.log(`${req.user.username} request to get all the exercises`);
     return this.exerciseService.findAll(req.user, getExerciseDto);
   }

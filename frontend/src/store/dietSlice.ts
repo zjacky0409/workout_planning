@@ -1,4 +1,10 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+/*
+    Redux to store the diet related data 
+    and build some diet related api call
+*/
+
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { createFoodAPI, getFoodListAPI, updateFoodAPI, deleteFoodAPI } from '../api/dietApi';
 import { createFoodJson } from '../api/dietApi';

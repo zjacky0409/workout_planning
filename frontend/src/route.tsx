@@ -97,47 +97,47 @@ const routes: RouteObject[] = [
       },
       {
         path: "/exercises/back/summary",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Back"} subtype={"Summary"} />,
       },
       {
         path: "/exercises/back/upper",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Back"} subtype={"Upper"} />,
       },
       {
         path: "/exercises/back/lat",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Back"} subtype={"Lat"} />,
       },
       {
         path: "/exercises/back/trap",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Back"} subtype={"Trap"} />,
       },
       {
         path: "/exercises/chest/summary",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Chest"} subtype={"Summary"} />,
       },
       {
         path: "/exercises/chest/upper_chest",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Chest"} subtype={"Upper"} />,
       },
       {
         path: "/exercises/chest/lower_chest",
-        element: <ExercisesView />,
+        element: <ExercisesView type={""} subtype={"Lower"} />,
       },
       {
         path: "/exercises/chest/middle_chest",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Chest"} subtype={"Middle"} />,
       },
       {
         path: "/exercises/chest/inner_chest",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Chest"} subtype={"Inner"} />,
       },
       {
         path: "/exercises/chest/outer_chest",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Chest"} subtype={"Outter"} />,
       },
       {
         path: "/exercises/chest",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Chest"} subtype={"Summary"} />,
       },
       {
         path: "/exercises/arm",
@@ -145,19 +145,19 @@ const routes: RouteObject[] = [
       },
       {
         path: "/exercises/arm/summary",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Arms"} subtype={"Summary"} />,
       },
       {
         path: "/exercises/arm/former",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Arms"} subtype={"Former"} />,
       },
       {
         path: "/exercises/arm/bi",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Arms"} subtype={"Bicept"} />,
       },
       {
         path: "/exercises/arm/tri",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Arms"} subtype={"Tricept"} />,
       },
       {
         path: "/exercises/leg",
@@ -165,35 +165,35 @@ const routes: RouteObject[] = [
       },
       {
         path: "/exercises/leg/summary",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Legs"} subtype={"Summary"} />,
       },
       {
         path: "/exercises/leg/quad",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Legs"} subtype={"Quad"} />,
       },
       {
         path: "/exercises/leg/harmstring",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Legs"} subtype={"Harmstring"} />,
       },
       {
         path: "/exercises/leg/hip",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Legs"} subtype={"Hip"} />,
       },
       {
         path: "/exercises/shoulder/summary",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Shoulder"} subtype={"Summary"} />,
       },
       {
         path: "/exercises/shoulder/rear_delt",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Shoulder"} subtype={"Rear Delt"} />,
       },
       {
         path: "/exercises/shoulder/front_delt",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Shoulder"} subtype={"Front Delt"} />,
       },
       {
         path: "/exercises/shoulder/side_delt",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Shoulder"} subtype={"Side Delt"} />,
       },
       {
         path: "/exercises/shoulder/summary",
@@ -205,19 +205,19 @@ const routes: RouteObject[] = [
       },
       {
         path: "/exercises/core/upper",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Core"} subtype={"Upper"} />,
       },
       {
         path: "/exercises/core/lower",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Core"} subtype={"Lower"} />,
       },
       {
         path: "/exercises/core/summary",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Core"} subtype={"Summary"} />,
       },
       {
         path: "/exercises/core/full",
-        element: <ExercisesView />,
+        element: <ExercisesView type={"Core"} subtype={"Full"} />,
       },
     ],
   },

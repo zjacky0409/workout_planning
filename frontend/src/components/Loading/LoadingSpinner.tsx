@@ -1,13 +1,17 @@
+/* 
+  A Loading indicator for the user
+*/
+
 import styled from "styled-components";
 import variantToColor from "../../common/styleFunction";
 
 interface LoadingSpinnerProps {
   size: "small" | "medium" | "large";
-  variant: string;
+  variant: "primary" | "danger" | "info" | "warning" | "cancel"; // customise the color for the component
 }
 
 interface StyledLoadingSpinnerProps {
-  variant: string;
+  variant: "primary" | "danger" | "info" | "warning" | "cancel";
 }
 
 // for the props, i may

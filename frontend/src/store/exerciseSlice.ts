@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+/*
+    Redux to store the exercise related data 
+    and build some exercise related api call
+*/
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { createExerciseJson, createExerciseAPI, getExerciseAPI, updateExerciseJson, updateExerciseAPI, deleteExerciseAPI, getExerciseJson } from '../api/exerciseApi';
 import { ExerciseObject } from '../common';
@@ -40,15 +45,6 @@ export const deleteExercise = createAsyncThunk(
         return response.data;
     }
 );
-
-
-// export const updateFood = createAsyncThunk(
-//     'diet/update',
-//     async (foodData: updateFoodJson) => {
-//         const response = await updateFoodAPI(foodData);
-//         return response.data;
-//     }
-// )
 
 export const getExercise = createAsyncThunk(
     'exercise/get',

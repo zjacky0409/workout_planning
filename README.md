@@ -32,6 +32,12 @@ Process
 7. User/ Coach Registration Flow Successfully
 
 
+TODO List:
+1. weight and diet tracking
+2. workout planning and diet planning
+3. Error handling im frontend when web app receive error from the backend
+
+
 
 
 Flow for Coach Registration:

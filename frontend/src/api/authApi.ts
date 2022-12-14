@@ -11,7 +11,7 @@ export async function getUser() {
 
 
 // for sending create user request to server
-// no need to require jwt toke
+// no need to require jwt token
 
 export interface createUserJson {
     firstName: string;
@@ -33,9 +33,6 @@ export async function createUserAPI(jsonData: createUserJson) {
 }
 
 // check the user email address exist or not
-// jsonData: {
-//      emailAddress: string
-// }
 export interface checkEmailExistJson {
     emailAddress: string
 }
@@ -46,7 +43,7 @@ export async function checkEmailExistAPI(jsonData: checkEmailExistJson) {
 }
 
 
-// check the user email address exist or not
+// check the username exist or not
 export interface checkUsernameExistJson {
     username: string
 }

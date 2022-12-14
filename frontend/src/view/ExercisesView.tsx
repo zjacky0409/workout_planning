@@ -22,15 +22,12 @@ import {
 } from "../store/exerciseSlice";
 import { ExerciseObject } from "../common";
 import { getExerciseJson } from "../api/exerciseApi";
-interface Exercise {
-  id: number;
-  name: string;
-  details: string;
+
+interface ExerciseProps {
+  type: string;
+  subtype: string;
 }
-type GetExerciseResponse = {
-  data: Exercise[];
-};
-const ExercisesView = () => {
+const ExercisesView = ({ type, subtype }: ExerciseProps) => {
   const { t } = useTranslation();
   const status = useAppSelector(selectStatus);
   const exerciseList = useAppSelector(selectExerciseList);
@@ -38,6 +35,8 @@ const ExercisesView = () => {
   const role = useAppSelector(selectRole);
 
   const [open, setOpen] = useState(false);
+
+  // https://beta.reactjs.org/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
   const [version, setVersion] = useState(0);
 
   const [modify, setModify] = useState<{
@@ -75,11 +74,11 @@ const ExercisesView = () => {
 
   useEffect(() => {
     let sendToServer: getExerciseJson = {
-      type: "Chest",
-      subtype: "Upper",
+      type: type,
+      subtype: subtype,
     };
     dispatch(getExercise(sendToServer));
-  }, [dispatch]);
+  }, [dispatch, subtype, type]);
 
   if (status !== "idle") {
     return (
@@ -175,6 +174,8 @@ const ExercisesView = () => {
           modify={modify.modify}
           data={modify.data}
           key={version}
+          type={type}
+          subtype={subtype}
         />
       </div>
     </MainLayout>

@@ -5,7 +5,6 @@ import translation_cn from './zh-cn/translation_cn.json';
 import { initReactI18next } from 'react-i18next';
 
 // ref: https://medium.com/ms-club-of-sliit/internationalization-using-i18next-with-react-typescript-d7c443df3be4
-
 export const resources = {
     en: {
         translation: translation,

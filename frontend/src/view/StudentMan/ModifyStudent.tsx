@@ -47,6 +47,7 @@ const ModifyStudent = ({
 
   const dispatch = useAppDispatch();
 
+  // form validation with yup
   const schema = yup
     .object({
       display_name: yup.string().required("Please enter name"),
@@ -67,6 +68,7 @@ const ModifyStudent = ({
     resolver: yupResolver(schema),
   });
 
+  // set the init value for form
   React.useEffect(() => {
     reset({
       id: id,
@@ -75,12 +77,13 @@ const ModifyStudent = ({
     });
   },[display_name, id, isVerified, reset]);
 
-  const values = watch();
+  const values = watch(); // to monitor the user's input
 
   const onSubmit = () => {
     setOpenPopup(true);
   };
 
+  // for sending the form data to the server
   const sendToServer = () => {
     let data: StudentObject = {
       id: id,
@@ -164,7 +167,7 @@ const ModifyStudent = ({
                       type="radio"
                       value={"true"}
                     />
-                    <label htmlFor="Active">Active</label>
+                    <label htmlFor="Active">{t('Active')}</label>
                   </div>
                   <div
                     style={{ display: "flex", flexDirection: "row", gap: 5 }}
@@ -174,7 +177,7 @@ const ModifyStudent = ({
                       type="radio"
                       value={"false"}
                     />
-                    <label htmlFor="Disactive">Disactive</label>
+                    <label htmlFor="Disactive">{t('Disactive')}</label>
                   </div>
                 </div>
               </div>

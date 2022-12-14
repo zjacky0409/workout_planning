@@ -1,10 +1,9 @@
-import MainLayout from "../../layout/MainLayout";
 import { useTranslation } from "react-i18next";
 
-import { useAppSelector, useAppDispatch } from "../../store/hook";
+import { useAppDispatch } from "../../store/hook";
 import CustomButton from "../../components/Button/CustomButton";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -21,7 +20,7 @@ import { FoodObject } from "../../common";
 import FormHelperText from "@mui/material/FormHelperText";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 interface PropsType {
   open: boolean;
   handleClose: any;
@@ -53,6 +52,7 @@ const ModifyFood = ({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
+  // form validatio with yup
   const schema = yup
     .object({
       name: yup.string().required("Please enter food name"),
@@ -79,18 +79,17 @@ const ModifyFood = ({
     resolver: yupResolver(schema),
   });
 
-  const values = watch();
+  const values = watch(); // to monitor the user's input
 
-  console.log(values);
-
+  // reset the form's value when the data has change
   useEffect(() => {
     if (modify) {
       reset(data);
     }
   }, [data, modify, reset]);
 
+  // submit the data to the server
   const onSubmit = () => {
-    console.log("values == ", values);
 
     if (modify && data) {
       let sendToServer: updateFoodJson = {

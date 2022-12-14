@@ -1,10 +1,14 @@
+/*
+    Redux to store the auth related data 
+    and build some auth related api call
+*/
+
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { getUser, createUserAPI, checkEmailExistAPI, checkUsernameExistAPI } from '../api/authApi';
 import { createUserJson, checkEmailExistJson, checkUsernameExistJson } from '../api/authApi';
 import { StudentObject } from '../common';
 import { getStudentListAPI } from '../api/coachApi';
-import { stat } from 'fs';
 export interface AuthState {
   authentication: boolean;
   status: 'idle' | 'pending' | 'failed';
@@ -17,7 +21,7 @@ export interface AuthState {
   student_id?: number,
   coach_id?: number,
   isVerified: boolean,
-  student_list?: StudentObject[]
+  student_list?: StudentObject[] // to store all student of a coach
 }
 
 const initialState: AuthState = {

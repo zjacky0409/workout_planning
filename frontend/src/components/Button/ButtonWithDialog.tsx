@@ -1,3 +1,12 @@
+/*
+  This component may be useless now
+  It combines button and dialog together
+  When we click the button, the dialod with be shown
+
+  Why Useless?
+  Because it is hard to close the confirm dialog after click the confirm button in the dialog
+*/
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import variantToColor from "../../common/styleFunction";

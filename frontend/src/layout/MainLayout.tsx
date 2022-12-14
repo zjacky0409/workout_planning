@@ -21,7 +21,7 @@ interface PropsType {
 }
 
 const MainLayout = (props: PropsType) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const isVertified = useAppSelector(selectIsVertified);
   const role = useAppSelector(selectRole);
@@ -36,8 +36,6 @@ const MainLayout = (props: PropsType) => {
 
   return (
     <div>
-      {/* <CssBaseline /> */}
-
       <TopBar />
       <Box
         sx={{

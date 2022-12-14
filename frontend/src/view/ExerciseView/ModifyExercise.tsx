@@ -38,6 +38,8 @@ interface PropsType {
   handleClose: any;
   setOpen: Function;
   modify: boolean;
+  type: string;
+  subtype: string;
   data?: ExerciseObject;
 }
 
@@ -57,6 +59,8 @@ const ModifyExercise = ({
   handleClose,
   setOpen,
   modify,
+  type,
+  subtype,
   data,
 }: PropsType) => {
   const { t } = useTranslation();
@@ -96,10 +100,9 @@ const ModifyExercise = ({
     resolver: yupResolver(schema),
   });
 
-  const values = watch();
-
-  console.log(values);
-
+  const values = watch(); // to monitor the user's input
+  
+  // reset the form's data
   useEffect(() => {
     if (modify) {
       reset(data);
@@ -107,7 +110,6 @@ const ModifyExercise = ({
   }, [data, modify, reset]);
 
   const onSubmit = () => {
-    console.log("values == ", values);
 
     if (modify && data) {
       let sendToServer: updateExerciseJson = {

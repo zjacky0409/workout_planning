@@ -6,7 +6,7 @@ import CustomButton from "../components/Button/CustomButton";
 
 import { useEffect, useState } from "react";
 import Chip from "@mui/material/Chip";
-import { deleteFood, selectFoodList, selectStatus } from "../store/dietSlice";
+import { selectFoodList, selectStatus } from "../store/dietSlice";
 import ModifyFood from "./FoodView/ModifyFood";
 import { getFood } from "../store/dietSlice";
 import { FoodObject } from "../common";
@@ -23,6 +23,8 @@ const FoodView = (props: PropsType) => {
   const { t } = useTranslation();
 
   const [open, setOpen] = useState(false);
+
+  // https://beta.reactjs.org/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
   const [version, setVersion] = useState(0);
 
   const handleReset = () => {
@@ -67,25 +69,6 @@ const FoodView = (props: PropsType) => {
     handleReset();
     setOpen(false);
   };
-
-  // const callDeleteFoodApi = (toBeDelete: number) => {
-  //   dispatch(deleteFood(toBeDelete))
-  //     .unwrap()
-  //     .then((result) => {
-  //       if (result.delete_food === true) {
-  //         // dispatch(getFood());
-  //       } else {
-  //         console.log("error");
-  //       }
-  //       // handle result here
-  //     })
-  //     .catch((rejectedValueOrSerializedError) => {
-  //       console.log(rejectedValueOrSerializedError);
-  //       // handle error here
-  //       // TODO: error handling
-  //       // 1. what if the user name already exist???
-  //     });
-  // };
 
   if (status === "pending") {
     return (

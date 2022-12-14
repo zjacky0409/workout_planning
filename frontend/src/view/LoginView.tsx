@@ -20,9 +20,10 @@ import axios from "axios";
 import { selectAuth, setAuthentication } from "../store/authSlice";
 import CustomButton from "../components/Button/CustomButton";
 import ChangeLangSelect from "../components/ChangeLangSelect";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 const LoginView = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = React.useState(false); // if ture, we display the password to the user
   const dispatch = useAppDispatch();
 
@@ -162,7 +163,7 @@ const LoginView = () => {
               </div>
             </FormControl>
 
-            {status === "pending" && <CircularProgress />}
+            {status === "pending" && <LoadingSpinner size={"small"} variant={"primary"} />}
 
             {status === "error" && (
               <Alert severity="error" sx={{ width: "90%" }}>
