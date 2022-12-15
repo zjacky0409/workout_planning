@@ -40,6 +40,7 @@ TODO List:
 5. build a table component for my web app
 6. remove "any" 
 7. Logging in the backend
+8. Code Review
 
 
 
