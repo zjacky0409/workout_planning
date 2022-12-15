@@ -1,3 +1,7 @@
+/*
+  Some common object interface
+*/
+
 export interface userInfo {
   userId: number;
   username: string;

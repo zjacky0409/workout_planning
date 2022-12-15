@@ -21,6 +21,8 @@ import { IsVerifiedGuard } from 'src/guards/isVerified.guard';
 export class FoodController {
   constructor(private readonly foodService: FoodService) {}
 
+  // create a food
+  // only for coach
   @Roles(Role.Coach)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/create')
@@ -31,15 +33,18 @@ export class FoodController {
     return this.foodService.create(createFoodDto, req.user);
   }
 
+  // get food list
   @UseGuards(JwtAuthGuard, IsVerifiedGuard)
   @Get('/get')
   get(@Request() req) {
     return this.foodService.getFood(req.user);
   }
 
+  // update a food
+  // only for coach
   @Roles(Role.Coach)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post('update')
+  @Post('/update')
   update(
     @Request() req,
     @Body(new ValidationPipe()) updateFoodDto: UpdateFoodDto,
@@ -47,6 +52,8 @@ export class FoodController {
     return this.foodService.updateFood(updateFoodDto, req.user);
   }
 
+  // delete a food
+  // only for coach
   @Roles(Role.Coach)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('delete')

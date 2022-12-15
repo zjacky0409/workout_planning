@@ -61,7 +61,7 @@ export class FoodService {
   async updateFood(food: UpdateFoodDto, user: any) {
     console.log('user == ', user)
     console.log(`user ${user.userId} request to get the food list`);
-    // const result = await this.foodRepository.update({id: });
+    // select data from the database
     const foodToUpdate = await this.foodRepository.find({
       where: { id: food.id },
       relations: {
@@ -74,6 +74,7 @@ export class FoodService {
     if (foodToUpdate[0].coach.id !== user.coach_id) {
       throw new UnauthorizedException(); // should not happen
     }
+    // modify the food
     foodToUpdate[0].name = food.name;
     foodToUpdate[0].carbs = food.carbs;
     foodToUpdate[0].protein = food.protein;
@@ -81,6 +82,7 @@ export class FoodService {
     foodToUpdate[0].comment = food.comment;
     foodToUpdate[0].recommendation = food.recommendation;
     try {
+      // save the change
       await this.foodRepository.save(foodToUpdate[0]);
       return { update_food: true };
     } catch (e) {
@@ -107,6 +109,7 @@ export class FoodService {
     console.log(`${user.username} is going to delete a food`)
     let deleteResult
     try {
+      // delete the food from the database
       deleteResult = await this.foodRepository.delete({
         id: toBeDelete.toBeDelete,
         coach: { id: user.coach_id },
@@ -123,6 +126,7 @@ export class FoodService {
     }
 
     if (deleteResult.affected === 0) {
+      // should not happen
       throw new UnauthorizedException();
     }
     console.log('result == ', deleteResult)

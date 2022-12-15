@@ -1,3 +1,9 @@
+/**
+  A Pipe to check the update/ insert exericse request
+  to make sure that the request is valid 
+  and the type and subtype is correct --> no other wrong input
+*/
+
 import {
   PipeTransform,
   Injectable,

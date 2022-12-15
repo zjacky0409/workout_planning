@@ -1,3 +1,9 @@
+/**
+  A Pipe to check the update/ insert exericse request
+  to make sure that the request is valid 
+  and the type and subtype is correct --> no other wrong input
+*/
+
 import {
   PipeTransform,
   Injectable,
@@ -6,16 +12,9 @@ import {
 } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
-
-// a pipe to checking the user request fit the dto or not
 @Injectable()
 export class ExerciseValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
-    // ref: https://ithelp.ithome.com.tw/articles/10191227
-    /*不檢查原生JavaScript的型別，因為刻意寫ValidationPipe，就是要使用自定義的DTO class
-        的屬性去做參數型別檢查，如果metatype是原生JavaScript的型別，就直接return 原始參數，
-        不做ValidationPipe的檢查。
-        */
     if (!metatype || !this.toValidate(metatype)) {
       return value;
     }

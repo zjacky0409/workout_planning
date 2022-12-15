@@ -35,7 +35,6 @@ export class AuthController {
     const user_meta_data = await this.userService.findUserWithMeta(
       req.user.username,
     );
-    console.log(user_meta_data)
     return user_meta_data;
   }
 }

@@ -58,9 +58,9 @@ const ModifyExercise = ({
   open,
   handleClose,
   setOpen,
-  modify,
-  type,
-  subtype,
+  modify, // true: modify the exercise, false: add a new exericse 
+  type, // for fetch the data to get the exercise list
+  subtype, // for fetch the data to get the exercise list
   data,
 }: PropsType) => {
   const { t } = useTranslation();
@@ -109,6 +109,7 @@ const ModifyExercise = ({
     }
   }, [data, modify, reset]);
 
+  // submit the data to the server
   const onSubmit = () => {
 
     if (modify && data) {
@@ -127,8 +128,8 @@ const ModifyExercise = ({
             setOpen(false);
             reset();
             let sendToServer: getExerciseJson = {
-              type: "Chest",
-              subtype: "Upper",
+              type: type,
+              subtype: subtype,
             };
             dispatch(getExercise(sendToServer));
           } else {
@@ -158,8 +159,8 @@ const ModifyExercise = ({
             setOpen(false);
             reset();
             let sendToServer: getExerciseJson = {
-              type: "Chest",
-              subtype: "Upper",
+              type: type,
+              subtype: subtype,
             };
             dispatch(getExercise(sendToServer));
           } else {

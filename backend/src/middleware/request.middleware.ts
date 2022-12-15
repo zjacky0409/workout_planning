@@ -1,3 +1,9 @@
+/*
+
+To log the user request and the response from our server
+ 
+*/
+
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
 
 import { Request, Response, NextFunction } from 'express';

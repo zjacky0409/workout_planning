@@ -1,3 +1,8 @@
+/*
+  The common pipe
+  Just check the jwt token payload valid(with class-validator) or not
+*/
+
 import {
   PipeTransform,
   Injectable,

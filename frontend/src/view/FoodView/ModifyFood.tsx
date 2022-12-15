@@ -1,5 +1,9 @@
-import { useTranslation } from "react-i18next";
+/*
+A component to let coach modify edit or add a new food and send it to the server
+*/
 
+
+import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "../../store/hook";
 import CustomButton from "../../components/Button/CustomButton";
 
@@ -25,7 +29,7 @@ interface PropsType {
   open: boolean;
   handleClose: any;
   setOpen: Function;
-  modify: boolean;
+  modify: boolean; // true: modify the food, false: add a new food 
   data?: FoodObject;
 }
 
@@ -83,7 +87,7 @@ const ModifyFood = ({
 
   // reset the form's value when the data has change
   useEffect(() => {
-    if (modify) {
+    if (modify) { // true: modify the food, false: add a new food 
       reset(data);
     }
   }, [data, modify, reset]);
@@ -269,28 +273,6 @@ const ModifyFood = ({
                   />
                 )}
               />
-
-              {/* <Controller
-                name="recommendation"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    error={!!errors["recommendation"]}
-                    size="small"
-                    label={t("recommendation")}
-                    fullWidth
-                    helperText={
-                      errors["recommendation"]
-                        ? t(
-                            errors["recommendation"]
-                              .message as unknown as TemplateStringsArray
-                          )
-                        : ""
-                    }
-                  />
-                )}
-              /> */}
               <Controller
                 name="recommendation"
                 control={control}

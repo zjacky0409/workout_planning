@@ -1,5 +1,4 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -27,6 +26,7 @@ interface ModifyStudentProps {
   isVerified: boolean;
 }
 
+// define the form schema
 interface IFormInput {
   id: number;
   display_name: string;

@@ -53,7 +53,7 @@ export class ExerciseService {
   async update(createExerciseDto: UpdateExerciseDto, user: userInfo) {
     console.log('user == ', user)
     console.log(`user ${user.userId} request to get the food list`);
-    // const result = await this.foodRepository.update({id: });
+    // select the data from the database
     const foodToUpdate = await this.exerciseRepository.find({
       where: { id: createExerciseDto.id },
       relations: {
@@ -66,11 +66,14 @@ export class ExerciseService {
     if (foodToUpdate[0].created_by.id !== user.coach_id) {
       throw new UnauthorizedException(); // should not happen
     }
+
+    // modify the record
     foodToUpdate[0].name = createExerciseDto.name;
     foodToUpdate[0].type = createExerciseDto.type;
     foodToUpdate[0].subtype = createExerciseDto.subtype;
     foodToUpdate[0].details = createExerciseDto.details;
     try {
+      // save the change
       await this.exerciseRepository.save(foodToUpdate[0]);
       return { update_exercise: true };
     } catch (e) {
@@ -109,6 +112,7 @@ export class ExerciseService {
     };
   }
 
+  // to delete an exericse
   async delete(user: userInfo, toBeDeleted: number) {
 
     let deleteResult;
@@ -126,6 +130,7 @@ export class ExerciseService {
     }
 
     if (deleteResult.affected === 0) {
+      // should not happen
       throw new UnauthorizedException();
     }
     console.log('result == ', deleteResult);

@@ -10,7 +10,6 @@ import { jwtConstants } from './constants';
 import { AuthController } from './auth.controller';
 @Module({
   imports: [
-    // UsersModule,
     UserModule,
     Logger,
     PassportModule,

@@ -27,6 +27,8 @@ import { GetExerciseValidationPipe } from './pipe/get_exercise_validate.pipe';
 export class ExerciseController {
   constructor(private readonly exerciseService: ExerciseService) { }
 
+  // create an exercise
+  // only for coach
   @Roles(Role.Coach)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/create')
@@ -37,6 +39,8 @@ export class ExerciseController {
     return this.exerciseService.create(createExerciseDto, req.user);
   }
 
+  // update an exercise
+  // only for coach
   @Roles(Role.Coach)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/update')
@@ -58,6 +62,8 @@ export class ExerciseController {
     return this.exerciseService.findAll(req.user, getExerciseDto);
   }
 
+  // delete an exericse
+  // only for coach
   @Roles(Role.Coach)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/delete')

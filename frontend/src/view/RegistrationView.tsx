@@ -53,7 +53,7 @@ const defaultValues = {
 };
 
 // do the form validation with yup library
-// TODO: I should use test for the username and email checking
+// TODO: I should use test for the username and email checking, i.e. directly do the call api here
 const schema = yup
   .object({
     firstName: yup.string().required("Please enter the first name"),
@@ -215,6 +215,7 @@ const RegistrationView = () => {
     setDShowPassword(event.target.checked);
   };
 
+  // for setting the error msg for deduplicate username/ emailAddress
   const handleDuplicateError = (type: "username" | "emailAddress"): string => {
     if (usernameExist && type === "username") {
       return t("The username already existed");
@@ -225,7 +226,7 @@ const RegistrationView = () => {
     }
 
     if (errors[type]) {
-      // TODO here quite confuse, why i need to add ? here
+      // TODO here quite confuse, why i need to add "?" here
       return t(errors[type]?.message as unknown as TemplateStringsArray);
     }
     return "";

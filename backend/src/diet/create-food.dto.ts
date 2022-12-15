@@ -6,7 +6,4 @@ export default class CreateDietDto {
 
   @IsString()
   type: string;
-
-//   @Is
-//   meal_th: number
 }

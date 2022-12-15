@@ -10,6 +10,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super();
   }
 
+  // to check the user enter the correct password and username or not
   async validate(username: string, password: string): Promise<any> {
     // call function to vaildate user's password and useranme
     Logger.log(`username ${username} -- login action`, 'LocalStrategy');

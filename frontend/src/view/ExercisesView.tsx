@@ -1,14 +1,11 @@
 import MainLayout from "../layout/MainLayout";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import CustomButton from "../components/Button/CustomButton";
 import { useAppSelector, useAppDispatch } from "../store/hook";
@@ -39,6 +36,7 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
   // https://beta.reactjs.org/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
   const [version, setVersion] = useState(0);
 
+  // set the data to ModifyExercise Component
   const [modify, setModify] = useState<{
     modify: boolean;
     data: ExerciseObject;
@@ -55,6 +53,7 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
     },
   });
 
+  // https://beta.reactjs.org/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
   const handleReset = () => {
     setVersion(version + 1);
   };
@@ -63,6 +62,7 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
     setOpen(true);
   };
 
+  // reset the modiftExercise component and the modify state
   const handleClose = () => {
     setModify({
       ...modify,
@@ -72,6 +72,7 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
     setOpen(false);
   };
 
+  // get the data from the server
   useEffect(() => {
     let sendToServer: getExerciseJson = {
       type: type,

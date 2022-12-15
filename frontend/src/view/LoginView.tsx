@@ -3,7 +3,6 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useTranslation } from "react-i18next";
 import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -27,7 +26,7 @@ const LoginView = () => {
   const [showPassword, setShowPassword] = React.useState(false); // if ture, we display the password to the user
   const dispatch = useAppDispatch();
 
-  const auth = useAppSelector(selectAuth);
+  const auth = useAppSelector(selectAuth); // to know the user login or not
 
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -49,7 +48,7 @@ const LoginView = () => {
     event.preventDefault();
     setStatus("pending");
 
-    // one way to fetch the data
+    // to fetch/send data to server without redux-toolkit
     async function fetchData() {
       const loginInPromise = new Promise((resolve, reject) => {
         axios

@@ -1,4 +1,4 @@
-// To define different interface that are used in different file
+// To define different interface/constants that are used in different file
 
 export interface SideBarObject {
     path: string,

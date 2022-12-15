@@ -11,6 +11,7 @@ import UpdateStudentDto from './dto/update_student.dto';
 export class CoachController {
   constructor(private readonly coachService: CoachService) {}
 
+  // to update student by a coach
   @Roles(Role.Coach)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/update_student')
@@ -21,6 +22,7 @@ export class CoachController {
     return await this.coachService.update(updateStudentData, req.user);
   }
 
+  // get all stduent of a coach
   @Roles(Role.Coach)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/get_student')

@@ -30,6 +30,8 @@ const FoodView = (props: PropsType) => {
   const handleReset = () => {
     setVersion(version + 1);
   };
+
+  // need to pass to ModifyFood Component
   const [modify, setModify] = useState({
     modify: false,
     data: {
@@ -60,7 +62,8 @@ const FoodView = (props: PropsType) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  
+  // reset the modiftExercise component and the modify state
   const handleClose = () => {
     setModify({
       ...modify,
@@ -144,8 +147,7 @@ const FoodView = (props: PropsType) => {
             justifyContent: "space-between",
           }}
         >
-          {" "}
-          <p>This is the {t("Food")} Page</p>{" "}
+          <p>This is the {t("Food")} Page</p>
           {role.includes("coach") && (
             <CustomButton
               shownText={"Add New Food"}
@@ -177,6 +179,7 @@ const FoodView = (props: PropsType) => {
                 </Grid>
               );
             }
+            return <></>
           })}
         </Grid>
 
@@ -200,7 +203,9 @@ const FoodView = (props: PropsType) => {
                 </Grid>
               );
             }
+            return <></>
           })}
+          
         </Grid>
 
         <>{Line("Not Recommand")}</>
@@ -223,6 +228,7 @@ const FoodView = (props: PropsType) => {
                 </Grid>
               );
             }
+            return <></>
           })}
         </Grid>
         <ModifyFood

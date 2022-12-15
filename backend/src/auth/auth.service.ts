@@ -35,8 +35,7 @@ export class AuthService {
 
   // to sign the jwt token with its payload
   async login(user: any) {
-    // user should not be any ah
-    console.log('user == ', user);
+    // the payload to be inserted to the jwt token
     const payload = {
       username: user.username,
       sub: user.id,
@@ -47,9 +46,14 @@ export class AuthService {
       isVerified: false,
     };
     let user_coach = null
+
+    // if the user is a student
     if (user.student !== null) {
       payload.role.push('student');
       payload.student_id = user.student.id;
+
+      // select the data from the Student Table
+      // find the coach, isVerified for the user
       user_coach = await this.dataSource
         .getRepository(Student)
         .createQueryBuilder('student')
@@ -57,9 +61,11 @@ export class AuthService {
         .where('student.id = :id', { id: user.student.id })
         .getOne();
       payload.student_coach_id = user_coach.id;
-      console.log('user_coach => ', user_coach)
+      console.log('user_coach => ', user_coach);
       payload.isVerified = user_coach.isVerified;
     }
+
+    // if the user is a coach
     if (user.coach !== null) {
       payload.role.push('coach');
       payload.coach_id = user.coach.id;

@@ -39,8 +39,6 @@ export class UserService {
 
   // check the email exist or not
   async checkEmailExist(data: CheckEmailDto): Promise<boolean> {
-    const user_test = this.findAll()
-    console.log('user_test --> ', user_test)
     const user = await this.userRepository.findOneBy({
       emailAddress: data.emailAddress,
     });
@@ -52,6 +50,7 @@ export class UserService {
     return false;
   }
 
+  // to create an user
   async create(user: CreateUserDto) {
     const metaData = {
       role: 'coach',
@@ -142,18 +141,12 @@ export class UserService {
     }
   }
 
-  // find all user from the database
-  async findAll(): Promise<string> {
-    const user = await this.userRepository.find();
-    console.log('user in findall', user)
-    return 'haha'
-  }
 
   // find the user information from the database and used by thr getUser Api
   async findUserWithMeta(username: string): Promise<any> {
-    // role.push('student');
     const role = [];
-    // role.push('coach');
+
+    // select the user from the user table
     const user = await this.dataSource
       .getRepository(User)
       .createQueryBuilder('user')
@@ -163,6 +156,8 @@ export class UserService {
       .getOne();
 
     let user_coach = null;
+
+    // if the user is a student
     if (user.student !== null) {
       role.push('student');
       user_coach = await this.dataSource
@@ -173,6 +168,7 @@ export class UserService {
         .getOne();
     }
     let coach_student = null;
+    // if the user is a coach
     if (user.coach !== null) {
       role.push('coach');
       coach_student = await this.dataSource
@@ -208,10 +204,8 @@ export class UserService {
     this.logger.error(`no user found in the user repository`);
     return null;
   }
-  async findOneById(id: number): Promise<User> {
-    return await this.userRepository.findOneBy({ id: id });
-  }
 
+  // delete the user from the database
   async remove(id: string): Promise<void> {
     await this.userRepository.delete(id);
   }
