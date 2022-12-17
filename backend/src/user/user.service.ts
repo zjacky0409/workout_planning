@@ -119,6 +119,8 @@ export class UserService {
       const student_meta = {
         username: 'to_be_insert_by_coach',
         coach: student_coach[0],
+        display_name: user.username, // it may change it by coach later
+        isVerified: false, // it may change it by coach later
       };
       const new_student = this.studentRepository.create(student_meta);
       successInsert = await this.studentRepository.save(new_student);

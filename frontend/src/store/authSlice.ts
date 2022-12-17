@@ -21,7 +21,7 @@ export interface AuthState {
   student_id?: number,
   coach_id?: number,
   isVerified: boolean,
-  student_list?: StudentObject[] // to store all student of a coach
+  student_list: StudentObject[] // to store all student of a coach
 }
 
 const initialState: AuthState = {
@@ -38,7 +38,7 @@ const initialState: AuthState = {
   student_id: undefined,
   coach_id: undefined,
   isVerified: false,
-  student_list: undefined
+  student_list: []
 };
 
 // get the user infomation and config from the server and check the jwt token valid or not

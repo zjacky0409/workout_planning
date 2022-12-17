@@ -48,6 +48,11 @@ export interface StudentObject {
     display_name: string,
     isVerified: boolean,
 }
+// the table column interface
+export interface Column {
+    name: string;
+    width: string;
+}
 
 export const Body_Part = ["Chest", "Back", "Arms", "Legs", "Core", "Shoulder"]
 
