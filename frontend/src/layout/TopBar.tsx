@@ -114,6 +114,7 @@ const TopBar = () => {
         width: { sm: `calc(100% - ${240}px)` },
         ml: { sm: `${240}px` },
         height: 63,
+        maxHeight: 63,
         bgcolor: "#ffffff",
       }}
       elevation={4}
@@ -123,7 +124,7 @@ const TopBar = () => {
           {
             // If the screen size is small, we show the meun icon
           }
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" }}}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -199,7 +200,7 @@ const TopBar = () => {
                 textDecoration: "none",
               }}
             >
-              <img src="/Logo.svg" alt="Logo" width="200" height="100" />
+              <img src="/Logo.svg" alt="Logo" width="128" height="64" />
             </Typography>
           </>
 

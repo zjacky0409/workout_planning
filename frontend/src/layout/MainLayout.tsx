@@ -25,7 +25,7 @@ const MainLayout = (props: PropsType) => {
 
   const isVertified = useAppSelector(selectIsVertified);
   const role = useAppSelector(selectRole);
-  console.log('role in mainlayout -> ', role)
+  // console.log('role in mainlayout -> ', role)
   const dispatch = useAppDispatch();
 
   // when we logout, we remove the access_token and set auth state to false

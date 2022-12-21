@@ -19,6 +19,8 @@ import {
 } from "../store/exerciseSlice";
 import { ExerciseObject } from "../common";
 import { getExerciseJson } from "../api/exerciseApi";
+import SearchIcon from "@mui/icons-material/Search";
+
 
 interface ExerciseProps {
   type: string;
@@ -32,6 +34,32 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
   const role = useAppSelector(selectRole);
 
   const [open, setOpen] = useState(false);
+
+  // to store the the serach value
+  const [searchValue, setSerachValue] = useState("");
+
+  const [shownExerciseList, setShownExerciseList] = useState<ExerciseObject[]>(
+    []
+  );
+
+  useEffect(() => {
+    console.log('searchValue => ', searchValue)
+    if (searchValue === "") {
+      setShownExerciseList(exerciseList);
+    } else {
+      // for filtering the data list
+      setShownExerciseList(
+        exerciseList.filter(
+          (val: ExerciseObject) =>
+            val.details.includes(searchValue) || val.name.includes(searchValue)
+        )
+      );
+    }
+  }, [searchValue, exerciseList]);
+
+  const serachInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSerachValue(e.target.value);
+  };
 
   // https://beta.reactjs.org/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
   const [version, setVersion] = useState(0);
@@ -114,7 +142,24 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
             justifyContent: "space-between",
           }}
         >
-          <p>This is the {t("Exercises")} Page</p>
+           <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: 'center',
+              gap: 3
+              // justifyContent: "space-between",
+            }}
+          >
+            <SearchIcon />
+            <input
+              value={searchValue}
+              onChange={serachInputChange}
+              style={{ width: "300px", height: "30px" }}
+              type="text"
+              placeholder="Search by name or details.."
+            />
+          </div>
           {role.includes("coach") && (
             <CustomButton
               shownText={"Add a new exercise"}
@@ -126,7 +171,7 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
         </div>
 
         <Grid container spacing={2}>
-          {exerciseList.map((value: ExerciseObject) => {
+          {shownExerciseList.map((value: ExerciseObject) => {
             return (
               <Grid item xs={12} sm={6} md={6} lg={4} key={value.id}>
                 <Card sx={{ minWidth: 275 }}>
@@ -135,11 +180,12 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
                       variant="h5"
                       // color="text.secondary"
                       gutterBottom
+                      noWrap
                     >
                       {value.name}
                     </Typography>
-                    <Typography component="div">{value.type}</Typography>
-                    <Typography variant="body2">{value.details}</Typography>
+                    <Typography component="div" noWrap>{value.type}</Typography>
+                    <Typography variant="body2" noWrap>{value.details}</Typography>
                   </CardContent>
                   <CardActions>
                     <CustomButton
