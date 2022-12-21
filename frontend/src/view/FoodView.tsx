@@ -15,6 +15,7 @@ import Grid from "@mui/material/Grid";
 
 import { selectRole } from "../store/authSlice";
 import FoodCard from "./FoodView/FoodCard";
+import SearchIcon from "@mui/icons-material/Search";
 interface PropsType {
   day: string;
 }
@@ -22,10 +23,13 @@ interface PropsType {
 const FoodView = (props: PropsType) => {
   const { t } = useTranslation();
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+
+  // serach value 
+  const [serachValue, setSerachValue] = useState<string>("");
 
   // https://beta.reactjs.org/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
-  const [version, setVersion] = useState(0);
+  const [version, setVersion] = useState<number>(0);
 
   const handleReset = () => {
     setVersion(version + 1);
@@ -51,9 +55,30 @@ const FoodView = (props: PropsType) => {
 
   const foodList = useAppSelector(selectFoodList);
 
+  const [shownFoodList, setShownFoodList] = useState<FoodObject[]>([]);
+
   const role = useAppSelector(selectRole);
 
   const status = useAppSelector(selectStatus);
+
+  const serachInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSerachValue(e.target.value);
+  };
+
+  useEffect(() => {
+    // filter the data list function
+    if (serachValue !== "") {
+      setShownFoodList(
+        foodList.filter(
+          (word: FoodObject) =>
+            word.name.toLowerCase().includes(serachValue.toLowerCase()) ||
+            word.comment.toLowerCase().includes(serachValue.toLowerCase())
+        )
+      );
+    } else {
+      setShownFoodList(foodList);
+    }
+  }, [foodList, serachValue]);
 
   useEffect(() => {
     dispatch(getFood());
@@ -62,7 +87,7 @@ const FoodView = (props: PropsType) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  
+
   // reset the modiftExercise component and the modify state
   const handleClose = () => {
     setModify({
@@ -73,6 +98,7 @@ const FoodView = (props: PropsType) => {
     setOpen(false);
   };
 
+  // fetching the data from the server, we show the loading status to the user
   if (status === "pending") {
     return (
       <MainLayout content="Diet">
@@ -147,7 +173,25 @@ const FoodView = (props: PropsType) => {
             justifyContent: "space-between",
           }}
         >
-          <p>This is the {t("Food")} Page</p>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: 'center',
+              gap: 3
+              // justifyContent: "space-between",
+            }}
+          >
+            <SearchIcon />
+            <input
+              value={serachValue}
+              onChange={serachInputChange}
+              style={{ width: "300px", height: "30px" }}
+              type="text"
+              placeholder="Search by name or comment.."
+            />
+          </div>
+
           {role.includes("coach") && (
             <CustomButton
               shownText={"Add New Food"}
@@ -161,7 +205,7 @@ const FoodView = (props: PropsType) => {
         <>{Line("Recommand")}</>
 
         <Grid container spacing={2}>
-          {foodList.map((values: FoodObject) => {
+          {shownFoodList.map((values: FoodObject) => {
             if (values.recommendation === "Recommand") {
               return (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={values.id}>
@@ -179,13 +223,13 @@ const FoodView = (props: PropsType) => {
                 </Grid>
               );
             }
-            return <></>
+            return <></>;
           })}
         </Grid>
 
         <>{Line("Not Bad")}</>
         <Grid container spacing={2}>
-          {foodList.map((values: FoodObject) => {
+          {shownFoodList.map((values: FoodObject) => {
             if (values.recommendation === "Not Bad") {
               return (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={values.id}>
@@ -203,14 +247,13 @@ const FoodView = (props: PropsType) => {
                 </Grid>
               );
             }
-            return <></>
+            return <></>;
           })}
-          
         </Grid>
 
         <>{Line("Not Recommand")}</>
         <Grid container spacing={2}>
-          {foodList.map((values: FoodObject) => {
+          {shownFoodList.map((values: FoodObject) => {
             if (values.recommendation === "Not Recommand") {
               return (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={values.id}>
@@ -228,7 +271,7 @@ const FoodView = (props: PropsType) => {
                 </Grid>
               );
             }
-            return <></>
+            return <></>;
           })}
         </Grid>
         <ModifyFood
