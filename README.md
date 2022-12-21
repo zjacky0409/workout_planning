@@ -36,7 +36,7 @@ TODO List:
 1. weight and diet tracking
 2. workout planning and diet planning
 3. Error handling im frontend when web app receive error from the backend
-4. seraching on the food, exercise page
+4. seraching on the food(finished), exercise page
 5. build a table component for my web app --> 60% !need review!
 6. remove "any" 
 7. Logging in the backend
