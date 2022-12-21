@@ -21,7 +21,6 @@ import { ExerciseObject } from "../common";
 import { getExerciseJson } from "../api/exerciseApi";
 import SearchIcon from "@mui/icons-material/Search";
 
-
 interface ExerciseProps {
   type: string;
   subtype: string;
@@ -43,7 +42,7 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
   );
 
   useEffect(() => {
-    console.log('searchValue => ', searchValue)
+    console.log("searchValue => ", searchValue);
     if (searchValue === "") {
       setShownExerciseList(exerciseList);
     } else {
@@ -142,12 +141,12 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
             justifyContent: "space-between",
           }}
         >
-           <div
+          <div
             style={{
               display: "flex",
               flexDirection: "row",
-              alignItems: 'center',
-              gap: 3
+              alignItems: "center",
+              gap: 3,
               // justifyContent: "space-between",
             }}
           >
@@ -184,30 +183,38 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
                     >
                       {value.name}
                     </Typography>
-                    <Typography component="div" noWrap>{value.type}</Typography>
-                    <Typography variant="body2" noWrap>{value.details}</Typography>
+                    <Typography component="div" noWrap>
+                      {value.type}
+                    </Typography>
+                    <Typography variant="body2" noWrap>
+                      {value.details}
+                    </Typography>
                   </CardContent>
                   <CardActions>
-                    <CustomButton
-                      // size="small"
-                      shownText="Edit"
-                      onClick={() => {
-                        setModify({
-                          modify: true,
-                          data: value,
-                        });
-                        setOpen(true);
-                      }}
-                      variant={"primary"}
-                    />
-                    <CustomButton
-                      // size="small"
-                      shownText="Delete"
-                      onClick={() => {
-                        dispatch(deleteExercise(value.id));
-                      }}
-                      variant={"danger"}
-                    />
+                    {role.includes("coach") && (
+                      <>
+                        <CustomButton
+                          // size="small"
+                          shownText="Edit"
+                          onClick={() => {
+                            setModify({
+                              modify: true,
+                              data: value,
+                            });
+                            setOpen(true);
+                          }}
+                          variant={"primary"}
+                        />
+                        <CustomButton
+                          // size="small"
+                          shownText="Delete"
+                          onClick={() => {
+                            dispatch(deleteExercise(value.id));
+                          }}
+                          variant={"danger"}
+                        />
+                      </>
+                    )}
                   </CardActions>
                 </Card>
               </Grid>

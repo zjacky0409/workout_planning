@@ -60,7 +60,7 @@ export class AuthService {
         .leftJoinAndSelect('student.coach', 'student_coach')
         .where('student.id = :id', { id: user.student.id })
         .getOne();
-      payload.student_coach_id = user_coach.id;
+      payload.student_coach_id = user_coach.coach_id;
       console.log('user_coach => ', user_coach);
       payload.isVerified = user_coach.isVerified;
     }

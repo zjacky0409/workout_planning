@@ -51,6 +51,7 @@ export class FoodService {
     } else {
       toBeSerachedId = user.coach_id;
     }
+    console.log('toBeSerachedId => ', toBeSerachedId)
     return {
       food_list: await this.foodRepository.find({
         where: { coach: { id: toBeSerachedId } },
