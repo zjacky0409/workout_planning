@@ -33,6 +33,7 @@ import {
   updateExercise,
 } from "../../store/exerciseSlice";
 import { Body_Part, Body_Part_Subtype } from "../../common";
+import { selectRole } from "../../store/authSlice";
 interface PropsType {
   open: boolean;
   handleClose: any;
@@ -41,8 +42,8 @@ interface PropsType {
   type: string;
   subtype: string;
   data?: ExerciseObject;
+  viewOnly: boolean;
 }
-
 interface IFormInput {
   id: number;
   name: string;
@@ -58,14 +59,15 @@ const ModifyExercise = ({
   open,
   handleClose,
   setOpen,
-  modify, // true: modify the exercise, false: add a new exericse 
+  modify, // true: modify the exercise, false: add a new exericse
   type, // for fetch the data to get the exercise list
   subtype, // for fetch the data to get the exercise list
   data,
+  viewOnly, // true: only allow user view the data, user cannot modify(i.e. typing)
 }: PropsType) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-
+  const role = useAppSelector(selectRole);
   const schema = yup
     .object({
       name: yup.string().required("Please enter food name"),
@@ -101,7 +103,7 @@ const ModifyExercise = ({
   });
 
   const values = watch(); // to monitor the user's input
-  
+
   // reset the form's data
   useEffect(() => {
     if (modify) {
@@ -111,7 +113,6 @@ const ModifyExercise = ({
 
   // submit the data to the server
   const onSubmit = () => {
-
     if (modify && data) {
       let sendToServer: updateExerciseJson = {
         name: values.name,
@@ -195,7 +196,13 @@ const ModifyExercise = ({
                     error={!!errors["name"]}
                     size="small"
                     label={t("Exercise Name")}
+                    disabled={viewOnly}
                     fullWidth
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                     helperText={
                       errors["name"]
                         ? t(
@@ -217,6 +224,12 @@ const ModifyExercise = ({
                     size="small"
                     label={t("Details")}
                     fullWidth
+                    disabled={viewOnly}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                     helperText={
                       errors["details"]
                         ? t(
@@ -234,7 +247,16 @@ const ModifyExercise = ({
                 defaultValue="None"
                 render={({ field }) => (
                   <FormControl>
-                    <Select {...field} size="small">
+                    <Select
+                      {...field}
+                      size="small"
+                      disabled={viewOnly}
+                      sx={{
+                        "& .MuiInputBase-input.Mui-disabled": {
+                          WebkitTextFillColor: "#000000",
+                        },
+                      }}
+                    >
                       <MenuItem value="None">
                         <em>None</em>
                       </MenuItem>
@@ -261,7 +283,17 @@ const ModifyExercise = ({
                 defaultValue="None"
                 render={({ field }) => (
                   <FormControl>
-                    <Select {...field} size="small">
+                    <Select
+                      {...field}
+                      size="small"
+                      disabled={viewOnly}
+                      // disable textfield color to black in mui
+                      sx={{
+                        "& .MuiInputBase-input.Mui-disabled": {
+                          WebkitTextFillColor: "#000000",
+                        },
+                      }}
+                    >
                       <MenuItem value="None">
                         <em>None</em>
                       </MenuItem>
@@ -292,16 +324,18 @@ const ModifyExercise = ({
             variant="cancel"
             type="button"
           />
-          <CustomButton
-            // disabled={disabled}
-            type="submit"
-            // handler={handleClose}
-            shownText="Comfirm"
-            variant="primary"
-            // handler={function (): void {
-            //   throw new Error("Function not implemented.");
-            // }}
-          />
+          {role.includes("coach") && ( // only shown to coach 
+            <CustomButton
+              // disabled={disabled}
+              type="submit"
+              // handler={handleClose}
+              shownText="Comfirm"
+              variant="primary"
+              // handler={function (): void {
+              //   throw new Error("Function not implemented.");
+              // }}
+            />
+          )}
         </DialogActions>
       </form>
     </Dialog>

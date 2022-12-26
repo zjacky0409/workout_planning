@@ -33,13 +33,13 @@ const FoodCard = ({
   comment,
   setModify,
   setOpen,
-  // callDeleteFoodApi,
-}: PropsType) => {
+}: // callDeleteFoodApi,
+PropsType) => {
   const foodList = useAppSelector(selectFoodList);
 
   const { t } = useTranslation();
   const role = useAppSelector(selectRole);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const callDeleteFoodApi = (toBeDelete: number) => {
     dispatch(deleteFood(toBeDelete))
@@ -60,7 +60,7 @@ const FoodCard = ({
       });
   };
 
-  const [openDelete, setOpenDelete] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false);
 
   return (
     <Card sx={{ display: "flex" }}>
@@ -122,6 +122,7 @@ const FoodCard = ({
                 variant={"primary"}
                 onClick={() => {
                   setModify({
+                    viewOnly: false,
                     modify: true,
                     data: foodList.find(
                       (element: FoodObject) => element.id === id
@@ -131,7 +132,8 @@ const FoodCard = ({
                 }}
               />
 
-              {/* <ButtonWithDialog
+              {/* // useless now just a testing for compponent ButtonWithDialog
+              <ButtonWithDialog
                 shownText={"Delete"}
                 variant="danger"
                 handler={() => callDeleteFoodApi(id)}
@@ -153,6 +155,22 @@ const FoodCard = ({
                 disabled={false}
               />
             </>
+          )}
+          {role.includes("student") && (
+            <CustomButton
+              shownText={"View"}
+              variant={"primary"}
+              onClick={() => {
+                setModify({
+                  viewOnly: true,
+                  modify: true,
+                  data: foodList.find(
+                    (element: FoodObject) => element.id === id
+                  ),
+                });
+                setOpen(true);
+              }}
+            />
           )}
         </Box>
       </Box>

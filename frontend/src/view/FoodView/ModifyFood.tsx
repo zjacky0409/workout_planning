@@ -2,9 +2,8 @@
 A component to let coach modify edit or add a new food and send it to the server
 */
 
-
 import { useTranslation } from "react-i18next";
-import { useAppDispatch } from "../../store/hook";
+import { useAppDispatch, useAppSelector } from "../../store/hook";
 import CustomButton from "../../components/Button/CustomButton";
 
 import { useEffect } from "react";
@@ -25,12 +24,14 @@ import FormHelperText from "@mui/material/FormHelperText";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { selectRole } from "../../store/authSlice";
 interface PropsType {
   open: boolean;
   handleClose: any;
   setOpen: Function;
-  modify: boolean; // true: modify the food, false: add a new food 
+  modify: boolean; // true: modify the food, false: add a new food
   data?: FoodObject;
+  viewOnly: boolean; // true: only allow user view the data, user cannot modify(i.e. typing)
 }
 
 interface IFormInput {
@@ -52,9 +53,11 @@ const ModifyFood = ({
   setOpen,
   modify,
   data,
+  viewOnly,
 }: PropsType) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const role = useAppSelector(selectRole);
 
   // form validatio with yup
   const schema = yup
@@ -87,14 +90,14 @@ const ModifyFood = ({
 
   // reset the form's value when the data has change
   useEffect(() => {
-    if (modify) { // true: modify the food, false: add a new food 
+    if (modify) {
+      // true: modify the food, false: add a new food
       reset(data);
     }
   }, [data, modify, reset]);
 
   // submit the data to the server
   const onSubmit = () => {
-
     if (modify && data) {
       let sendToServer: updateFoodJson = {
         carbs: Number(values.carbs),
@@ -177,7 +180,14 @@ const ModifyFood = ({
                     error={!!errors["name"]}
                     size="small"
                     label={t("Food Name")}
+                    disabled={viewOnly}
                     fullWidth
+                    // disable textfield color to black in mui
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                     helperText={
                       errors["name"]
                         ? t(
@@ -195,10 +205,17 @@ const ModifyFood = ({
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    disabled={viewOnly}
                     error={!!errors["carbs"]}
                     size="small"
                     label={t("Carbs")}
                     fullWidth
+                    // disable textfield color to black in mui
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                     helperText={
                       errors["carbs"]
                         ? t(
@@ -216,10 +233,17 @@ const ModifyFood = ({
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    disabled={viewOnly}
                     error={!!errors["protein"]}
                     size="small"
                     label={t("Protein")}
                     fullWidth
+                    // disable textfield color to black in mui
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                     helperText={
                       errors["protein"]
                         ? t(
@@ -237,8 +261,14 @@ const ModifyFood = ({
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    disabled={viewOnly}
                     error={!!errors["fat"]}
                     size="small"
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                     label={t("Fat")}
                     fullWidth
                     helperText={
@@ -258,6 +288,12 @@ const ModifyFood = ({
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    disabled={viewOnly}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                     error={!!errors["comment"]}
                     size="small"
                     label={t("comment")}
@@ -279,23 +315,34 @@ const ModifyFood = ({
                 defaultValue="None"
                 render={({ field }) => (
                   <FormControl>
-                  <Select
-                    {...field}
-                    size="small"
-                  >
-                    <MenuItem value="None">
-                      <em>{t('None')}</em>
-                    </MenuItem>
-                    <MenuItem value={"Recommand"}>{t("Recommand")}</MenuItem>
-                    <MenuItem value={"Not Bad"}>{t("Not Bad")}</MenuItem>
-                    <MenuItem value={"Not Recommand"}>{t("Not Recommand")}</MenuItem>
-                  </Select>
-                  <FormHelperText sx={{color: 'red'}}>{errors["recommendation"]
+                    <Select
+                      disabled={viewOnly}
+                      {...field}
+                      size="small"
+                      // disable textfield color to black in mui
+                      sx={{
+                        "& .MuiInputBase-input.Mui-disabled": {
+                          WebkitTextFillColor: "#000000",
+                        },
+                      }}
+                    >
+                      <MenuItem value="None">
+                        <em>{t("None")}</em>
+                      </MenuItem>
+                      <MenuItem value={"Recommand"}>{t("Recommand")}</MenuItem>
+                      <MenuItem value={"Not Bad"}>{t("Not Bad")}</MenuItem>
+                      <MenuItem value={"Not Recommand"}>
+                        {t("Not Recommand")}
+                      </MenuItem>
+                    </Select>
+                    <FormHelperText sx={{ color: "red" }}>
+                      {errors["recommendation"]
                         ? t(
                             errors["recommendation"]
                               .message as unknown as TemplateStringsArray
                           )
-                        : ""}</FormHelperText>
+                        : ""}
+                    </FormHelperText>
                   </FormControl>
                 )}
               />
@@ -309,16 +356,18 @@ const ModifyFood = ({
             variant="cancel"
             type="button"
           />
-          <CustomButton
-            // disabled={disabled}
-            type="submit"
-            // handler={handleClose}
-            shownText="Comfirm"
-            variant="primary"
-            // handler={function (): void {
-            //   throw new Error("Function not implemented.");
-            // }}
-          />
+          {role.includes("coach") && (  // only shown to coach 
+            <CustomButton
+              // disabled={disabled}
+              type="submit"
+              // handler={handleClose}
+              shownText="Comfirm"
+              variant="primary"
+              // handler={function (): void {
+              //   throw new Error("Function not implemented.");
+              // }}
+            />
+          )}
         </DialogActions>
       </form>
     </Dialog>

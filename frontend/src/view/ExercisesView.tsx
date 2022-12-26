@@ -65,10 +65,12 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
 
   // set the data to ModifyExercise Component
   const [modify, setModify] = useState<{
+    viewOnly: boolean,
     modify: boolean;
     data: ExerciseObject;
   }>({
     modify: false,
+    viewOnly: true,
     data: {
       id: -999,
       name: "",
@@ -198,6 +200,7 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
                           shownText="Edit"
                           onClick={() => {
                             setModify({
+                              viewOnly: false,
                               modify: true,
                               data: value,
                             });
@@ -215,6 +218,21 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
                         />
                       </>
                     )}
+                    {role.includes("student") && (
+                      <CustomButton
+                        // size="small"
+                        shownText="View"
+                        onClick={() => {
+                          setModify({
+                            viewOnly: true,
+                            modify: true,
+                            data: value,
+                          });
+                          setOpen(true);
+                        }}
+                        variant={"primary"}
+                      />
+                    )}
                   </CardActions>
                 </Card>
               </Grid>
@@ -229,6 +247,7 @@ const ExercisesView = ({ type, subtype }: ExerciseProps) => {
           data={modify.data}
           key={version}
           type={type}
+          viewOnly={modify.viewOnly}
           subtype={subtype}
         />
       </div>

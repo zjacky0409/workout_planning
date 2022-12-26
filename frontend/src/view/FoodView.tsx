@@ -25,7 +25,7 @@ const FoodView = (props: PropsType) => {
 
   const [open, setOpen] = useState<boolean>(false);
 
-  // serach value 
+  // serach value
   const [serachValue, setSerachValue] = useState<string>("");
 
   // https://beta.reactjs.org/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
@@ -36,8 +36,13 @@ const FoodView = (props: PropsType) => {
   };
 
   // need to pass to ModifyFood Component
-  const [modify, setModify] = useState({
+  const [modify, setModify] = useState<{
+    viewOnly: boolean;
+    modify: boolean;
+    data: FoodObject;
+  }>({
     modify: false,
+    viewOnly: false,
     data: {
       id: -999,
       name: "",
@@ -177,8 +182,8 @@ const FoodView = (props: PropsType) => {
             style={{
               display: "flex",
               flexDirection: "row",
-              alignItems: 'center',
-              gap: 3
+              alignItems: "center",
+              gap: 3,
               // justifyContent: "space-between",
             }}
           >
@@ -281,6 +286,7 @@ const FoodView = (props: PropsType) => {
           modify={modify.modify}
           data={modify.data}
           key={version}
+          viewOnly={modify.viewOnly}
         />
       </div>
     </MainLayout>
