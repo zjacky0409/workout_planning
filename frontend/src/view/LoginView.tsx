@@ -14,12 +14,13 @@ import FormHelperText from "@mui/material/FormHelperText";
 import { useAppSelector, useAppDispatch } from "../store/hook";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import axios from "axios";
 import { selectAuth, setAuthentication } from "../store/authSlice";
 import CustomButton from "../components/Button/CustomButton";
 import ChangeLangSelect from "../components/ChangeLangSelect";
 import LoadingSpinner from "../components/Loading/LoadingSpinner";
+import e from "express";
 
 const LoginView = () => {
   const { t } = useTranslation();
@@ -28,8 +29,13 @@ const LoginView = () => {
 
   const auth = useAppSelector(selectAuth); // to know the user login or not
 
-  const [username, setUserName] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  // const [username, setUserName] = React.useState("");
+  // const [password, setPassword] = React.useState("");
+  // use useRef here because setStates for username, password is quite useless,
+  // because we only need these two value for fetch api instead of "watching" the value
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
   const [status, setStatus] = React.useState<"idle" | "pending" | "error">(
     "idle"
   ); // login api status
@@ -51,17 +57,21 @@ const LoginView = () => {
     // to fetch/send data to server without redux-toolkit
     async function fetchData() {
       const loginInPromise = new Promise((resolve, reject) => {
-        axios
-          .post("http://localhost:4000/auth/login", {
-            username: username,
-            password: password,
-          })
-          .then(function (response) {
-            return resolve(response);
-          })
-          .catch(function (error) {
-            return reject(error);
-          });
+        if (usernameRef.current !== null && passwordRef.current !== null) {
+          axios
+            .post("http://localhost:4000/auth/login", {
+              username: usernameRef.current.value,
+              password: passwordRef.current.value,
+            })
+            .then(function (response) {
+              return resolve(response);
+            })
+            .catch(function (error) {
+              return reject(error);
+            });
+        }else{
+          return reject('input error');
+        }
       });
       let result: any;
       try {
@@ -79,17 +89,17 @@ const LoginView = () => {
     fetchData();
   };
 
-  const handleUsername = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    setUserName(event.target.value);
-  };
+  // const handleUsername = (
+  //   event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  // ) => {
+  //   setUserName(event.target.value);
+  // };
 
-  const handlePassword = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    setPassword(event.target.value);
-  };
+  // const handlePassword = (
+  //   event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  // ) => {
+  //   setPassword(event.target.value);
+  // };
 
   // change the visibility for the password text box
   const switchShowPassword = () => {
@@ -120,11 +130,12 @@ const LoginView = () => {
 
             <FormControl variant="standard" sx={{ width: "90%" }} required>
               <Input
-                value={username}
+                // value={username}
                 disabled={status === "pending"}
-                onChange={(
-                  e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-                ) => handleUsername(e)}
+                // onChange={(
+                //   e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+                // ) => handleUsername(e)}
+                inputRef={usernameRef}
                 startAdornment={
                   <InputAdornment position="start">
                     <AccountCircle />
@@ -144,13 +155,14 @@ const LoginView = () => {
               >
                 <div style={{ width: "90%" }}>
                   <Input
-                    value={password}
+                    // value={password}
                     disabled={status === "pending"}
-                    onChange={(
-                      e: React.ChangeEvent<
-                        HTMLTextAreaElement | HTMLInputElement
-                      >
-                    ) => handlePassword(e)}
+                    // onChange={(
+                    //   e: React.ChangeEvent<
+                    //     HTMLTextAreaElement | HTMLInputElement
+                    //   >
+                    // ) => handlePassword(e)}
+                    inputRef={passwordRef}
                     sx={{ width: "100%" }}
                     type={!showPassword ? "password" : "text"} // here to set the visibility for the password
                   />
@@ -162,7 +174,9 @@ const LoginView = () => {
               </div>
             </FormControl>
 
-            {status === "pending" && <LoadingSpinner size={"small"} variant={"primary"} />}
+            {status === "pending" && (
+              <LoadingSpinner size={"small"} variant={"primary"} />
+            )}
 
             {status === "error" && (
               <Alert severity="error" sx={{ width: "90%" }}>
@@ -185,9 +199,9 @@ const LoginView = () => {
                 variant={"primary"}
                 type="button"
                 // https://stackoverflow.com/questions/73484680/pressing-enter-key-on-input-field-triggers-button-click-function
-                // When you have a button in a form, 
-                // it defaults to type "submit" which means the first button in a form will have its onclick event triggered 
-                // by the ENTER key. To prevent this from happening, simply assign type="button" to the button, 
+                // When you have a button in a form,
+                // it defaults to type "submit" which means the first button in a form will have its onclick event triggered
+                // by the ENTER key. To prevent this from happening, simply assign type="button" to the button,
                 // and enter key will no longer affect it.
               />
               <CustomButton
