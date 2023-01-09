@@ -11,6 +11,7 @@ import { Exercise } from './database/exercise.entity';
 import { Coach } from './database/coach.entity';
 import { Diet } from './database/diet.entity';
 import { Food } from './database/food.entity';
+import { Weight } from './database/weight.entity';
 import { Company } from './database/company.entity';
 import { Student } from './database/student.entity';
 // import { ExerciseController } from './exercise/exercise.controller';
@@ -18,6 +19,7 @@ import { FoodModule } from './food/food.module';
 import { DietModule } from './diet/diet.module';
 import { RequestLoggerMiddleware } from './middleware/request.middleware';
 import { CoachModule } from './coach/coach.module';
+import { ProcessModule } from './process/process.module';
 
 @Module({
   imports: [
@@ -31,13 +33,14 @@ import { CoachModule } from './coach/coach.module';
       username: 'postgres_test', // we should not set the username and password as plaintext here
       password: 'postgres_tes',
       database: 'postgres',
-      entities: [User, Exercise, Coach, Diet, Food, Student],
+      entities: [User, Exercise, Coach, Diet, Food, Student, Weight],
       synchronize: true,
     }),
     ExerciseModule,
     DietModule,
     FoodModule,
     CoachModule,
+    ProcessModule,
     // , ConfigModule.forRoot({ isGlobal: true }),
     //   TypeOrmModule.forRoot({
     //     type: 'postgres',

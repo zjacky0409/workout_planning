@@ -46,7 +46,7 @@ export class Coach {
 
   @OneToMany(() => Student, (student) => student.coach)
   @JoinColumn()
-  students: Student[]
+  students: Student[];
 
   // @OneToOne(() => Company)
   // @JoinColumn()

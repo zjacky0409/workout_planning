@@ -30,6 +30,7 @@ Process
 5. user registration
 6. food and exercises creation/update/delete
 7. User/ Coach Registration Flow Successfully
+8. allow user to add weight record(TODO) and display it as a chart(DONE)
 
 
 TODO List:

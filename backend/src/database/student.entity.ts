@@ -16,6 +16,7 @@ import { Exercise } from './exercise.entity';
 import { Diet } from './diet.entity';
 import { User } from './user.entity';
 import { Coach } from './coach.entity';
+import { Weight } from './weight.entity';
 // to define the user structure
 @Entity()
 export class Student {
@@ -73,4 +74,8 @@ export class Student {
   // @OneToOne(() => Company)
   // @JoinColumn()
   // company: Company;
+
+  @OneToMany(() => Weight, (weight) => weight.created_by)
+  @JoinColumn()
+  weights: Weight[];
 }
