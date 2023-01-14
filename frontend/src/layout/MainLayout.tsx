@@ -61,6 +61,8 @@ const MainLayout = (props: PropsType) => {
           <div
             style={{
               // height: `calc(100% - ${170}px)`,
+              // Why does height: 100% on a child element not apply when the parent 
+              // element has a min-height/max-height value but no height value?
               // https://stackoverflow.com/questions/58548583/why-does-height-100-on-a-child-element-not-apply-when-the-parent-element-has-a
               // minHeight: `calc(100% - ${170}px)`,
               padding: 20,
@@ -118,6 +120,3 @@ const MainLayout = (props: PropsType) => {
   );
 };
 export default MainLayout;
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}

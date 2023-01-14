@@ -71,11 +71,11 @@ const routes: RouteObject[] = [
       },
       {
         path: "/progress/trainning",
-        element: <ProgressView />,
+        element: <ProgressView key={'/progress/trainning'}/>,
       },
       {
         path: "/progress/weight",
-        element: <ProgressView />,
+        element: <ProgressView key={'/progress/weight'}/>,
       },
     ],
   },

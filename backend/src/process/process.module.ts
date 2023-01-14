@@ -3,9 +3,12 @@ import { ProcessService } from './process.service';
 import { ProcessController } from './process.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Weight } from 'src/database/weight.entity';
+import { UserService } from 'src/user/user.service';
+import { UserModule } from 'src/user/user.module';
+
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Weight])],
+  imports: [TypeOrmModule.forFeature([Weight]), UserModule],
   controllers: [ProcessController],
   providers: [ProcessService]
 })

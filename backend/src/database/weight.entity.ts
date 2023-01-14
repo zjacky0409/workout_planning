@@ -19,7 +19,7 @@ export class Weight {
   @PrimaryGeneratedColumn()
   id: number;
   // units is kg
-  @Column()
+  @Column({ type: 'float' })
   weight: number;
 
   @Column()
