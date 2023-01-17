@@ -515,6 +515,7 @@ const RegistrationView = () => {
                         size="small"
                         // sx={{ flexGrow: 0.7 }}
                         error={!!errors["dateOfBirth"]}
+                        // If true, the label is shrunk.
                         InputLabelProps={{ shrink: true }}
                         label={t("Date Of Birth")}
                         type={"date"}

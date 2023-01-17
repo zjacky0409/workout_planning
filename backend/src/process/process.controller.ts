@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ProcessService } from './process.service';
 import { CreateProcessDto } from './dto/create-process.dto';
@@ -18,6 +19,7 @@ import { Role } from 'src/guards/role_checker/role.enum';
 import { RolesGuard } from 'src/guards/role_checker/role.guard';
 import { Roles } from 'src/guards/role_checker/roles.decorator';
 import { ValidationPipe } from '../pipes/validate.pipe';
+import { GetStudentWeightDTO } from './dto/get-student-weight.dto';
 
 @Controller('process')
 export class ProcessController {
@@ -42,6 +44,16 @@ export class ProcessController {
   @Get('/get_all_weight')
   findAllWeight(@Request() req) {
     return this.processService.findAllWeight(req.user);
+  }
+
+  @Roles(Role.Coach)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post('/get_student_weight')
+  getUserWeight(
+    @Request() req,
+    @Body(new ValidationPipe()) getStudentWeightDTO: GetStudentWeightDTO,
+  ) {
+    return this.processService.findStudentWeight(req.user, getStudentWeightDTO);
   }
 
 

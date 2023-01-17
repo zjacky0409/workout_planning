@@ -54,6 +54,13 @@ export interface Column {
     width: string;
 }
 
+export interface WeightObject {
+    id: number,
+    weight: number;
+    date: string;
+    comment: string;
+}
+
 export const Body_Part = ["Chest", "Back", "Arms", "Legs", "Core", "Shoulder"]
 
 export const Body_Part_Subtype = {

@@ -6,13 +6,18 @@ import { Repository } from 'typeorm';
 import { CreateProcessDto } from './dto/create-process.dto';
 import { UpdateProcessDto } from './dto/update-process.dto';
 import { UserService } from 'src/user/user.service';
+import { GetStudentWeightDTO } from './dto/get-student-weight.dto';
+import { Student } from 'src/database/student.entity';
 
 @Injectable()
 export class ProcessService {
-  
+
+
   constructor(
     @InjectRepository(Weight)
     private weightResource: Repository<Weight>,
+    @InjectRepository(Student)
+    private studentRepository: Repository<Student>,
     private userServive: UserService,
   ) { }
 
@@ -41,7 +46,6 @@ export class ProcessService {
       return { create_exercise: false };
     }
 
-    return 'This action adds a new process';
   }
 
   findAll() {
@@ -50,14 +54,44 @@ export class ProcessService {
 
   async findAllWeight(user: userInfo): Promise<Weight[]> {
     console.log(user.userId + ' is going to find the weight from the database');
-    console.log(user)
+    console.log(user);
     const weight = await this.weightResource.find({
       where: { created_by: { id: user.student_id } },
       select: {
         weight: true,
         comments: true,
         date: true,
-    },
+      },
+    });
+
+    return weight;
+  }
+
+  async findStudentWeight(
+    user: userInfo,
+    getStudentWeightDTO: GetStudentWeightDTO,
+  ) {
+    console.log(user.userId + ' is going to find the weight from the database');
+    console.log(user);
+
+    const studentToUpdate = await this.studentRepository.find({
+      where: {
+        id: getStudentWeightDTO.id,
+        coach: { id: user.coach_id },
+      },
+    });
+
+    if (studentToUpdate.length <= 0) {
+      console.log('e in update student => no student are found');
+      return { find_student_weight: false };
+    }
+    const weight = await this.weightResource.find({
+      where: { created_by: { id: getStudentWeightDTO.id } },
+      select: {
+        weight: true,
+        comments: true,
+        date: true,
+      },
     });
 
     return weight;
