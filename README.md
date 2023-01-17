@@ -31,6 +31,7 @@ Process
 6. food and exercises creation/update/delete
 7. User/ Coach Registration Flow Successfully
 8. allow user to add weight record(TODO) and display it as a chart(DONE)
+9. allow coach to monitor his/her student weight process(No Code review!!!!)
 
 
 TODO List:
