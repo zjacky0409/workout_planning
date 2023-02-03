@@ -13,6 +13,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import CustomButton from "../components/Button/CustomButton";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -234,91 +235,106 @@ const ProgressView = () => {
     setOpen(false);
   };
 
+  const addNewWeight = () => {
+    setModify({
+      ...modify,
+      modify: false,
+    });
+    // handleReset();
+    setOpen(true);
+  }
+
   return (
     <MainLayout content="Progress">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          height: "100%",
-          gap: 10,
-        }}
-      >
-        {role.includes("coach") && (
-          <div style={{ flexGrow: 0.2, backgroundColor: "white" }}>
-            <List dense={false}>
-              {student_list.map((data: StudentObject) => {
-                return (
-                  <ListItem
-                    component="div"
-                    button={true}
-                    divider={true}
-                    onClick={() => setCurrentStudentID(data.id)} 
-                    // sx={{bgcolor:'red'}}
-                  >
-                    <div
-                      style={{
-                        width:'100%',
-                        // backgroundColor:'red',
-                        display: "flex",
-                        justifyContent: "space-between",
-                        gap: 10,
-                      }}
-                    >
-                      <ListItemText
-                        primary={data.display_name}
-                        // secondary={data.id}
-                      />
-                      <Divider
-                        orientation="vertical"
-                        // variant="middle"
-                        flexItem
-                        sx={{
-                          background:
-                            data.id === currentStudentID ? "skyblue" : "white",
-                          borderRightWidth: 5,
-                        }}
-                      />
-                    </div>
-                  </ListItem>
-                );
-              })}
-            </List>
-          </div>
-        )}
-
+      <>
+        <div style={{padding: 10}}>
+          <CustomButton shownText={"Add Weight"} variant={"primary"} onClick={addNewWeight} />
+        </div>
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            height: "100%",
-            gap: 20,
-            flexGrow: 0.8,
+            flexDirection: "row",
+            height: "90%",
+            gap: 10,
           }}
         >
-          {
-            // lol flex-grow doesnt work for chartjs's chart, you must set the height/width for the chart
-          }
-          <div style={{ flexGrow: 1, backgroundColor: "white" }}>
-            <Line
-              style={{ padding: 20 }}
-              options={options}
-              ref={chartRef}
-              onClick={onClick}
-              data={{
-                labels: dateOption,
-                datasets: [
-                  {
-                    label: "kg",
-                    data: data,
-                    borderColor: "rgb(255, 99, 132)",
-                    backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  },
-                ],
-              }}
-            />
-          </div>
-          {/* <div style={{ flexGrow: 0.3, backgroundColor: "blue" }}>
+          {role.includes("coach") && (
+            <div style={{ flexGrow: 0.2, backgroundColor: "white" }}>
+              <List dense={false}>
+                {student_list.map((data: StudentObject) => {
+                  return (
+                    <ListItem
+                      component="div"
+                      button={true}
+                      divider={true}
+                      onClick={() => setCurrentStudentID(data.id)}
+                      // sx={{bgcolor:'red'}}
+                    >
+                      <div
+                        style={{
+                          width: "100%",
+                          // backgroundColor:'red',
+                          display: "flex",
+                          justifyContent: "space-between",
+                          gap: 10,
+                        }}
+                      >
+                        <ListItemText
+                          primary={data.display_name}
+                          // secondary={data.id}
+                        />
+                        <Divider
+                          orientation="vertical"
+                          // variant="middle"
+                          flexItem
+                          sx={{
+                            background:
+                              data.id === currentStudentID
+                                ? "skyblue"
+                                : "white",
+                            borderRightWidth: 5,
+                          }}
+                        />
+                      </div>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </div>
+          )}
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              gap: 20,
+              flexGrow: 0.8,
+            }}
+          >
+            {
+              // lol flex-grow doesnt work for chartjs's chart, you must set the height/width for the chart
+            }
+            <div style={{ flexGrow: 1, backgroundColor: "white" }}>
+              <Line
+                style={{ padding: 20 }}
+                options={options}
+                ref={chartRef}
+                onClick={onClick}
+                data={{
+                  labels: dateOption,
+                  datasets: [
+                    {
+                      label: "kg",
+                      data: data,
+                      borderColor: "rgb(255, 99, 132)",
+                      backgroundColor: "rgba(255, 99, 132, 0.5)",
+                    },
+                  ],
+                }}
+              />
+            </div>
+            {/* <div style={{ flexGrow: 0.3, backgroundColor: "blue" }}>
           <div
             style={{
               display: "flex",
@@ -347,17 +363,18 @@ const ProgressView = () => {
           </div>
         </div> */}
 
-          <ModifyWeightProcess
-            key={version}
-            open={open}
-            handleClose={handleClose}
-            setOpen={setOpen}
-            modify={modify.modify}
-            viewOnly={modify.viewOnly}
-            data={modify.data}
-          />
+            <ModifyWeightProcess
+              key={version}
+              open={open}
+              handleClose={handleClose}
+              setOpen={setOpen}
+              modify={modify.modify}
+              viewOnly={modify.viewOnly}
+              data={modify.data}
+            />
+          </div>
         </div>
-      </div>
+      </>
     </MainLayout>
   );
 };

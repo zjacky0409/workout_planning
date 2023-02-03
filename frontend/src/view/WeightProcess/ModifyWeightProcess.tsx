@@ -22,6 +22,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { selectRole } from "../../store/authSlice";
+import axios from "axios";
 
 interface PropsType {
   open: boolean;
@@ -74,15 +75,50 @@ const ModifyWeightProcess = ({
 
   const values = watch(); // to monitor the user's input
 
-    // reset the form's value when the data has change
-    useEffect(() => {
-      if (modify) {
-        // true: modify the food, false: add a new food
-        reset(data);
-      }
-    }, [data, modify, reset]);
+  // reset the form's value when the data has change
+  useEffect(() => {
+    if (modify) {
+      // true: modify the food, false: add a new food
+      reset(data);
+    }
+  }, [data, modify, reset]);
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    console.log("values => ", values);
+    async function fetchData() {
+      const loginInPromise = new Promise((resolve, reject) => {
+        axios
+          .post(
+            "http://localhost:4000/process/create_weight",
+            {
+              weight: parseFloat(values.weight+""),
+              comments: values.comment,
+              // ISO 8601 date string
+              date: new Date(values.date).toISOString(),
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+              },
+            }
+          )
+          .then(function (response) {
+            return resolve(response);
+          })
+          .catch(function (error) {
+            return reject(error);
+          });
+      });
+      let result: any;
+      try {
+        result = await loginInPromise;
+        handleClose();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchData();
+  };
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={"md"}>
