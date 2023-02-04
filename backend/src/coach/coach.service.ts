@@ -25,6 +25,7 @@ export class CoachService {
 
     if (studentToUpdate.length <= 0) {
       console.log('e in update student => no student are found');
+      // should not happen if the coach really update the info by our website
       return { update_student: false };
     }
     // modify the record

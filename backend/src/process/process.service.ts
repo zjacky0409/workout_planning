@@ -97,15 +97,15 @@ export class ProcessService {
     return weight;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} process`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} process`;
+  // }
 
-  update(id: number, updateProcessDto: UpdateProcessDto) {
-    return `This action updates a #${id} process`;
-  }
+  // update(id: number, updateProcessDto: UpdateProcessDto) {
+  //   return `This action updates a #${id} process`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} process`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} process`;
+  // }
 }
