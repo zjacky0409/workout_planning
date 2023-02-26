@@ -32,6 +32,7 @@ Process
 7. User/ Coach Registration Flow Successfully
 8. allow user to add weight record(TODO) and display it as a chart(DONE)
 9. allow coach to monitor his/her student weight process(No Code review!!!!)
+10. add student sidebar for diet/program view --> going to implement the diet planning and program planning
 
 
 TODO List:
@@ -43,6 +44,7 @@ TODO List:
 6. remove "any" 
 7. Logging in the backend
 8. Code Review
+9. implement the diet planning and program planning
 
 
 
