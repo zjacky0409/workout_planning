@@ -21,6 +21,7 @@ import CustomButton from "../components/Button/CustomButton";
 import ChangeLangSelect from "../components/ChangeLangSelect";
 import LoadingSpinner from "../components/Loading/LoadingSpinner";
 import e from "express";
+import { useGoTo } from "../customHook/useGoTo";
 
 const LoginView = () => {
   const { t } = useTranslation();
@@ -39,7 +40,7 @@ const LoginView = () => {
   const [status, setStatus] = React.useState<"idle" | "pending" | "error">(
     "idle"
   ); // login api status
-  const navigate = useNavigate();
+  const navigate = useGoTo();
 
   // go to main page when we detect the user already login
   useEffect(() => {

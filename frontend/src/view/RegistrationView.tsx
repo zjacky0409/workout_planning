@@ -23,6 +23,7 @@ import ConfirmDialog from "../components/Dialog/ConfirmDialog";
 import { useTranslation } from "react-i18next";
 import ChangeLangSelect from "../components/ChangeLangSelect";
 import { createUserJson } from "../api/authApi";
+import { useGoTo } from "../customHook/useGoTo";
 // declare the form structure
 interface IFormInput {
   firstName: string;
@@ -101,7 +102,7 @@ const RegistrationView = () => {
   const [emailExist, setEmailExist] = useState(false);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const navigate = useGoTo();
   const submitStatus = useAppSelector(selectStatus);
 
   const handleClose = () => {

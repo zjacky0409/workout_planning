@@ -25,6 +25,21 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
 
   const location = useLocation();
 
+  const { i18n } = useTranslation();
+
+  const pathname_without_lang = React.useMemo(() => {
+    let temp_path = location.pathname.split("/");
+    let return_path = "/" + i18n.language + "/";
+    for (let i = 0; i < temp_path.length; i++) {
+      if (i > 1 && i !== temp_path.length - 1)
+        return_path = return_path + temp_path[i] + "/";
+      if (i === temp_path.length - 1) return_path = return_path + temp_path[i];
+    }
+
+    return return_path;
+  }, [location, i18n]);
+  console.log("pathname_without_lang => ", pathname_without_lang);
+
   const sideBarContent = React.useMemo(() => {
     let tempContent: SideBarObject[] = [];
 
@@ -32,18 +47,18 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
 
     if (subNavContent.length > 0) {
       let toBeProcessed = subNavContent[0];
-      if (toBeProcessed.path === location.pathname) {
+      if ("/" + i18n.language + toBeProcessed.path === pathname_without_lang) {
         return toBeProcessed.children;
       }
       toBeProcessed.children.forEach((child: PageObject) => {
-        if (child.path === location.pathname) {
+        if ("/" + i18n.language + child.path === pathname_without_lang) {
           tempContent = toBeProcessed.children;
         }
 
         // https://stackoverflow.com/questions/49610779/typescript-error-ts2532-object-is-possibly-undefined-even-after-undefined-c
         // if(child.children !== undefined){
         //   child.children.forEach((subChild) => {
-        //     if (subChild.path === location.pathname) {
+        //     if (subChild.path === pathname_without_lang) {
         //       if(child.children !== undefined){
         //         tempContent = child.children;
         //       }
@@ -53,7 +68,7 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
 
         if (child.children !== undefined) {
           for (var subChild of child.children) {
-            if (subChild.path === location.pathname) {
+            if (i18n.language + subChild.path === pathname_without_lang) {
               tempContent = child.children;
             }
           }
@@ -63,7 +78,8 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
     } else {
       return [];
     }
-  }, [location, content]);
+  }, [content, i18n.language, pathname_without_lang]);
+
   const drawer = (
     <div>
       <Toolbar sx={{ bgcolor: "white", height: 100 }}>
@@ -97,11 +113,11 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
             disablePadding
             sx={
               {
-                // bgcolor: location.pathname === text.path ? "#cacbcc" : "white",
+                // bgcolor: pathname_without_lang === text.path ? "#cacbcc" : "white",
               }
             }
           >
-            <ListItemButton component={Link} to={text.path}>
+            <ListItemButton component={Link} to={"/" + i18n.language + text.path}>
               <Stack
                 direction="row"
                 spacing={2}
@@ -114,7 +130,9 @@ export default function SideBar({ content = "Diet" }: SideBarProp) {
                   flexItem
                   sx={{
                     background:
-                      location.pathname === text.path ? "skyblue" : "white",
+                      pathname_without_lang === "/" + i18n.language + text.path
+                        ? "skyblue"
+                        : "white",
                     borderRightWidth: 5,
                   }}
                 />

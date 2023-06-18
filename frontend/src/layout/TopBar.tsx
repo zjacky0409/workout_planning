@@ -107,6 +107,20 @@ const TopBar = () => {
     setAnchorElLang(null);
   };
 
+
+  const pathname_without_lang = React.useMemo(() => {
+    let temp_path = location.pathname.split("/");
+    let return_path = "/" + i18n.language + "/";
+    for (let i = 0; i < temp_path.length; i++) {
+      if (i > 1 && i !== temp_path.length - 1)
+        return_path = return_path + temp_path[i] + "/";
+    }
+
+    return return_path;
+  }, [location, i18n]);
+
+  console.log('pathname_without_lang => ', pathname_without_lang)
+
   return (
     <AppBar
       position="fixed"
@@ -124,7 +138,7 @@ const TopBar = () => {
           {
             // If the screen size is small, we show the meun icon
           }
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" }}}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -167,10 +181,9 @@ const TopBar = () => {
                       key={page.path + "_menuItem"}
                       component={Link}
                       onClick={handleCloseNavMenu}
-                      to={page.path}
+                      to={"/" + i18n.language + page.path}
                     >
                       <ListItemText sx={{ fontWeight: "bold" }}>
-                        {/* {page.icon}{" "} */}
                         {t(page.name as unknown as TemplateStringsArray)}
                       </ListItemText>
                     </MenuItem>
@@ -222,7 +235,7 @@ const TopBar = () => {
                             <MenuItem
                               key={value.path + "_menuItem"}
                               component={Link}
-                              to={value.path}
+                              to={"/" + i18n.language + value.path}
                               sx={{ width: "50%" }}
                             >
                               <ListItemText>
@@ -267,7 +280,7 @@ const TopBar = () => {
                         borderRadius: 0,
                       }}
                       component={Link}
-                      to={page.path}
+                      to={"/" + i18n.language + page.path}
                       onMouseOver={(e: React.MouseEvent<HTMLElement>) =>
                         handleMouseOver(e, page.children)
                       }
@@ -275,8 +288,8 @@ const TopBar = () => {
                       {/* {page.icon} */}
                       {t(page.name as unknown as TemplateStringsArray)}
                     </Button>
-                    {location.pathname.split("/")[1] ===
-                      page.path.split("/")[1] && (
+                    {pathname_without_lang ===
+                      "/" + i18n.language + page.path.split("/")[1] && (
                       <Divider
                         sx={{ background: "skyblue", borderBottomWidth: 5 }}
                       />

@@ -3,6 +3,7 @@ import { useAppSelector } from "../store/hook";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from 'react-i18next'
+import { useGoTo } from "../customHook/useGoTo";
 
 interface PropsType {
   children: JSX.Element;
@@ -16,7 +17,7 @@ const RoleCheckLayout = (props: PropsType) => {
   const status = useAppSelector(selectStatus);
   const role = useAppSelector(selectRole);
 
-  const navigate = useNavigate();
+  const navigate = useGoTo();
 
 
   useEffect(() => {

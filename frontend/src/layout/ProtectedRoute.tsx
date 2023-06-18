@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useTranslation } from 'react-i18next'
 import LoadingSpinner from '../components/Loading/LoadingSpinner'
+import { useGoTo } from "../customHook/useGoTo";
 
 interface PropsType {
   children: JSX.Element;
@@ -18,7 +19,7 @@ const ProtectedRoute = (props: PropsType) => {
   
   const { t } = useTranslation()
 
-  const navigate = useNavigate();
+  const navigate = useGoTo();
 
   // if the auth state is false, we redirect to the login page
   useEffect(() => {

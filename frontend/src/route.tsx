@@ -16,265 +16,254 @@ import RoleCheckLayout from "./layout/RoleCheckLayout";
 // ref: https://reactrouter.com/en/main/hooks/use-routes
 const routes: RouteObject[] = [
   {
-    path: "/",
+    path: "/:lng/",
     element: <Outlet></Outlet>,
     children: [
-      { path: "/", element: <LoginView /> },
-      { path: "/login", element: <LoginView /> },
+      { path: "", element: <LoginView /> },
+      { path: "login", element: <LoginView /> },
       // { path: '401', element: <UnauthorizedView /> },
-      { path: "/registration", element: <RegistrationView /> },
-      { path: "*", element: <LoginView /> },
+      { path: "registration", element: <RegistrationView /> },
+      // { path: "*", element: <DietView day="trainning_day" /> },
     ],
   },
-  // {
-  //   path: "/login",
-  //   element: <LoginView />,
-  //   //   children: [
-  //   //     {
-  //   //       path: "messages",
-  //   //       element: <DashboardMessages />,
-  //   //     },
-  //   //     { path: "tasks", element: <DashboardTasks /> },
-  //   //   ],
-  // },
   {
-    path: "/diet",
+    path: "/:lng/diet/",
     element: (
       <ProtectedRoute>
         <Outlet></Outlet>
       </ProtectedRoute>
     ),
     children: [
+      // {
+      //   path: "",
+      //   element: <Navigate to="/:lng/diet/trainning_day" replace={true} />,
+      // },
       {
-        path: "/diet",
-        element: <Navigate to="/diet/trainning_day" replace={true} />,
-      },
-      {
-        path: "/diet/trainning_day",
+        path: "trainning_day",
         element: <DietView day="trainning_day" />,
       },
-      { path: "/diet/rest_day", element: <DietView day="rest_day" /> },
-      { path: "/diet/food", element: <FoodView day="rest_day" /> },
+      { path: "rest_day", element: <DietView day="rest_day" /> },
+      { path: "food", element: <FoodView day="rest_day" /> },
     ],
   },
   {
-    path: "progress",
+    path: "/:lng/progress/",
     element: (
       <ProtectedRoute>
         <Outlet />
       </ProtectedRoute>
     ),
     children: [
+      // {
+      //   path: "",
+      //   element: <Navigate to="/progress/trainning" replace={true} />,
+      // },
       {
-        path: "/progress",
-        element: <Navigate to="/progress/trainning" replace={true} />,
-      },
-      {
-        path: "/progress/trainning",
+        path: "trainning",
         element: <ProgressView key={'/progress/trainning'}/>,
       },
       {
-        path: "/progress/weight",
+        path: "weight",
         element: <ProgressView key={'/progress/weight'}/>,
       },
     ],
   },
   {
-    path: "exercises",
+    path: "/:lng/exercises/",
     element: (
       <ProtectedRoute>
         <Outlet></Outlet>
       </ProtectedRoute>
     ),
     children: [
+      // {
+      //   path: "",
+      //   element: <Navigate to="/exercises/back" replace={true} />,
+      // },
+      // {
+      //   path: "back",
+      //   element: <Navigate to="/exercises/back/summary" replace={true} />,
+      // },
       {
-        path: "/exercises",
-        element: <Navigate to="/exercises/back" replace={true} />,
-      },
-      {
-        path: "/exercises/back",
-        element: <Navigate to="/exercises/back/summary" replace={true} />,
-      },
-      {
-        path: "/exercises/back/summary",
+        path: "back/summary",
         element: <ExercisesView type={"Back"} subtype={"Summary"} />,
       },
       {
-        path: "/exercises/back/upper",
+        path: "back/upper",
         element: <ExercisesView type={"Back"} subtype={"Upper"} />,
       },
       {
-        path: "/exercises/back/lat",
+        path: "back/lat",
         element: <ExercisesView type={"Back"} subtype={"Lat"} />,
       },
       {
-        path: "/exercises/back/trap",
+        path: "back/trap",
         element: <ExercisesView type={"Back"} subtype={"Trap"} />,
       },
       {
-        path: "/exercises/chest/summary",
+        path: "chest/summary",
         element: <ExercisesView type={"Chest"} subtype={"Summary"} />,
       },
       {
-        path: "/exercises/chest/upper_chest",
+        path: "chest/upper_chest",
         element: <ExercisesView type={"Chest"} subtype={"Upper"} />,
       },
       {
-        path: "/exercises/chest/lower_chest",
+        path: "chest/lower_chest",
         element: <ExercisesView type={""} subtype={"Lower"} />,
       },
       {
-        path: "/exercises/chest/middle_chest",
+        path: "chest/middle_chest",
         element: <ExercisesView type={"Chest"} subtype={"Middle"} />,
       },
       {
-        path: "/exercises/chest/inner_chest",
+        path: "chest/inner_chest",
         element: <ExercisesView type={"Chest"} subtype={"Inner"} />,
       },
       {
-        path: "/exercises/chest/outer_chest",
+        path: "chest/outer_chest",
         element: <ExercisesView type={"Chest"} subtype={"Outter"} />,
       },
       {
-        path: "/exercises/chest",
+        path: "chest",
         element: <ExercisesView type={"Chest"} subtype={"Summary"} />,
       },
+      // {
+      //   path: "arm",
+      //   element: <Navigate to="/exercises/arm/summary" replace={true} />,
+      // },
       {
-        path: "/exercises/arm",
-        element: <Navigate to="/exercises/arm/summary" replace={true} />,
-      },
-      {
-        path: "/exercises/arm/summary",
+        path: "arm/summary",
         element: <ExercisesView type={"Arms"} subtype={"Summary"} />,
       },
       {
-        path: "/exercises/arm/former",
+        path: "arm/former",
         element: <ExercisesView type={"Arms"} subtype={"Former"} />,
       },
       {
-        path: "/exercises/arm/bi",
+        path: "arm/bi",
         element: <ExercisesView type={"Arms"} subtype={"Bicept"} />,
       },
       {
-        path: "/exercises/arm/tri",
+        path: "arm/tri",
         element: <ExercisesView type={"Arms"} subtype={"Tricept"} />,
       },
+      // {
+      //   path: "leg",
+      //   element: <Navigate to="/exercises/leg/summary" replace={true} />,
+      // },
       {
-        path: "/exercises/leg",
-        element: <Navigate to="/exercises/leg/summary" replace={true} />,
-      },
-      {
-        path: "/exercises/leg/summary",
+        path: "leg/summary",
         element: <ExercisesView type={"Legs"} subtype={"Summary"} />,
       },
       {
-        path: "/exercises/leg/quad",
+        path: "leg/quad",
         element: <ExercisesView type={"Legs"} subtype={"Quad"} />,
       },
       {
-        path: "/exercises/leg/harmstring",
+        path: "leg/harmstring",
         element: <ExercisesView type={"Legs"} subtype={"Harmstring"} />,
       },
       {
-        path: "/exercises/leg/hip",
+        path: "leg/hip",
         element: <ExercisesView type={"Legs"} subtype={"Hip"} />,
       },
       {
-        path: "/exercises/shoulder/summary",
+        path: "shoulder/summary",
         element: <ExercisesView type={"Shoulder"} subtype={"Summary"} />,
       },
       {
-        path: "/exercises/shoulder/rear_delt",
+        path: "shoulder/rear_delt",
         element: <ExercisesView type={"Shoulder"} subtype={"Rear Delt"} />,
       },
       {
-        path: "/exercises/shoulder/front_delt",
+        path: "shoulder/front_delt",
         element: <ExercisesView type={"Shoulder"} subtype={"Front Delt"} />,
       },
       {
-        path: "/exercises/shoulder/side_delt",
+        path: "shoulder/side_delt",
         element: <ExercisesView type={"Shoulder"} subtype={"Side Delt"} />,
       },
+      // {
+      //   path: "shoulder/summary",
+      //   element: <Navigate to="/diet/trainning_day" replace={true} />,
+      // },
+      // {
+      //   path: "core",
+      //   element: <Navigate to="/exercises/core/summary" replace={true} />,
+      // },
       {
-        path: "/exercises/shoulder/summary",
-        element: <Navigate to="/diet/trainning_day" replace={true} />,
-      },
-      {
-        path: "/exercises/core",
-        element: <Navigate to="/exercises/core/summary" replace={true} />,
-      },
-      {
-        path: "/exercises/core/upper",
+        path: "core/upper",
         element: <ExercisesView type={"Core"} subtype={"Upper"} />,
       },
       {
-        path: "/exercises/core/lower",
+        path: "core/lower",
         element: <ExercisesView type={"Core"} subtype={"Lower"} />,
       },
       {
-        path: "/exercises/core/summary",
+        path: "core/summary",
         element: <ExercisesView type={"Core"} subtype={"Summary"} />,
       },
       {
-        path: "/exercises/core/full",
+        path: "core/full",
         element: <ExercisesView type={"Core"} subtype={"Full"} />,
       },
     ],
   },
   {
-    path: "useful_resources",
+    path: "/:lng/useful_resources",
     element: (
       <ProtectedRoute>
         <Outlet />
       </ProtectedRoute>
     ),
     children: [
+      // {
+      //   path: "",
+      //   element: <Navigate to="/useful_resources/exercise" replace={true} />,
+      // },
       {
-        path: "/useful_resources",
-        element: <Navigate to="/useful_resources/exercise" replace={true} />,
-      },
-      {
-        path: "/useful_resources/exercise",
+        path: "exercise",
         element: <UsefulResourceView />,
       },
       {
-        path: "/useful_resources/other",
+        path: "other",
         element: <UsefulResourceView />,
       },
     ],
   },
   {
-    path: "program",
+    path: "/:lng/program",
     element: (
       <ProtectedRoute>
         <Outlet />
       </ProtectedRoute>
     ),
     children: [
+      // {
+      //   path: "",
+      //   element: <Navigate to="/program/pull_day" replace={true} />,
+      // },
       {
-        path: "/program",
-        element: <Navigate to="/program/pull_day" replace={true} />,
-      },
-      {
-        path: "/program/pull_day",
+        path: "pull_day",
         element: <ProgramView />,
       },
       {
-        path: "/program/push_day",
+        path: "push_day",
         element: <ProgramView />,
       },
       {
-        path: "/program/legs_day",
+        path: "legs_day",
         element: <ProgramView />,
       },
       {
-        path: "/program/arms_day",
+        path: "arms_day",
         element: <ProgramView />,
       },
     ],
   },
   {
-    path: "coach",
+    path: "/:lng/coach",
     element: (
       <ProtectedRoute>
         <RoleCheckLayout requiredRole={"coach"}>
@@ -284,11 +273,11 @@ const routes: RouteObject[] = [
     ),
     children: [
       {
-        path: "/coach",
+        path: "",
         element: <Navigate to="/coach/student_management" replace={true} />,
       },
       {
-        path: "/coach/student_management",
+        path: "student_management",
         element: <StudentManView />,
       },
     ],

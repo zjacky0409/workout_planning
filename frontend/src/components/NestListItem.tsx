@@ -11,6 +11,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link } from "react-router-dom";
 import { PageObject } from "../common";
+import { useTranslation } from "react-i18next";
 
 interface SideBarProp {
   shownText: string;
@@ -26,6 +27,8 @@ export default function NestListItem({
   action,
 }: SideBarProp) {
   const [open, setOpen] = React.useState(false);
+
+  const { i18n } = useTranslation();
 
   const handleClick = () => {
     setOpen(!open);
@@ -61,9 +64,8 @@ export default function NestListItem({
                   sx={{ pl: 8 }}
                   onClick={action}
                   component={Link}
-                  to={val.path}
+                  to={"/" + i18n.language + val.path}
                 >
-                  {/* {val.icon} */}
                   {val.name}
                 </ListItemButton>
               );
@@ -92,7 +94,7 @@ export default function NestListItem({
                 sx={{ pl: 4 }}
                 onClick={action}
                 component={Link}
-                to={val.path}
+                to={"/" + i18n.language + val.path}
               >
                 {/* {val.icon} */}
                 {val.name}
